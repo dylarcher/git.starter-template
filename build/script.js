@@ -65,9 +65,22 @@ const indexSrc = fs.readFileSync(path.join(rootDir, 'src', 'index.js'), 'utf8')
 const cliSrc = fs.readFileSync(path.join(rootDir, 'src', 'bin', 'cli.js'), 'utf8')
 
 // Create CommonJS version (index.cjs.js)
+// Use a more robust approach to convert ESM to CommonJS
 const cjsContent = `'use strict';
 
-${indexSrc.replace('export default', 'module.exports =')}
+// Convert ESM to CommonJS in a more robust way
+const exportedModule = (() => {
+  // Temporary exports object to capture named exports
+  const exports = {};
+
+  // Execute the module code in this context
+  ${indexSrc.replace(/export\s+default\s+/, 'exports.default = ')}
+
+  // Return either the default export or the full exports object
+  return exports.default || exports;
+})();
+
+module.exports = exportedModule;
 `
 fs.writeFileSync(path.join(distDir, 'index.cjs.js'), cjsContent)
 console.log('Created index.cjs.js (CommonJS)')
@@ -84,7 +97,14 @@ const umdContent = `(function (global, factory) {
 })(this, function () {
   'use strict';
 
-  ${indexSrc.replace('export default', 'return')}
+  // Execute the module code and capture exports
+  const exports = {};
+
+  // Execute the module code in this context
+  ${indexSrc.replace(/export\s+default\s+/, 'exports.default = ')}
+
+  // Return either the default export or the full exports object
+  return exports.default || exports;
 });
 `
 fs.writeFileSync(path.join(distDir, 'index.umd.js'), umdContent)
