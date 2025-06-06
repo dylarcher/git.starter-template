@@ -1,4 +1,9 @@
 {
-  "extends": "default",
-  "ignores": [ "node_modules", "dist" ]
+  "ignores": [ "node_modules", "dist" ],
+  "MD013": {
+    "line_length": 80,
+    "heading_line_length": 80,
+    "code_block_line_length": 80,
+    "tables": true
+  }
 }
