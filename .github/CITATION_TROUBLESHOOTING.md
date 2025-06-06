@@ -98,7 +98,8 @@ https://github.com/dylarcher/git.starter-template
 
 -
 
-[GitHub Citation Documentation](<https://docs.github.com/en/repositories/managing>
+[GitHub Citation
+Documentation](<https://docs.github.com/en/repositories/managing>
 -your-repositorys-settings-and-features/customizing-your-repository/about-citati
 on-files)
 
