@@ -40,8 +40,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - build-mode: autobuild
-            language: GitHub Actions
           - build-mode: none
             language: javascript
   scan_and_autofix_main:
