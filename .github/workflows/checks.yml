@@ -1,4 +1,31 @@
+name: Comprehensive CI Pipeline
+'on':
+  issues: {}
+  pull_request:
+    types: [opened, reopened, synchronize]
+  pull_request_target: {}
+  schedule:
+    - cron: 39 5 * * 1
+  workflow_dispatch: {}
+
 jobs:
+  lint-files:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    name: Lint Docs & Configs (MD, YAML, Actions)
+    permissions:
+      contents: read # Linters only need to read files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository source code
+        uses: actions/checkout@v4
+      - name: NodeJS environment setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - name: Project dependencies setup
+        run: npm ci
+      - name: Lint Markdown, YAML, and Actions files
+        run: npm run lint
   analyze-codeql:
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     name: CodeQL Check (${{ matrix.language }})
