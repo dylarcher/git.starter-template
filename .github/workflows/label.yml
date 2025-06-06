@@ -14,5 +14,4 @@ jobs:
           dot: true
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           sync-labels: true
-name: Auto-Label Issues
 on: [issues, pull_request_target]
