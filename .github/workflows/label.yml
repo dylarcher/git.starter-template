@@ -1,0 +1,19 @@
+jobs:
+  label:
+    permissions:
+      contents: read
+      id-token: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Apply project labels
+        uses: actions/labeler@v5
+        with:
+          configuration-path: .github/labeler.yml
+          dot: true
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          sync-labels: true
+name: Auto-Label Issues
+on: [issues, pull_request_target, workflow_dispatch]
