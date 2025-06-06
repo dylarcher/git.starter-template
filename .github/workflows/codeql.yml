@@ -18,7 +18,7 @@ jobs:
         name: NodeJS environment setup (PR)
         uses: actions/setup-node@v4
         with:
-          node-version: 20.19.2
+          node-version: 20.x
       - if: matrix.language == 'javascript'
         name: Project build process (PR)
         run: npm ci && npm run build
@@ -62,7 +62,7 @@ jobs:
         name: NodeJS environment setup (main)
         uses: actions/setup-node@v4
         with:
-          node-version: 20.19.2
+          node-version: 20.x
       - if: matrix.language == 'javascript'
         name: Project build process (main)
         run: npm ci && npm run build
