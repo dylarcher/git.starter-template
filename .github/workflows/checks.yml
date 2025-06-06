@@ -54,18 +54,21 @@ jobs:
         run: npm ci
       - name: Format project source code
         run: npm run format
-      - name: Check-in change(s) to project
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add -A
-          git diff --staged --quiet || (git commit -m "Automated formatting" && git push)
+      - name: Upload Prettier fixes
+        uses: actions/upload-artifact@v4
+        with:
+          name: prettier-fixes
+          path: |
+            ./
+            !node_modules/
+            !.git/
+          if-no-files-found: ignore
 
   lint-code:
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     name: Lint Code (ESLint)
     permissions:
-      contents: read
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -76,7 +79,16 @@ jobs:
       - name: Project dependency setup
         run: npm ci
       - name: Lint project source code
-        run: npx eslint src/**/*.js
+        run: npm run lint
+      - name: Upload ESLint fixes
+        uses: actions/upload-artifact@v4
+        with:
+          name: eslint-fixes
+          path: |
+            ./
+            !node_modules/
+            !.git/
+          if-no-files-found: ignore
   run-tests:
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     name: Run Tests (Suite)
@@ -118,6 +130,46 @@ jobs:
         name: Add summary comment to issue
         run: |
           gh issue comment $ISSUE_NUMBER --body '### 📝 AI Summary\n\n${{ steps.inference.outputs.response }}'
+
+  commit-changes:
+    name: Commit Automated Changes
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' # Ensure it runs under the same conditions
+    runs-on: ubuntu-latest
+    needs: [format-code, lint-code] # Depends on the formatter and linter jobs
+    permissions:
+      contents: write # Required to push changes
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }} # Checkout the head of the PR
+          token: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for commit/push
+
+      - name: Download Prettier fixes
+        uses: actions/download-artifact@v4
+        with:
+          name: prettier-fixes
+          path: ./ # Download to the root of the workspace
+
+      - name: Download ESLint fixes
+        uses: actions/download-artifact@v4
+        with:
+          name: eslint-fixes
+          path: ./ # Download to the root of the workspace, overwriting if necessary
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          # Add all changes that might have been applied from artifacts
+          git add -A
+          # Check if there are any staged changes and commit/push
+          if ! git diff --staged --quiet; then
+            git commit -m "CHORE: Automated code improvements (format & lint)"
+            git push
+          else
+            echo "No changes to commit."
+          fi
 
 name: Comprehensive CI Pipeline
 'on':

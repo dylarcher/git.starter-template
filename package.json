@@ -73,7 +73,10 @@
         "url": "git+https://github.com/dylarcher/[REPOSITORY_NAMESPACE].git"
     },
     "scripts": {
-        "docs:build": "echo \"[UNSET_SCRIPT_COMMANDS]\" && exit 0"
+        "docs:build": "echo \"[UNSET_SCRIPT_COMMANDS]\" && exit 0",
+        "format": "prettier --write --log-level warn .",
+        "lint": "eslint --fix --quiet src/**/*.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "sideEffects": false,
     "type": "module",
