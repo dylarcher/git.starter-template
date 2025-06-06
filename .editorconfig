@@ -22,3 +22,6 @@ trim_trailing_whitespace = false
 #* below this: specific language rules (optional)
 [{*.css,*.html,*.js,*.json,*.md,*.yml,*.svg}]
 indent_size = 2
+
+[*.md]
+print_width = 280
