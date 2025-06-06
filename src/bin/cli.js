@@ -1,2 +1,10 @@
-#!/usr/bin/env node
-// CLI implementation goes here
+/**
+ * CLI module for the application
+ * @module cli
+ */
+
+/**
+ * Default export for the CLI module
+ * @type {Object}
+ */
+export default {};
