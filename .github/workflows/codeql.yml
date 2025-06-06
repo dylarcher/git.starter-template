@@ -35,12 +35,7 @@ jobs:
       - name: Perform CodeQL Analysis (PR)
         uses: github/codeql-action/analyze@v3
         with:
-          category: pr-analysis-${{ matrix.language }}
-      - if: always()
-        name: Upload CodeQL SARIF (PR)
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          category: pr-sarif-${{ matrix.language }}
+          category: pr-analysis-${{ matrix.language }}-${{ github.run_id }}
     strategy:
       fail-fast: false
       matrix:
@@ -82,16 +77,11 @@ jobs:
       - name: Perform CodeQL Analysis (main)
         uses: github/codeql-action/analyze@v3
         with:
-          category: main-analysis-${{ matrix.language }}
-      - if: always()
-        name: Upload CodeQL SARIF (main)
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          category: main-sarif-${{ matrix.language }}
+          category: main-analysis-${{ matrix.language }}-${{ github.run_id }}
       - name: Attempt to autofix alerts for ${{ matrix.language }} (main)
         uses: github/codeql-action/autofix@v2
         with:
-          category: main-autofix-${{ matrix.language }}
+          category: main-autofix-${{ matrix.language }}-${{ github.run_id }}
           commit_message: Apply CodeQL autofixes for ${{ matrix.language }} on main
           pr_title: '[Auto] CodeQL Fixes for ${{ matrix.language }} (main)'
           token: ${{ secrets.GITHUB_TOKEN }}
