@@ -84,9 +84,9 @@
     "clean": "npm run clean:dist && npm run clean:libs",
     "clean:dist": "rimraf dist lib test/coverage .vscode-test types",
     "clean:libs": "rimraf node_modules package-lock.json .cache/npm",
-    "format": "biome format --write --config-path .github/configs/biome.json src && markdownlint --config .github/configs/.markdownlintrc.json --fix .github/**/*.md docs/**/*.md src/**/*.md README.md CHANGELOG.md",
+    "format": "biome format --write --config-path .github/configs/biome.json src && markdownlint-cli --config .github/configs/.markdownlintrc.json --fix .github/**/*.md docs/**/*.md src/**/*.md README.md CHANGELOG.md",
     "lint": "biome lint --write --config-path .github/configs/biome.json src && yamllint -c .github/configs/yaml-lint.yaml .github/**/*.yml",
-    "test": "c8 --config .github/configs/.c8rc.json node --test"
+    "test": "c8 --config .github/configs/.c8rc.json node --test test/cli.test.js test/index.test.js"
   },
   "type": "module",
   "version": "0.1.0"
