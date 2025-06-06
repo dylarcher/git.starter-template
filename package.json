@@ -7,7 +7,7 @@
   "bugs": {
     "url": "https://github.com/dylarcher/git.starter-template/issues"
   },
-  "description": "A github starter template for creating a new repository with a predefined structures, documents and configurations.",
+  "description": "A github starter template for creating a new repository with a set of predefined structures, documents and configurations.",
   "dependencies": {
     "yargs": "18.0.0"
   },
