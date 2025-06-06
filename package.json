@@ -76,7 +76,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && npm run build:bin",
-    "build:bin": "mkdir -p dist/bin && echo '#!/usr/bin/env node\\nrequire(\"../dist/cjs/bin/cli.js\");' > dist/bin/cli.js && chmod +x dist/bin/cli.js",
+    "build:bin": "mkdir -p dist/bin && echo '#!/usr/bin/env node\\nrequire(\"../cjs/bin/cli.js\");' > dist/bin/cli.js && chmod +x dist/bin/cli.js",
     "clean": "npm run clean:dist && npm run clean:libs",
     "clean:dist": "npx rimraf dist types bin",
     "clean:libs": "npx rimraf node_modules package-lock.json .cache/npm",
