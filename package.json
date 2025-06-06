@@ -72,7 +72,7 @@
     "url": "git+https://github.com/dylarcher/git.starter-template.git"
   },
   "scripts": {
-    "build": "tsc && node build/script.js",
+    "build": "node build/script.js",
     "bundle:types": "echo 'Type declarations bundled by build script'",
     "clean": "npm run clean:dist && npm run clean:libs",
     "clean:dist": "npx rimraf dist lib test/coverage .vscode-test types bin",
