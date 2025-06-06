@@ -4,7 +4,7 @@ rules:
     max: 120
     level: warning
   # Add other rule modifications if necessary
-ignore: |
-  node_modules/
-  .idx/
-  .vscode/
+ignore:
+  - node_modules/
+  - .idx/
+  - .vscode/
