@@ -55,7 +55,6 @@
   "module": "dist/index.esm.js",
   "name": "enter-repository-namespace",
   "optionalDependencies": {
-    "@biomejs/biome": "1.9.4",
     "@types/chrome": "0.0.326",
     "@types/vscode": "1.100.0",
     "c8": "10.1.3",
