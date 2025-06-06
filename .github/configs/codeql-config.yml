@@ -1,9 +1,5 @@
 disable-default-queries: false
 name: CodeQL Configuration
-packs:
-  javascript:
-    - codeql/javascript-queries:Security
-    - codeql/javascript-queries:Correctness
 paths:
   - src/**
   - bin/**
