@@ -4,48 +4,49 @@ A brief description of your project. This starter template provides a foundation
 
 ## Getting Started
 
-1.  **Use this template:**
-    *   Click the "Use this template" button on the GitHub repository page.
-    *   Alternatively, clone this repository: `git clone https://github.com/dylarcher/git.starter-template.git your-project-name`
-    *   Navigate into your new project directory: `cd your-project-name`
+1. **Use this template:**
+    * Click the "Use this template" button on the GitHub repository page.
+    * Alternatively, clone this repository: `git clone https://github.com/dylarcher/git.starter-template.git your-project-name`
+    * Navigate into your new project directory: `cd your-project-name`
 
-2.  **Install dependencies:**
+2. **Install dependencies:**
+
     ```bash
     npm install
     ```
 
-3.  **Update Project Name and Details:**
-    *   Open `package.json`.
-    *   Change the `name` field from `enter-repository-namespace` to your project's name (e.g., `my-awesome-library` or `my-cli-tool`).
-    *   Update other fields like `description`, `author`, `repository.url`, `bugs.url`, and `homepage` as needed.
-    *   Consider renaming the main export in `src/index.ts` if you changed the library name significantly.
+3. **Update Project Name and Details:**
+    * Open `package.json`.
+    * Change the `name` field from `enter-repository-namespace` to your project's name (e.g., `my-awesome-library` or `my-cli-tool`).
+    * Update other fields like `description`, `author`, `repository.url`, `bugs.url`, and `homepage` as needed.
+    * Consider renaming the main export in `src/index.ts` if you changed the library name significantly.
 
 ## Available Scripts
 
 This template comes with the following scripts pre-configured in `package.json`:
 
-*   `npm run build`
+* `npm run build`
     Builds the TypeScript source code into JavaScript in the `dist` directory. It creates ES Module (esm), CommonJS (cjs) versions, and type declaration files (.d.ts).
 
-*   `npm run build:bin`
+* `npm run build:bin`
     An internal script used by `npm run build` to create an executable for the CLI tool (if applicable).
 
-*   `npm run format`
+* `npm run format`
     Formats the codebase using Biome (for TypeScript/JavaScript) and markdownlint-cli (for Markdown files).
 
-*   `npm run lint`
+* `npm run lint`
     Lints the codebase using Biome (for TypeScript/JavaScript) and yaml-lint (for YAML files).
 
-*   `npm run test`
+* `npm run test`
     Runs the test suite using Node.js's built-in test runner and generates coverage reports using `c8`. (Note: Example test files `test/cli.test.js` and `test/index.test.js` need to be updated or converted to TypeScript if desired).
 
-*   `npm run clean`
+* `npm run clean`
     Removes generated files and directories, including `dist`, `types`, `bin` (the generated one, not src/bin), and `node_modules`, `package-lock.json`.
 
-*   `npm run clean:dist`
+* `npm run clean:dist`
     Removes only the build output directories (`dist`, `types`, `bin`).
 
-*   `npm run clean:libs`
+* `npm run clean:libs`
     Removes `node_modules`, `package-lock.json`, and npm cache.
 
 ## Project Structure
