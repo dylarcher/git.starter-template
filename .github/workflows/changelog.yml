@@ -15,26 +15,17 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-      - name: Get PR branch and base branch
-        id: branch-info
-        run: |
-          # Extract branch names for easier reference
-          echo "pr_branch=${{ github.head_ref }}" >> $GITHUB_OUTPUT
-          echo "base_branch=${{ github.base_ref }}" >> $GITHUB_OUTPUT
       - name: Extract PR number
         id: pr-info
         run: |
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
-          else
-            echo "pr_number=$(echo ${{ github.ref }} | sed -E 's/.*\/([0-9]+).*/\1/')" >> $GITHUB_OUTPUT
-          fi
+          # Workflow is triggered on pull_request, so github.event.pull_request.number is available.
+          echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
       - name: Generate commit history since base branch
         id: generate-commits
         run: |
-          git fetch --depth=1 origin ${{ steps.branch-info.outputs.base_branch }} ${{ steps.branch-info.outputs.pr_branch }}
+          # Initial checkout with fetch-depth: 0 makes all history available.
           TEMP_FILE=$(mktemp)
-          git log --pretty=format:"- %s (%h) by %an" origin/${{ steps.branch-info.outputs.base_branch }}..origin/${{ steps.branch-info.outputs.pr_branch }} -- . > $TEMP_FILE
+          git log --pretty=format:"- %s (%h) by %an" origin/${{ github.base_ref }}..origin/${{ github.head_ref }} -- . > $TEMP_FILE
           COMMIT_COUNT=$(wc -l < $TEMP_FILE | tr -d ' ')
           echo "commit_count=$COMMIT_COUNT" >> $GITHUB_OUTPUT
           COMMIT_HISTORY=$(cat $TEMP_FILE)
@@ -56,7 +47,7 @@ jobs:
         run: |
           git add .github/CHANGELOG.md
           git commit -m "Update CHANGELOG.md for PR #${{ steps.pr-info.outputs.pr_number }}" || echo "No changes to commit"
-          git push origin HEAD:${{ steps.branch-info.outputs.pr_branch }}
+          git push origin HEAD:${{ github.head_ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Comment on PR with summary
@@ -76,3 +67,71 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
     branches: [main]
+
+# TODO: Add to ci.yml?
+#   update-changelog:
+#     name: Update CHANGELOG.md
+#     runs-on: ubuntu-latest
+#     # This job should only run on pull requests to the main branch, matching original trigger.
+#     if: github.event_name == 'pull_request' && github.base_ref == 'refs/heads/main'
+#     permissions:
+#       contents: write
+#       pull-requests: write
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0 # Required for git log
+#           ref: ${{ github.head_ref }} # Checkout the PR branch
+#           token: ${{ secrets.GITHUB_TOKEN }} # To allow pushing changes
+#       - name: Setup Git
+#         run: |
+#           git config user.name "GitHub Actions"
+#           git config user.email "actions@github.com"
+#       - name: Extract PR number
+#         id: pr-info
+#         run: |
+#           echo "pr_number=${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+#       - name: Generate commit history since base branch
+#         id: generate-commits
+#         run: |
+#           TEMP_FILE=$(mktemp)
+#           # Compare head_ref with the common ancestor with base_ref on origin
+#           git log --pretty=format:"- %s (%h) by %an" origin/${{ github.base_ref }}..origin/${{ github.head_ref }} -- . > $TEMP_FILE
+#           COMMIT_COUNT=$(wc -l < $TEMP_FILE | tr -d ' ')
+#           echo "commit_count=$COMMIT_COUNT" >> $GITHUB_OUTPUT
+#           COMMIT_HISTORY=$(cat $TEMP_FILE)
+#           echo "commit_history<<EOF" >> $GITHUB_OUTPUT
+#           echo "$COMMIT_HISTORY" >> $GITHUB_OUTPUT
+#           echo "EOF" >> $GITHUB_OUTPUT
+#       - name: Update CHANGELOG.md
+#         if: steps.generate-commits.outputs.commit_count != '0'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#         run: |
+#           TODAY=$(date +"%Y-%m-%d")
+#           PR_TITLE=$(gh pr view ${{ steps.pr-info.outputs.pr_number }} --json title -q .title)
+#           NEW_ENTRY="## [Unreleased] - PR #${{ steps.pr-info.outputs.pr_number }}: ${PR_TITLE} - $TODAY\n\n### Changes\n\n${{ steps.generate-commits.outputs.commit_history }}\n\n"
+#           # Insert after line 7 (assuming line 8 is where new entries start)
+#           sed -i '8i\\' .github/CHANGELOG.md
+#           sed -i "9i$NEW_ENTRY" .github/CHANGELOG.md
+#       - name: Commit and push changes
+#         if: steps.generate-commits.outputs.commit_count != '0'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Not strictly needed here if checkout configured token for git
+#         run: |
+#           git add .github/CHANGELOG.md
+#           git commit -m "Update CHANGELOG.md for PR #${{ steps.pr-info.outputs.pr_number }}" || echo "No changes to commit"
+#           git push origin HEAD:${{ github.head_ref }}
+#       - name: Comment on PR with summary
+#         if: steps.generate-commits.outputs.commit_count != '0'
+#         uses: actions/github-script@v7
+#         with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+#           script: |
+#             github.rest.issues.createComment({
+#               issue_number: ${{ steps.pr-info.outputs.pr_number }},
+#               owner: context.repo.owner,
+#               repo: context.repo.repo,
+#               body: '## Changelog Updated\n\nThe CHANGELOG.md has been automatically updated with the following commits from this PR:\n\n```\n${{ steps.generate-commits.outputs.commit_history }}\n```\n\nView the full changelog: [CHANGELOG.md](.github/CHANGELOG.md)'
+#             });

@@ -92,7 +92,7 @@
     "bin",
     "docs",
     "src"
-, "lib/bin", "lib/index.js"  ],
+, "bin", "lib/index.js"  ],
   "typeAcquisition": {
     "enable": true,
     "include": [

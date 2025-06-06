@@ -1,0 +1,130 @@
+jobs:
+  analyze-codeql:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    name: CodeQL Check (${{ matrix.language }})
+    permissions:
+      actions: read
+      contents: read
+      packages: read
+      security-events: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository source code
+        uses: actions/checkout@v4
+      - if: matrix.language == 'javascript'
+        name: NodeJS environment setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - if: matrix.language == 'javascript'
+        name: Project build process
+        run: npm ci && npm run build
+      - name: CodeQL environment setup
+        uses: github/codeql-action/init@v3
+        with:
+          build-mode: ${{ matrix.build-mode }}
+          languages: ${{ matrix.language }}
+          queries: security-extended,security-and-quality
+      - name: CodeQL analyze scripts
+        uses: github/codeql-action/analyze@v3
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - build-mode: autobuild
+            language: GitHub Actions
+          - build-mode: none
+            language: javascript
+  format-code:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    name: Format Code (Prettier)
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: NodeJS environment setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - name: Project prerequisites setup
+        run: npm ci
+      - name: Format project source code
+        run: npm run format
+      - name: Check-in change(s) to project
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --staged --quiet || (git commit -m "Automated formatting" && git push)
+
+  lint-code:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    name: Lint Code (ESLint)
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - name: Project dependency setup
+        run: npm ci
+      - name: Lint project source code
+        run: npx eslint src/**/*.js
+  run-tests:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    name: Run Tests (Suite)
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: NodeJS environment setup
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+      - name: NodeJS dependency setup
+        run: npm ci
+      - name: Test project source code
+        run: npm test
+  summarize-issue:
+    if: github.event_name == 'issues' && github.event.action == 'opened'
+    name: AI Issue Summarizer
+    permissions:
+      contents: read
+      issues: write
+      models: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - id: inference
+        name: Generate concise AI summary
+        uses: actions/ai-inference@v1
+        with:
+          prompt: |
+            Summarize the following GitHub issue clearly and concisely in one paragraph:
+            Title: ${{ github.event.issue.title }}
+            Body: ${{ github.event.issue.body }}
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        name: Add summary comment to issue
+        run: |
+          gh issue comment $ISSUE_NUMBER --body '### 📝 AI Summary\n\n${{ steps.inference.outputs.response }}'
+
+name: Comprehensive CI Pipeline
+'on':
+  issues: {}
+  pull_request:
+    types: [opened, reopened, synchronize]
+  pull_request_target: {}
+  schedule:
+    - cron: 39 5 * * 1
+  workflow_dispatch: {}
