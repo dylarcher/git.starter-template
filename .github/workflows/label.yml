@@ -15,7 +15,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           sync-labels: true
 name: Auto-Label Issues
-on: [issues, pull_request_target, workflow_dispatch]
+on: [issues, pull_request_target]
 
 
 # TODO: Add to ci.yml?
