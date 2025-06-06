@@ -1,3 +1,4 @@
+name: Apply labels to PRs and issues
 jobs:
   label:
     permissions:

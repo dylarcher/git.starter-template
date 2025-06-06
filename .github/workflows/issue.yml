@@ -1,3 +1,8 @@
+name: Summarize new issues using AI
+'on':
+  issues:
+    types: [opened]
+
 jobs:
   summarize:
     permissions:
@@ -22,7 +27,3 @@ jobs:
         name: Add summary comment to issue
         run: |
           gh issue comment $ISSUE_NUMBER --body '### 📝 AI Summary\n\n${{ steps.inference.outputs.response }}'
-name: AI Issue Summarizer
-'on':
-  issues:
-    types: [opened]

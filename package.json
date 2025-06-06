@@ -10,7 +10,9 @@
     "description": "[UNSET_PACKAGE_DESCRIPTION]",
     "devDependencies": {
         "@types/node": "22.15.30",
-        "@types/yargs": "17.0.33"
+        "@types/yargs": "17.0.33",
+        "eslint": "9.28.0",
+        "prettier": "3.5.3"
     },
     "directories": {
         ".github": ".github",
@@ -77,8 +79,8 @@
         "build:maps": "echo \"Run github-action for building source maps\" && exit 1",
         "build:types": "echo \"Run github-action for building types\" && exit 1",
         "clean": "echo \"Run github-action for cleaning\" && exit 1",
-        "format": "echo \"Run github-action for formatting \" && exit 1",
-        "lint": "echo \"Run github-action for linting\" && exit 1",
+        "format": "prettier --write .",
+        "lint": "eslint --fix .",
         "test": "echo \"Run github-action for testing\" && exit 1",
         "test:coverage": "echo \"Run github-action for test:coverage\" && exit 1"
     },
