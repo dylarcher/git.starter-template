@@ -1,6 +1,7 @@
 # Citation
 
-If you use `git.starter-template` in your research or project, please consider citing it as follows:
+If you use `git.starter-template` in your research or project, please consider
+citing it as follows:
 
 ## APA Format
 
@@ -22,11 +23,14 @@ Archer, D. (2025). git.starter-template: A tool for architecting a hybrid "all-i
 
 ## Contributing
 
-If you contribute to this project and would like to be acknowledged in citations, please submit a pull request updating this document with your information.
+If you contribute to this project and would like to be acknowledged in
+citations, please submit a pull request updating this document with your
+information.
 
 ## Version Information
 
-When citing this tool, it's helpful to include the specific version you used. You can find version information in the package.json file or by running:
+When citing this tool, it's helpful to include the specific version you used.
+You can find version information in the package.json file or by running:
 
 ```bash
 npm list git.starter-template
@@ -34,8 +38,11 @@ npm list git.starter-template
 
 ## Related Publications
 
-If this tool has been mentioned or used in academic publications, they will be listed here. If you've published work using this tool, please let us know so we can add your publication to this list.
+If this tool has been mentioned or used in academic publications, they will be
+listed here. If you've published work using this tool, please let us know so we
+can add your publication to this list.
 
 ---
 
-Thank you for citing our work! Citations help us track the impact of our software and secure continued support for its development.
+Thank you for citing our work! Citations help us track the impact of our
+software and secure continued support for its development.
