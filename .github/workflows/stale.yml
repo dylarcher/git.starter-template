@@ -1,8 +1,3 @@
-name: Monitor and close stale issues and PRs
-on:
-  schedule:
-    - cron: 39 5 * * 1
-
 jobs:
   stale:
     permissions:
@@ -19,3 +14,7 @@ jobs:
           stale-issue-message: ⚠️ This issue has been inactive for 60 days and is marked as stale. Please add a comment or update the issue within 7 days to keep it open, otherwise it will be automatically closed.
           stale-pr-label: inactive-pr
           stale-pr-message: ⚠️ This pull request has been inactive for 60 days and is marked as stale. Please update it or leave a comment within 7 days to keep it open, otherwise it will be automatically closed.
+name: Monitor and close stale issues and PRs
+'on':
+  schedule:
+    - cron: 39 5 * * 1

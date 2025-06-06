@@ -1,125 +1,99 @@
-name: Analyze code with CodeQL
-on:
-  pull_request: # Trigger for PR analysis job
-    # types: [opened, synchronize, reopened] # Optional: be specific
-  push: # Trigger for main branch scan and autofix job
-    branches:
-      - main # Or use github.event.repository.default_branch if that syntax is supported
-      # - master # Include if master is the default branch
-
 jobs:
-  analyze_pr_code: # Renamed for clarity, was 'analyze'
-    name: CodeQL PR Analysis (${{ matrix.language }})
+  analyze_pr_code:
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
+    name: CodeQL PR Analysis (${{ matrix.language }})
     permissions:
       actions: read
-      contents: read      # Read-only for PR checks
+      contents: read
       packages: read
       security-events: write
-    strategy:
-      fail-fast: false
-      matrix: # From existing workflow
-        include:
-          - build-mode: autobuild
-            language: GitHub Actions
-          - build-mode: none
-            language: javascript
+    runs-on: ubuntu-latest
     steps:
       - name: Repository source code (PR)
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.sha }} # Checkout the PR's head commit
-
+          ref: ${{ github.event.pull_request.head.sha }}
       - if: matrix.language == 'javascript'
         name: NodeJS environment setup (PR)
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-
       - if: matrix.language == 'javascript'
         name: Project build process (PR)
-        run: npm ci && npm run build # Installs dependencies and builds the project using npm
-
+        run: npm ci && npm run build
       - name: Initialize CodeQL (PR)
         uses: github/codeql-action/init@v3
         with:
+          build-mode: ${{ matrix.build-mode }}
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
-          build-mode: ${{ matrix.build-mode }}
-
-
       - name: Perform CodeQL Analysis (PR)
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:${{ matrix.language }}"
-
-      - name: Upload CodeQL SARIF (PR)
-        if: always()
+          category: /language:${{ matrix.language }}
+      - if: always()
+        name: Upload CodeQL SARIF (PR)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          # Auto-detects sarif file from analyze step typically
           category: ${{ matrix.language }}
-
-  scan_and_autofix_main:
-    name: CodeQL Scan and Autofix (${{ matrix.language }}) (main branch)
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') # Adjust branch name if needed
-    runs-on: ubuntu-latest
-    permissions:
-      actions: read
-      contents: write      # Write to commit fixes and for autofix to create PRs
-      packages: read
-      security-events: write
-      pull-requests: write # For autofix to create PRs
     strategy:
       fail-fast: false
-      matrix: # From existing workflow
+      matrix:
         include:
           - build-mode: autobuild
             language: GitHub Actions
           - build-mode: none
             language: javascript
+  scan_and_autofix_main:
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    name: CodeQL Scan and Autofix (${{ matrix.language }}) (main branch)
+    permissions:
+      actions: read
+      contents: write
+      packages: read
+      pull-requests: write
+      security-events: write
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository (main branch)
         uses: actions/checkout@v4
-        # 'ref' defaults to the branch that triggered the push event (e.g., main)
-        # token: ${{ secrets.GITHUB_TOKEN }} # Not needed for checkout, autofix action takes its own token
-
       - if: matrix.language == 'javascript'
         name: NodeJS environment setup (main)
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-
       - if: matrix.language == 'javascript'
         name: Project build process (main)
-        run: npm ci && npm run build # Assuming this is the correct build
-
+        run: npm ci && npm run build
       - name: Initialize CodeQL (main)
         uses: github/codeql-action/init@v3
         with:
+          build-mode: ${{ matrix.build-mode }}
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
-          build-mode: ${{ matrix.build-mode }}
-
-
       - name: Perform CodeQL Analysis (main)
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:${{ matrix.language }}"
-
-      - name: Upload CodeQL SARIF (main)
-        if: always()
+          category: /language:${{ matrix.language }}
+      - if: always()
+        name: Upload CodeQL SARIF (main)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          # Auto-detects sarif file from analyze step typically
           category: ${{ matrix.language }}
-
       - name: Attempt to autofix alerts for ${{ matrix.language }} (main)
-        uses: github/codeql-action/autofix@v3
+        uses: github/codeql-action/autofix@v2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }} # Crucial for committing or creating PR
           category: ${{ matrix.language }}
-          # Optional: Customize commit message or PR details if needed
-          # commit_message: "Apply CodeQL autofixes for ${{ matrix.language }} on main"
-          # pr_title: "[Auto] CodeQL Fixes for ${{ matrix.language }} (main)"
+          commit_message: Apply CodeQL autofixes for ${{ matrix.language }} on main
+          pr_title: '[Auto] CodeQL Fixes for ${{ matrix.language }} (main)'
+          token: ${{ secrets.GITHUB_TOKEN }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - build-mode: autobuild
+            language: GitHub Actions
+          - build-mode: none
+            language: javascript
+name: Analyze code with CodeQL
+'on': [pull_request]
