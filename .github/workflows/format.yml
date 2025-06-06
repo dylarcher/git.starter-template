@@ -12,8 +12,6 @@ jobs:
           node-version: 20.x
       - name: Project prerequisites setup
         run: npm ci
-      - name: Install markdownlint-cli
-        run: npm install -g markdownlint-cli
       - name: Format project source code
         run: npm run format
       - name: Check-in change(s) to project

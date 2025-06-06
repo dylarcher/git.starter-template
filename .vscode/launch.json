@@ -6,8 +6,8 @@
       "request": "launch",
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/src/index.js",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "program": "${workspaceFolder}/dist/esm/index.js",
+      "outFiles": ["${workspaceFolder}/dist/esm/**/*.js"]
     },
     {
       "type": "node",
@@ -15,13 +15,6 @@
       "name": "Debug Current File",
       "program": "${file}",
       "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}"
     }
   ]
 }
