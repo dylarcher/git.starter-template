@@ -13,7 +13,7 @@ jobs:
       - name: Project dependency setup
         run: npm ci
       - name: Lint project source code
-        run: npm run lint
+        run: npm run lint --write
       - name: Check-in change(s) to project
         run: |
           git config --global user.name 'github-actions[bot]'
