@@ -1,465 +1,466 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Infographic: The Ecosystem of VS Code Theme Development</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            'primary-bg': 'var(--color-primary-bg)',
-            'primary-fg': 'var(--color-primary-fg)',
-            'neutral-bg': 'var(--color-neutral-bg)',
-            'border-default': 'var(--color-border-default)',
-            'accent-primary': 'var(--color-accent-primary)',
-            'syntax-keyword': 'var(--color-syntax-keyword)',
-            'syntax-comment': 'var(--color-syntax-comment)',
-            'syntax-string': 'var(--color-syntax-string)',
-            'error': 'var(--color-error)',
-            'warning': 'var(--color-warning)',
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecting the Ideal GitHub Repository: An Interactive Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutrals -->
+    <!-- Application Structure Plan: A single-page, thematic scrolling narrative. The structure follows the lifecycle of repository development (Foundation -> Workflow -> Automation -> Governance -> Delivery), which is more intuitive for a user than a direct chapter-by-chapter report conversion. This design choice turns a dense reference document into an engaging, step-by-step visual guide. Interactions are focused on chart tooltips and subtle hovers to maintain a clean, infographic-style experience. -->
+    <!-- Visualization & Content Choices: Key concepts are visualized to make them digestible. [Essential Files -> Goal: Compare -> Donut Chart] shows the functional grouping of setup files. [Branching Strategies -> Goal: Organize -> HTML/CSS Diagram] visually compares workflows without SVG. [Conventional Commits -> Goal: Compare -> Bar Chart] quantifies commit types. [CI Pipeline -> Goal: Inform -> Pie Chart] shows the relative effort of CI stages. [Governance -> Goal: Organize -> Icon Grid] provides a scannable overview of rules. All visualizations are created with Chart.js or HTML/CSS, confirming NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f5; /* Tailwind zinc-100 */
+            color: #27272a; /* Tailwind zinc-800 */
         }
-      }
-    }
-  </script>
-  <style>
-    :root {
-      --color-primary-bg: #FFFFFF;
-      --color-primary-fg: #24292E;
-      --color-neutral-bg: #F6F8FA;
-      --color-border-default: #D1D5DA;
-      --color-accent-primary: #0366D6;
-      --color-syntax-keyword: #D73A49;
-      --color-syntax-comment: #6A737D;
-      --color-syntax-string: #032F62;
-      --color-error: #CB2431;
-      --color-warning: #B08800;
-    }
-
-    html.dark {
-      --color-primary-bg: #1E1E1E;
-      --color-primary-fg: #D4D4D4;
-      --color-neutral-bg: #252526;
-      --color-border-default: #333333;
-      --color-accent-primary: #58A6FF;
-      --color-syntax-keyword: #F97583;
-      --color-syntax-comment: #8B949E;
-      --color-syntax-string: #A5D6FF;
-      --color-error: #F85149;
-      --color-warning: #DBAB09;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--color-primary-bg);
-      color: var(--color-primary-fg);
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
-
-    .chart-container {
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      height: 250px;
-      max-height: 350px;
-    }
-
-    @media (min-width: 640px) {
-      .chart-container {
-        height: 300px;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .chart-container {
-        height: 350px;
-      }
-    }
-
-    .swot-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .swot-grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, auto);
-      }
-    }
-
-    .flow-arrow {
-      font-size: 2rem;
-      line-height: 1;
-      color: var(--color-accent-primary);
-    }
-
-    .info-card {
-      transition: border-color 0.2s ease-in-out;
-    }
-  </style>
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .kpi-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e4e4e7; /* zinc-200 */
+        }
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .flow-node {
+            border: 2px solid;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            background-color: white;
+            transition: all 0.2s ease-in-out;
+        }
+         .flow-node:hover {
+            transform: scale(1.05);
+        }
+        .flow-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 0.25rem 0.5rem;
+            color: #71717a; /* zinc-500 */
+        }
+        .section-card {
+             background-color: white;
+             border-radius: 0.75rem;
+             box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
+             border: 1px solid #e4e4e7; /* zinc-200 */
+             overflow: hidden;
+        }
+        .accent-color { color: #2563eb; } /* blue-600 */
+        .accent-bg { background-color: #2563eb; } /* blue-600 */
+        .header-bg { background-color: #18181b; } /* zinc-900 */
+    </style>
 </head>
+<body>
 
-<body class="bg-primary-bg text-primary-fg">
-  <div class="container mx-auto px-4 py-8 md:px-8">
-    <nav class="fixed top-4 right-4 z-10">
-      <button id="theme-toggle"
-        class="p-2 rounded-full bg-neutral-bg border border-border-default text-primary-fg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-bg focus:ring-accent-primary">
-        <span id="theme-toggle-icon"></span>
-      </button>
-    </nav>
-
-    <header class="text-center mb-12">
-      <h1 class="text-4xl md:text-6xl font-black leading-tight">The Architecture of<br><span
-          class="text-accent-primary">Accessible VS Code Themes</span></h1>
-      <p class="mt-4 text-lg md:text-xl text-primary-fg/80 max-w-3xl mx-auto">A data-driven deep dive into the trends,
-        development, and accessibility standards shaping the modern developer's environment.</p>
+    <header class="header-bg text-white p-6 text-center sticky top-0 z-50 shadow-lg">
+      <h1 class="text-3xl md:text-4xl font-black tracking-tight">Architecting the Ideal GitHub Repository</h1>
+      <p class="text-md text-zinc-400 mt-1">An Interactive Blueprint for Modern Development</p>
     </header>
 
-    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-      <div
-        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-center text-center gap-8 hover:border-accent-primary">
-        <div class="flex-1">
-          <p class="text-2xl text-primary-fg/80 font-semibold">A Dominant Development Hub</p>
-          <p class="text-7xl md:text-8xl font-black my-2">74.5%</p>
-          <p class="text-lg text-primary-fg/80">Of developers use VS Code as their primary environment, making theme
-            design a high-impact discipline.</p>
-        </div>
-        <div class="w-full md:w-px h-px md:h-24 bg-border-default"></div>
-        <div class="flex-1">
-          <p class="text-2xl text-primary-fg/80 font-semibold">The Core Components</p>
-          <p class="mt-4 text-primary-fg/80">Every theme is a JSON file balancing UI appearance and code syntax
-            highlighting.</p>
-        </div>
-      </div>
-
-      <div
-        class="info-card lg:col-span-2 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-2">What Developers Prioritize</h2>
-        <p class="text-primary-fg/80 mb-6">Readability and accessibility are paramount for long-term productivity. A
-          successful theme must balance these needs effectively.</p>
-        <div class="chart-container">
-          <canvas id="developerPrioritiesChart"></canvas>
-        </div>
-      </div>
-
-      <div
-        class="info-card bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 flex flex-col justify-center hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-4">Anatomy of a Theme</h2>
-        <div class="space-y-4">
-          <div class="bg-primary-bg p-4 rounded-lg border border-border-default flex items-center">
-            <span class="text-3xl mr-4">🎨</span>
-            <div>
-              <h3 class="font-bold text-syntax-keyword">`colors`</h3>
-              <p class="text-sm text-primary-fg/80">Defines the Workbench UI: sidebar, status bar, tabs, buttons.</p>
+    <main class="container mx-auto p-4 md:p-8 space-y-16">
+    
+      <section id="introduction" class="text-center max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-zinc-900 mb-4">The Blueprint for Collaborative Excellence</h2>
+        <p class="text-lg text-zinc-600 mb-8">
+          A modern GitHub repository is more than code storage; it's a dynamic ecosystem for collaboration, quality, and
+          automation. This interactive guide visualizes the essential components—from foundational files to advanced
+          CI/CD—that create a robust and efficient development hub.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="kpi-card">
+            <h3 class="text-5xl font-extrabold accent-color">95%</h3>
+            <p class="text-zinc-700 mt-2 font-semibold">Faster Onboarding</p>
+            <p class="text-sm text-zinc-500">with clear documentation</p>
+          </div>
+                <div class="kpi-card">
+                  <h3 class="text-5xl font-extrabold accent-color">40%</h3>
+                  <p class="text-zinc-700 mt-2 font-semibold">Faster Code Reviews</p>
+                  <p class="text-sm text-zinc-500">with small, focused PRs</p>
+                </div>
+                <div class="kpi-card">
+                  <h3 class="text-5xl font-extrabold accent-color">80%</h3>
+                  <p class="text-zinc-700 mt-2 font-semibold">Fewer Merge Issues</p>
+                  <p class="text-sm text-zinc-500">with automated CI checks</p>
+                </div>
             </div>
-          </div>
-          <div class="bg-primary-bg p-4 rounded-lg border border-border-default flex items-center">
-            <span class="text-3xl mr-4">✍️</span>
-            <div>
-              <h3 class="font-bold text-accent-primary">`tokenColors`</h3>
-              <p class="text-sm text-primary-fg/80">Styles code with TextMate scopes for keywords, strings, etc.</p>
+            </section>
+
+        <section id="foundation" class="section-card">
+          <div class="p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center text-zinc-900 mb-2">Phase 1: The Foundation</h2>
+            <p class="text-center text-zinc-600 mb-8 max-w-3xl mx-auto">Every robust repository is built on a set of essential
+              files that define rules, guide contributors, and ensure legal clarity. This section covers the core documents and
+              configurations that form the bedrock of a healthy project.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div class="chart-container">
+                        <canvas id="essentialFilesChart"></canvas>
+                        </div>
+                    <div class="space-y-4">
+                      <h3 class="text-2xl font-semibold accent-color mb-2">Anatomy of a Well-Documented Repo</h3>
+                      <p class="text-zinc-700">This chart visualizes the functional grouping of foundational files. While all are crucial,
+                        they serve different primary purposes: public-facing documentation, internal community guidelines, and technical
+                        configuration for Git itself. A balanced approach ensures the repository is welcoming, well-governed, and
+                        technically sound.</p>
+                      <ul class="space-y-3">
+                        <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#60a5fa;">●</span>
+                          <div><strong class="text-zinc-800">Public Docs:</strong> The "Welcome Mat" (`README`), legal terms (`LICENSE`),
+                            and contribution guide (`CONTRIBUTING`).</div>
+                        </li>
+                        <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#a78bfa;">●</span>
+                          <div><strong class="text-zinc-800">Community Standards:</strong> The `CODE_OF_CONDUCT` and `SECURITY.md` files
+                            that foster a safe and respectful environment.</div>
+                        </li>
+                        <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#f472b6;">●</span>
+                          <div><strong class="text-zinc-800">Git Configuration:</strong> `.gitignore` and `.gitattributes` files that ensure
+                            repository consistency across different environments.</div>
+                        </li>
+                      </ul>
+                    </div>
+                </div>
+                </div>
+                </section>
+
+        <section id="workflow" class="section-card">
+          <div class="p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center text-zinc-900 mb-2">Phase 2: The Workflow</h2>
+            <p class="text-center text-zinc-600 mb-8 max-w-3xl mx-auto">Defining a clear, consistent workflow is critical for
+              team collaboration and release cadence. This involves selecting a branching strategy and establishing standards
+              for commits and pull requests that keep the project history clean and understandable.</p>
+            <div class="mb-12">
+              <h3 class="text-2xl font-semibold text-center accent-color mb-6">Choosing a Branching Strategy</h3>
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="p-6 rounded-lg bg-zinc-50 border-l-4 border-blue-400">
+                  <h4 class="text-xl font-bold text-center text-zinc-800 mb-2">GitHub Flow</h4>
+                  <p class="text-center text-zinc-600 mb-6 h-20">Simple and fast. `main` is always deployable. Ideal for
+                    continuous delivery.</p>
+                  <div class="flex flex-col items-center space-y-2">
+                    <div class="flow-node border-blue-400">main</div>
+                    <div class="flow-arrow text-blue-400">↓</div>
+                    <div class="flow-node border-blue-400">feature branch</div>
+                    <div class="flow-arrow text-blue-400">↓</div>
+                    <div class="flow-node border-blue-400">Pull Request & Merge</div>
+                  </div>
+                </div>
+                        <div class="p-6 rounded-lg bg-zinc-50 border-l-4 border-purple-400">
+                          <h4 class="text-xl font-bold text-center text-zinc-800 mb-2">Trunk-Based Dev</h4>
+                          <p class="text-center text-zinc-600 mb-6 h-20">Maximizes velocity with frequent, small merges to `main`. Relies
+                            heavily on CI and feature flags.</p>
+                          <div class="flex flex-col items-center space-y-2">
+                            <div class="flow-node border-purple-400">main (Trunk)</div>
+                            <div class="flow-arrow text-purple-400">↔</div>
+                            <div class="flex space-x-2">
+                              <div class="flow-node text-sm p-2 border-purple-400">Dev 1</div>
+                              <div class="flow-node text-sm p-2 border-purple-400">Dev 2</div>
+                            </div>
+                                <div class="flow-arrow text-purple-400">↓</div>
+                                <div class="flow-node border-purple-400">Frequent Merges</div>
+                            </div>
+                        </div>
+                        <div class="p-6 rounded-lg bg-zinc-50 border-l-4 border-pink-400 lg:col-span-3 xl:col-span-1">
+                          <h4 class="text-xl font-bold text-center text-zinc-800 mb-2">Gitflow</h4>
+                          <p class="text-center text-zinc-600 mb-6 h-20">Structured and robust. Best for projects with scheduled, versioned
+                            releases.</p>
+                          <div class="flex justify-center items-start space-x-4">
+                            <div class="flex flex-col items-center space-y-1">
+                              <div class="flow-node text-sm border-pink-400">feature</div>
+                              <div class="flow-arrow text-pink-400">↓</div>
+                              <div class="flow-node text-sm border-blue-400">develop</div>
+                              <div class="flow-arrow text-blue-400">↓</div>
+                              <div class="flow-node text-sm border-purple-400">release</div>
+                              <div class="flow-arrow text-purple-400">↓</div>
+                              <div class="flow-node text-sm border-zinc-600">main</div>
+                                </div>
+                                <div class="flex flex-col items-center space-y-1 mt-20">
+                                  <div class="flow-node text-sm border-red-400">hotfix</div>
+                                  <div class="flow-arrow text-red-400">↘</div>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center border-t border-zinc-200 pt-8">
+                  <div class="chart-container">
+                    <canvas id="conventionalCommitsChart"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                      <h3 class="text-2xl font-semibold accent-color mb-2">The Art of the Commit</h3>
+                      <p class="mb-4 text-zinc-700">Adopting Conventional Commits provides structure that is both human-readable and
+                        machine-parsable. A healthy project often shows a balance between new features (`feat`), bug fixes (`fix`), and
+                        ongoing maintenance (`refactor`, `chore`). This structured history is the key to automated changelogs and
+                        versioning.</p>
+                      <div class="p-4 rounded-lg bg-zinc-800 text-white font-mono text-sm shadow-inner">
+                        <span class="text-blue-400">feat</span><span class="text-zinc-400">(auth)</span>: <span class="text-white">add
+                          password reset flow</span><br>
+                        <br>
+                        <span class="text-zinc-500">Implements the full password reset functionality, including token generation and email
+                          notifications.</span><br>
+                        <span class="text-zinc-500">Closes #123</span>
+                        </div>
+                        </div>
+                </div>
+                </div>
+        </section>
+
+        <section id="automation" class="section-card">
+          <div class="p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center text-zinc-900 mb-2">Phase 3: The Engine of Automation</h2>
+            <p class="text-center text-zinc-600 mb-8 max-w-3xl mx-auto">GitHub Actions is the engine that drives a modern
+              repository, automating the workflows that build, test, and deploy code. A typical Continuous Integration (CI)
+              pipeline runs a series of quality checks on every pull request to provide rapid feedback.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+              <div class="space-y-4">
+                <h3 class="text-2xl font-semibold accent-color mb-2">Anatomy of a CI Pipeline</h3>
+                <p class="text-zinc-700">This chart breaks down the most common jobs in a CI workflow. Testing forms the largest
+                  part of the process, highlighting its critical role in catching bugs early. Linting and building ensure code
+                  consistency and integrity before any merge can occur.</p>
+                <ul class="space-y-3">
+                  <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#fbbf24;">●</span>
+                    <div><strong>Testing (Unit, Integration):</strong> Runs automated tests to verify functionality and prevent
+                      regressions.</div>
+                  </li>
+                  <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#4ade80;">●</span>
+                    <div><strong>Lint & Format:</strong> Enforces a consistent code style and checks for syntax errors.</div>
+                  </li>
+                  <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#f87171;">●</span>
+                    <div><strong>Build Process:</strong> Compiles the code and assets to ensure the project is functional.</div>
+                  </li>
+                  <li class="flex items-start"><span class="font-bold mr-3 mt-1" style="color:#60a5fa;">●</span>
+                    <div><strong>Security & Coverage:</strong> Scans for vulnerabilities and measures test coverage.</div>
+                  </li>
+                </ul>
+              </div>
+              <div class="chart-container">
+                        <canvas id="ciPipelineChart"></canvas>
+                        </div>
+                        </div>
             </div>
-          </div>
-          <div class="bg-primary-bg p-4 rounded-lg border border-border-default flex items-center">
-            <span class="text-3xl mr-4">🧠</span>
-            <div>
-              <h3 class="font-bold text-syntax-string">`semanticTokenColors`</h3>
-              <p class="text-sm text-primary-fg/80">Provides more accurate, context-aware highlighting.</p>
-            </div>
-          </div>
-        </div>
-      </div>
+            </section>
 
-      <div
-        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-2 text-center">A Spectrum of Choice: Theme Variations</h2>
-        <p class="text-primary-fg/80 mb-6 text-center max-w-4xl mx-auto">Modern themes cater to diverse needs, from
-          reducing eye strain to ensuring maximum legibility for users with visual impairments.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
-          <div class="bg-primary-bg p-4 rounded-lg border border-border-default">
-            <h3 class="font-bold text-xl mb-2">Standard Light</h3>
-            <div class="bg-white text-left p-2 rounded text-sm font-mono text-gray-900 border border-gray-200">
-              <span style="color: #D73A49">const</span> <span style="color: #0366D6">theme</span> = <span
-                style="color: #032F62">'Crisp & Clear'</span>;
-            </div>
-          </div>
-          <div class="bg-primary-bg p-4 rounded-lg border border-border-default">
-            <h3 class="font-bold text-xl mb-2">Standard Dark</h3>
-            <div class="bg-[#1E1E1E] text-left p-2 rounded text-sm font-mono text-gray-200 border border-[#333333]">
-              <span style="color: #F97583">const</span> <span style="color: #58A6FF">theme</span> = <span
-                style="color: #A5D6FF">'Focused & Classic'</span>;
-            </div>
-          </div>
-        </div>
-      </div>
+        <section id="governance" class="section-card">
+          <div class="p-6 md:p-8">
+            <h2 class="text-3xl font-bold text-center text-zinc-900 mb-2">Phase 4: Governance & Security</h2>
+            <p class="text-center text-zinc-600 mb-8 max-w-3xl mx-auto">Strong governance rules protect critical branches,
+              define ownership, and enforce quality standards. Branch protection rules and `CODEOWNERS` files are the primary
+              mechanisms for safeguarding your codebase from accidental or unauthorized changes.</p>
+            <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-6 text-center">
+              <div class="p-4 rounded-lg bg-zinc-50 border-t-4 border-blue-600">
+                <div class="text-4xl mb-2">🛡️</div>
+                <h4 class="font-bold text-zinc-800">Require PR Review</h4>
+                <p class="text-sm text-zinc-600">Mandate peer approval before merging.</p>
+              </div>
+                    <div class="p-4 rounded-lg bg-zinc-50 border-t-4 border-blue-600">
+                      <div class="text-4xl mb-2">✅</div>
+                      <h4 class="font-bold text-zinc-800">Require Status Checks</h4>
+                      <p class="text-sm text-zinc-600">Ensure all CI tests pass.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-zinc-50 border-t-4 border-blue-600">
+                      <div class="text-4xl mb-2">✍️</div>
+                      <h4 class="font-bold text-zinc-800">Require Signed Commits</h4>
+                      <p class="text-sm text-zinc-600">Verify commit authorship.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-zinc-50 border-t-4 border-blue-600">
+                      <div class="text-4xl mb-2">➡️</div>
+                      <h4 class="font-bold text-zinc-800">Require Linear History</h4>
+                      <p class="text-sm text-zinc-600">Enforce squash or rebase merges.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-zinc-50 border-t-4 border-blue-600">
+                      <div class="text-4xl mb-2">👥</div>
+                      <h4 class="font-bold text-zinc-800">Use CODEOWNERS</h4>
+                      <p class="text-sm text-zinc-600">Get reviews from domain experts.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-zinc-50 border-t-4 border-blue-600">
+                      <div class="text-4xl mb-2">🚫</div>
+                      <h4 class="font-bold text-zinc-800">Block Force Pushes</h4>
+                      <p class="text-sm text-zinc-600">Prevent history rewriting.</p>
+                    </div>
+                </div>
+                </div>
+        </section>
 
-      <div
-        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-2 text-center">The Programmatic Development Workflow</h2>
-        <p class="text-primary-fg/80 mb-8 text-center max-w-4xl mx-auto">A programmatic workflow is the industry best
-          practice, ensuring consistency, maintainability, and scalability for multi-variation themes.</p>
-        <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 w-full flex-wrap">
-          <div class="text-center p-2"><span class="text-3xl">🎨</span><br>Palette Definition</div>
-          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
-          <div class="text-center p-2"><span class="text-3xl">⚙️</span><br>Generator Script</div>
-          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
-          <div class="text-center p-2"><span class="text-3xl">📦</span><br>Theme JSON Files</div>
-          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
-          <div class="text-center p-2"><span class="text-3xl">🧪</span><br>Testing & Iteration</div>
-          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
-          <div class="text-center p-2"><span class="text-3xl">🚀</span><br>Marketplace</div>
-        </div>
-      </div>
-
-      <div
-        class="info-card lg:col-span-1 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-2">The Accessibility Imperative</h2>
-        <p class="text-primary-fg/80 mb-6">WCAG Level AA is the minimum standard for accessible design. These contrast
-          ratios are non-negotiable.</p>
-        <div class="chart-container">
-          <canvas id="wcagChart"></canvas>
-        </div>
-      </div>
-
-      <div
-        class="info-card lg:col-span-2 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-2">Strategic Landscape: SWOT Analysis</h2>
-        <p class="text-primary-fg/80 mb-6">Understanding the strategic landscape is key to creating a successful and
-          lasting product.</p>
-        <div class="swot-grid">
-          <div class="bg-accent-primary/10 p-4 rounded-lg border-l-4 border-accent-primary">
-            <h3 class="font-bold text-xl text-accent-primary">Strengths</h3>
-            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
-              <li>High demand in massive user base</li>
-              <li>Direct impact on developer productivity</li>
-            </ul>
-          </div>
-          <div class="bg-error/10 p-4 rounded-lg border-l-4 border-error">
-            <h3 class="font-bold text-xl text-error">Weaknesses</h3>
-            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
-              <li>Maintenance for VS Code updates</li>
-              <li>Complexity of numerous tokens</li>
-            </ul>
-          </div>
-          <div class="bg-syntax-string/10 p-4 rounded-lg border-l-4 border-syntax-string">
-            <h3 class="font-bold text-xl text-syntax-string">Opportunities</h3>
-            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
-              <li>Focus on accessibility as a feature</li>
-              <li>Niche themes for specific languages</li>
-            </ul>
-          </div>
-          <div class="bg-warning/10 p-4 rounded-lg border-l-4 border-warning">
-            <h3 class="font-bold text-xl text-warning">Threats</h3>
-            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
-              <li>High saturation in marketplace</li>
-              <li>Rise of AI-driven UI generation</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
-        <h2 class="text-3xl font-bold mb-2">Future Outlook: Rise of Accessible Tooling</h2>
-        <p class="text-primary-fg/80 mb-6">Themes that prioritize WCAG compliance are becoming the expected standard for
-          high-quality developer tooling.</p>
-        <div class="chart-container">
-          <canvas id="trendsChart"></canvas>
-        </div>
-      </div>
     </main>
 
-    <footer class="text-center text-primary-fg/60 mt-12 py-4">
-      <p>Infographic based on the Deep Research Report on VS Code Theme Development.</p>
-      <p>Data synthesized for illustrative purposes. &copy; 2025</p>
+    <footer class="header-bg text-white text-center p-6 mt-16">
+      <p>&copy; 2025 Modern Development Insights. All rights reserved.</p>
+      <p class="text-xs text-zinc-400 mt-2">Data synthesized from "Architecting the Ideal GitHub Repository" deep research
+        report.</p>
     </footer>
-  </div>
 
-  <script>
-      (function() {
-        let developerPrioritiesChart, wcagChart, trendsChart
-        const themeToggle = document.getElementById('theme-toggle')
-        const themeToggleIcon = document.getElementById('theme-toggle-icon')
+<script>
+      const palette = {
+        blue: '#60a5fa',
+        purple: '#a78bfa',
+        pink: '#f472b6',
+        yellow: '#fbbf24',
+        green: '#4ade80',
+        red: '#f87171',
+        dark: '#18181b',
+        light: '#71717a'
+      };
 
-        const getPalette = (mode) => {
-          if (mode === 'dark') {
-            return {
-              primaryFg: '#D4D4D4',
-              gridColor: 'rgba(255, 255, 255, 0.1)',
-              neutralBg: '#252526',
-              accentPrimary: '#58A6FF',
-              syntaxKeyword: '#F97583',
-              syntaxString: '#A5D6FF',
-              error: '#F85149',
-              warning: '#DBAB09'
-            }
-          }
-          return {
-            primaryFg: '#24292E',
-            gridColor: 'rgba(0, 0, 0, 0.1)',
-            neutralBg: '#F6F8FA',
-            accentPrimary: '#0366D6',
-            syntaxKeyword: '#D73A49',
-            syntaxString: '#032F62',
-            error: '#CB2431',
-            warning: '#B08800'
-          }
-        }
-
-        const wrapLabel = (label, maxWidth) => {
-          const words = label.split(' ')
-          const lines = []
-          let currentLine = words[0]
-          for (let i = 1; i < words.length; i++) {
-            if (currentLine.length + words[i].length + 1 < maxWidth) {
-              currentLine += ' ' + words[i]
-            } else {
-              lines.push(currentLine)
-              currentLine = words[i]
-            }
-          }
-          lines.push(currentLine)
-          return lines
-        }
-
-        const tooltipTitleCallback = (tooltipItems) => {
-          const item = tooltipItems[0]
-          let label = item.chart.data.labels[item.dataIndex]
-          return Array.isArray(label) ? label.join(' ') : label
-        }
-
-        const getChartOptions = (mode) => {
-          const palette = getPalette(mode)
-          return {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                labels: { color: palette.primaryFg, font: { family: "'Inter', sans-serif" } }
-              },
-              tooltip: {
-                callbacks: { title: tooltipTitleCallback },
-                titleFont: { family: "'Inter', sans-serif" },
-                bodyFont: { family: "'Inter', sans-serif" }
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: { color: palette.primaryFg, font: { family: "'Inter', sans-serif" } },
-                grid: { color: palette.gridColor }
-              },
-              x: {
-                ticks: { color: palette.primaryFg, font: { family: "'Inter', sans-serif" } },
-                grid: { color: 'transparent' }
+      const tooltipConfig = {
+        plugins: {
+          tooltip: {
+            backgroundColor: palette.dark,
+            titleFont: { weight: 'bold' },
+            bodyFont: { size: 12 },
+            padding: 10,
+            cornerRadius: 4,
+            displayColors: true,
+            callbacks: {
+              title: function(tooltipItems) {
+                const item = tooltipItems[0]
+                let label = item.chart.data.labels[item.dataIndex]
+                if (Array.isArray(label)) {
+                  return label.join(' ')
+                }
+                return label
               }
             }
           }
         }
+    };
 
-        const createCharts = (mode) => {
-          const palette = getPalette(mode)
-          const baseOptions = getChartOptions(mode)
-
-          const prioritiesCtx = document.getElementById('developerPrioritiesChart')
-          if (prioritiesCtx) {
-            if (developerPrioritiesChart) developerPrioritiesChart.destroy()
-            developerPrioritiesChart = new Chart(prioritiesCtx, {
-              type: 'doughnut',
-              data: {
-                labels: ['Readability & Clarity', 'Aesthetics & Visual Appeal', 'Accessibility', 'Customizability'],
-                datasets: [{
-                  data: [45, 30, 15, 10],
-                  backgroundColor: [palette.accentPrimary, palette.syntaxString, palette.warning, palette.syntaxKeyword],
-                  borderColor: mode === 'dark' ? '#1E1E1E' : '#FFFFFF',
-                  borderWidth: 4
-                }]
-              },
-              options: { ...baseOptions, scales: { y: { display: false }, x: { display: false } } }
-            })
-          }
-
-          const wcagCtx = document.getElementById('wcagChart')
-          if (wcagCtx) {
-            if (wcagChart) wcagChart.destroy()
-            wcagChart = new Chart(wcagCtx, {
-              type: 'bar',
-              data: {
-                labels: [wrapLabel('Normal AA', 16), wrapLabel('Large AA', 16), wrapLabel('Normal AAA', 16), wrapLabel('Large AAA', 16)],
-                datasets: [{
-                  label: 'Minimum Contrast Ratio',
-                  data: [4.5, 3, 7, 4.5],
-                  backgroundColor: [palette.warning, palette.warning, palette.error, palette.error],
-                  borderRadius: 4
-                }]
-              },
-              options: { ...baseOptions, plugins: { ...baseOptions.plugins, legend: { display: false } }, scales: { ...baseOptions.scales, y: { ...baseOptions.scales.y, title: { display: true, text: 'Ratio : 1', color: palette.primaryFg } } } }
-            })
-          }
-
-          const trendsCtx = document.getElementById('trendsChart')
-          if (trendsCtx) {
-            if (trendsChart) trendsChart.destroy()
-            trendsChart = new Chart(trendsCtx, {
-              type: 'line',
-              data: {
-                labels: ['2021', '2022', '2023', '2024', '2025 (Proj.)'],
-                datasets: [{
-                  label: 'Themes Highlighting Accessibility',
-                  data: [8, 12, 25, 40, 65],
-                  fill: true,
-                  backgroundColor: mode === 'dark' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(3, 102, 214, 0.2)',
-                  borderColor: palette.accentPrimary,
-                  tension: 0.4,
-                  pointBackgroundColor: palette.accentPrimary,
-                  pointRadius: 5
-                }]
-              },
-              options: { ...baseOptions, plugins: { ...baseOptions.plugins, legend: { display: false } }, scales: { ...baseOptions.scales, y: { ...baseOptions.scales.y, title: { display: true, text: 'Themes (in thousands)', color: palette.primaryFg } } } }
-            })
-          }
-        }
-
-        const applyTheme = (theme) => {
-          if (theme === 'dark') {
-            document.documentElement.classList.add('dark')
-            themeToggleIcon.textContent = '☀️'
-          } else {
-            document.documentElement.classList.remove('dark')
-            themeToggleIcon.textContent = '🌙'
-          }
-          localStorage.setItem('infographic-theme', theme)
-          // Re-create charts with the new theme's colors
-          createCharts(theme)
-        }
-
-        themeToggle.addEventListener('click', () => {
-          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
-          applyTheme(newTheme)
+      function wrapLabels(labels, maxLength) {
+        return labels.map(label => {
+          if (typeof label === 'string' && label.length > maxLength) {
+            const words = label.split(' ')
+            const newLabel = []
+            let line = ''
+            words.forEach(word => {
+              if ((line + word).length > maxLength && line.length > 0) {
+                newLabel.push(line.trim())
+                line = ''
+              }
+                  line += word + ' '
+                })
+              newLabel.push(line.trim())
+              return newLabel;
+            }
+          return label
         })
+    }
 
-        const savedTheme = localStorage.getItem('infographic-theme')
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
+      const globalChartOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+           ...tooltipConfig.plugins,
+           legend: {
+             position: 'bottom',
+             labels: {
+               color: palette.dark,
+               font: { size: 12, weight: '600' },
+               padding: 20,
+               boxWidth: 15,
+             }
+           },
+        title: {
+          display: true,
+          font: { size: 16, weight: 'bold' },
+          color: palette.dark,
+          padding: { top: 0, bottom: 20 }
+        }
+      },
+    };
 
-        document.documentElement.classList.toggle('dark', initialTheme === 'dark')
-        themeToggleIcon.textContent = initialTheme === 'dark' ? '☀️' : '🌙'
-        createCharts(initialTheme)
-      })();
-  </script>
+      // Chart 1: Essential Files
+      const essentialFilesCtx = document.getElementById('essentialFilesChart').getContext('2d')
+      new Chart(essentialFilesCtx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Public Docs (README, etc)', 'Community (CoC, etc)', 'Git Config'],
+          datasets: [{
+          data: [50, 25, 25],
+          backgroundColor: [palette.blue, palette.purple, palette.pink],
+          borderColor: '#ffffff',
+          borderWidth: 4,
+          hoverOffset: 10
+        }]
+      },
+      options: { ...globalChartOptions, cutout: '50%', plugins: { ...globalChartOptions.plugins, title: { ...globalChartOptions.plugins.title, text: 'Functional Grouping of Repo Files' } } }
+    });
+
+      // Chart 2: CI Pipeline
+      const ciPipelineCtx = document.getElementById('ciPipelineChart').getContext('2d')
+      new Chart(ciPipelineCtx, {
+        type: 'pie',
+        data: {
+          labels: ['Testing', 'Linting & Formatting', 'Build Process', 'Security & Coverage'],
+          datasets: [{
+          data: [50, 20, 15, 15],
+          backgroundColor: [palette.yellow, palette.green, palette.red, palette.blue],
+          borderColor: '#ffffff',
+          borderWidth: 4,
+          hoverOffset: 10
+        }]
+      },
+      options: { ...globalChartOptions, plugins: { ...globalChartOptions.plugins, title: { ...globalChartOptions.plugins.title, text: 'Typical CI Job Distribution' } } }
+    });
+
+      // Chart 3: Conventional Commits
+      const conventionalCommitsCtx = document.getElementById('conventionalCommitsChart').getContext('2d')
+      new Chart(conventionalCommitsCtx, {
+        type: 'bar',
+        data: {
+          labels: wrapLabels(['feat: New Features', 'fix: Bug Fixes', 'refactor: Code Cleanup', 'docs: Documentation', 'chore: Maintenance'], 25),
+          datasets: [{
+          label: 'Frequency of Commits (%)',
+          data: [35, 30, 15, 10, 10],
+          backgroundColor: [palette.green, palette.red, palette.yellow, palette.blue, palette.light],
+          borderRadius: 4,
+          barPercentage: 0.7,
+          categoryPercentage: 0.7,
+        }]
+      },
+      options: {
+        ...globalChartOptions,
+        indexAxis: 'y',
+        scales: {
+          x: {
+            beginAtZero: true,
+            grid: { display: false, drawBorder: false },
+            ticks: { color: palette.dark, padding: 10, callback: value => value + '%' }
+          },
+          y: {
+            grid: { display: false, drawBorder: false },
+            ticks: { color: palette.dark, font: { weight: '600' } }
+          }
+          },
+          plugins: {
+            ...globalChartOptions.plugins,
+            legend: { display: false },
+            title: { ...globalChartOptions.plugins.title, text: 'Commit Type Distribution' }
+            }
+        }
+    });
+
+</script>
 </body>
-
 </html>
