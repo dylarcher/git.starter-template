@@ -1,3 +1,6 @@
+name: Run test suite
+on: [pull_request]
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -11,5 +14,3 @@ jobs:
         run: npm ci
       - name: Test project source code
         run: npm test
-name: Suite
-on: [pull_request]
