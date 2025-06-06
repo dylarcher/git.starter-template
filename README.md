@@ -1,3 +1,3 @@
-# \[REPOSITORY_NAMESPACE\]
+# git.starter-template
 
-> TBD
+> insert base README document content
