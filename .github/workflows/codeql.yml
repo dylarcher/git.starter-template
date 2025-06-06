@@ -39,7 +39,7 @@ jobs:
 
       - if: matrix.language == 'javascript'
         name: Project build process (PR)
-        run: npm ci && npm run build # Assuming this is the correct build
+        run: npm ci && npm run build # Installs dependencies and builds the project using npm
 
       - name: Initialize CodeQL (PR)
         uses: github/codeql-action/init@v3

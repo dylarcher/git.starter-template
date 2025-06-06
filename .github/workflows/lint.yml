@@ -1,4 +1,4 @@
-name: Lint code using ESLint
+name: Lint code using Biome
 on: [pull_request]
 
 jobs:
