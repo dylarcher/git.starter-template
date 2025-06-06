@@ -1,7 +1,7 @@
 {
   "author": "Dylan Archer <dylarcher@gmail.com> (@dylarcher)",
   "bin": {
-    "gst": "./bin/cli.js"
+    "gst": "./dist/bin/cli.js"
   },
   "browser": "dist/index.umd.js",
   "bugs": {
@@ -13,7 +13,8 @@
   },
   "devDependencies": {
     "@types/node": "22.15.30",
-    "@types/yargs": "17.0.33"
+    "@types/yargs": "17.0.33",
+    "markdownlint-cli": "^0.41.0"
   },
   "directories": {
     ".github": ".github",
@@ -30,8 +31,14 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js"
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./cli": {
+      "import": "./dist/esm/bin/cli.js",
+      "require": "./dist/cjs/bin/cli.js",
+      "types": "./dist/types/bin/cli.d.ts"
     }
   },
   "files": [
@@ -40,6 +47,7 @@
     "README.md",
     "LICENSE"
   ],
+  "types": "./dist/types/index.d.ts",
   "homepage": "https://dylarcher.github.io/git.starter-template",
   "keywords": [
     "state",
@@ -50,8 +58,8 @@
     "javascript"
   ],
   "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "name": "enter-repository-namespace",
   "optionalDependencies": {
     "@types/chrome": "0.0.326",
@@ -72,12 +80,12 @@
     "url": "git+https://github.com/dylarcher/git.starter-template.git"
   },
   "scripts": {
-    "build": "node build/script.js",
-    "bundle:types": "echo 'Type declarations bundled by build script'",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && npm run build:bin",
+    "build:bin": "mkdir -p dist/bin && echo '#!/usr/bin/env node\\nrequire(\"../dist/cjs/bin/cli.js\");' > dist/bin/cli.js && chmod +x dist/bin/cli.js",
     "clean": "npm run clean:dist && npm run clean:libs",
-    "clean:dist": "npx rimraf dist lib test/coverage .vscode-test types bin",
+    "clean:dist": "npx rimraf dist types bin",
     "clean:libs": "npx rimraf node_modules package-lock.json .cache/npm",
-    "format": "npx biome format --write --config-path .github/configs/biome.json src && node build/fix-markdown-lines.js && npx markdownlint-cli --config .github/configs/.markdownlint-fix.json --fix .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
+    "format": "npx biome format --write --config-path .github/configs/biome.json src && npx markdownlint-cli --config .github/configs/.markdownlint-fix.json --fix .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
     "lint": "npx biome lint --write --config-path .github/configs/biome.json src && npx yaml-lint -c .github/configs/yaml-lint.yaml .github/**/*.yml",
     "test": "c8 --config .github/configs/.c8rc.json node --test test/cli.test.js test/index.test.js"
   },

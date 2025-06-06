@@ -7,4 +7,10 @@
  * Default export for the CLI module
  * @type {Object}
  */
-export default {};
+const main = () => {
+  console.log("CLI tool executed!");
+};
+
+main();
+
+export default { main };
