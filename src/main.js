@@ -1,1 +1,1 @@
-"use strict"
+// Main module code goes here

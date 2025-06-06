@@ -2,6 +2,6 @@
   "recommendations": [
     "PascalReitermann93.vscode-yaml-sort",
     "richie5um2.vscode-sort-json",
-    "ritwickdey.LiveServer",
+    "ritwickdey.LiveServer"
   ]
 }

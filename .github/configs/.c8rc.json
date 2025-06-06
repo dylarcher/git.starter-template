@@ -3,15 +3,11 @@
   "allProbes": true,
   "branches": 87.5,
   "check-coverage": true,
-  "exclude": [ ],
+  "exclude": [],
   "excludeNodeModules": true,
-  "extension": [
-    ".js"
-  ],
+  "extension": [".js"],
   "functions": 90,
-  "include": [
-    "src/**/*.js"
-  ],
+  "include": ["src/**/*.js"],
   "lines": 95,
   "report-dir": "test/coverage",
   "reporter": [
@@ -59,21 +55,9 @@
   },
   "statements": 92.5,
   "watermarks": {
-    "branches": [
-      36,
-      80
-    ],
-    "functions": [
-      32,
-      64
-    ],
-    "lines": [
-      48,
-      72
-    ],
-    "statements": [
-      48,
-      96
-    ]
+    "branches": [36, 80],
+    "functions": [32, 64],
+    "lines": [48, 72],
+    "statements": [48, 96]
   }
 }

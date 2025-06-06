@@ -3,13 +3,7 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "rootDirs": [
-      "bin",
-      "docs",
-      "src",
-      "test",
-      "lib"
-    ],
+    "rootDirs": ["src", "dist"],
     "checkJs": true,
     "declaration": true,
     "declarationMap": true,
@@ -39,39 +33,16 @@
     "noEmit": false,
     "outDir": "dist",
     "paths": {
-      "#/*": [
-        "test/*"
-      ],
-      "@/*": [
-        "src/*"
-      ],
-      "bin/*": [
-        "bin/*"
-      ],
-      "conf/*": [
-        "git/configs/*"
-      ],
-      "docs/*": [
-        "docs/*"
-      ],
-      "git/*": [
-        ".github/*"
-      ],
-      "log/*": [
-        "logs/*",
-        "reports/*",
-        "coverage/*",
-        "#/coverage/*",
-      ],
-      "src/*": [
-        "src/*"
-      ],
-      "test/*": [
-        "test/*"
-      ],
-      "~/*": [
-        "dist/*"
-      ]
+      "#/*": ["test/*"],
+      "@/*": ["src/*"],
+      "bin/*": ["src/bin/*"],
+      "conf/*": ["git/configs/*"],
+      "docs/*": ["docs/*"],
+      "git/*": [".github/*"],
+      "log/*": ["logs/*", "reports/*", "coverage/*", "#/coverage/*"],
+      "src/*": ["src/*"],
+      "test/*": ["test/*"],
+      "~/*": ["dist/*"]
     },
     "resolveJsonModule": true,
     "sourceMap": true,
@@ -79,27 +50,17 @@
     "target": "esnext"
   },
   "exclude": [
-    "build",
-    "bundles",
-    "coverage",
     "release",
     "dist",
+    "test",
     "lib",
     "node_modules",
     "out"
   ],
-  "include": [
-    "bin",
-    "docs",
-    "src"
-, "bin", "lib/index.js"  ],
+  "files": ["cli.js"],
+  "include": ["src", "docs"],
   "typeAcquisition": {
     "enable": true,
-    "include": [
-      "@types/node",
-      "@types/vscode",
-      "c8/experimental",
-      "c8/globals"
-    ]
+    "include": ["@types/node", "@types/vscode", "c8/experimental", "c8/globals"]
   }
 }
