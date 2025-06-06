@@ -12,6 +12,7 @@ jobs:
       - name: Repository source code (PR)
         uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
       - if: matrix.language == 'javascript'
         name: NodeJS environment setup (PR)
@@ -91,8 +92,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - build-mode: autobuild
-            language: GitHub Actions
           - build-mode: none
             language: javascript
 name: Analyze code with CodeQL
