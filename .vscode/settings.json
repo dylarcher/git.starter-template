@@ -106,6 +106,10 @@
             ".browserslistrc.{yaml,yml}",
             "browserslist.config.{yaml,yml}"
         ],
+        "https://biomejs.dev/schemas/latest/schema.json": [
+            ".biomerc.{yaml,yml}",
+            "biome.{yaml,yml}",
+        ],
         "https://json.schemastore.org/commitlint.config.json": [
             ".commitlintrc.{yaml,yml}",
             "commitlintrc.config.{yaml,yml}"
@@ -196,6 +200,12 @@
             ]
         },
         {
+            "https://biomejs.dev/schemas/latest/schema.json": [
+                "biome.json",
+                ".biomerc",
+            ]
+        },
+        {
             "https://json.schemastore.org/package-lock.json": [
                 "bun.lock.json",
                 "bun.{lock,lockb}",
@@ -213,6 +223,8 @@
                 "prettier.config.json"
             ]
         },
+        {
+            "https://json.schemastore.org/npmrc.json": [
                 ".npmrc.json",
                 ".yarnrc",
                 ".yarnrc.json"
@@ -486,9 +498,13 @@
     "yaml.schemaStore.enable": true,
     "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
     "yaml.schemas": {
+
         "https://json.schemastore.org/browserslist": [
             ".browserslistrc.{yaml,yml}",
             "browserslist.config.{yaml,yml}"
+        ],
+        "https://biomejs.dev/schemas/latest/schema.json": [
+            "biome.{yaml,yml}",
         ],
         "https://json.schemastore.org/commitlint.config.json": [
             ".commitlintrc.{yaml,yml}",
