@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infographic: The Ecosystem of VS Code Theme Development</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'primary-bg': 'var(--color-primary-bg)',
+            'primary-fg': 'var(--color-primary-fg)',
+            'neutral-bg': 'var(--color-neutral-bg)',
+            'border-default': 'var(--color-border-default)',
+            'accent-primary': 'var(--color-accent-primary)',
+            'syntax-keyword': 'var(--color-syntax-keyword)',
+            'syntax-comment': 'var(--color-syntax-comment)',
+            'syntax-string': 'var(--color-syntax-string)',
+            'error': 'var(--color-error)',
+            'warning': 'var(--color-warning)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --color-primary-bg: #FFFFFF;
+      --color-primary-fg: #24292E;
+      --color-neutral-bg: #F6F8FA;
+      --color-border-default: #D1D5DA;
+      --color-accent-primary: #0366D6;
+      --color-syntax-keyword: #D73A49;
+      --color-syntax-comment: #6A737D;
+      --color-syntax-string: #032F62;
+      --color-error: #CB2431;
+      --color-warning: #B08800;
+    }
+
+    html.dark {
+      --color-primary-bg: #1E1E1E;
+      --color-primary-fg: #D4D4D4;
+      --color-neutral-bg: #252526;
+      --color-border-default: #333333;
+      --color-accent-primary: #58A6FF;
+      --color-syntax-keyword: #F97583;
+      --color-syntax-comment: #8B949E;
+      --color-syntax-string: #A5D6FF;
+      --color-error: #F85149;
+      --color-warning: #DBAB09;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--color-primary-bg);
+      color: var(--color-primary-fg);
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 250px;
+      max-height: 350px;
+    }
+
+    @media (min-width: 640px) {
+      .chart-container {
+        height: 300px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .chart-container {
+        height: 350px;
+      }
+    }
+
+    .swot-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .swot-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+      }
+    }
+
+    .flow-arrow {
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--color-accent-primary);
+    }
+
+    .info-card {
+      transition: border-color 0.2s ease-in-out;
+    }
+  </style>
+</head>
+
+<body class="bg-primary-bg text-primary-fg">
+  <div class="container mx-auto px-4 py-8 md:px-8">
+    <nav class="fixed top-4 right-4 z-10">
+      <button id="theme-toggle"
+        class="p-2 rounded-full bg-neutral-bg border border-border-default text-primary-fg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-primary-bg focus:ring-accent-primary">
+        <span id="theme-toggle-icon"></span>
+      </button>
+    </nav>
+
+    <header class="text-center mb-12">
+      <h1 class="text-4xl md:text-6xl font-black leading-tight">The Architecture of<br><span
+          class="text-accent-primary">Accessible VS Code Themes</span></h1>
+      <p class="mt-4 text-lg md:text-xl text-primary-fg/80 max-w-3xl mx-auto">A data-driven deep dive into the trends,
+        development, and accessibility standards shaping the modern developer's environment.</p>
+    </header>
+
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+      <div
+        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-center text-center gap-8 hover:border-accent-primary">
+        <div class="flex-1">
+          <p class="text-2xl text-primary-fg/80 font-semibold">A Dominant Development Hub</p>
+          <p class="text-7xl md:text-8xl font-black my-2">74.5%</p>
+          <p class="text-lg text-primary-fg/80">Of developers use VS Code as their primary environment, making theme
+            design a high-impact discipline.</p>
+        </div>
+        <div class="w-full md:w-px h-px md:h-24 bg-border-default"></div>
+        <div class="flex-1">
+          <p class="text-2xl text-primary-fg/80 font-semibold">The Core Components</p>
+          <p class="mt-4 text-primary-fg/80">Every theme is a JSON file balancing UI appearance and code syntax
+            highlighting.</p>
+        </div>
+      </div>
+
+      <div
+        class="info-card lg:col-span-2 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-2">What Developers Prioritize</h2>
+        <p class="text-primary-fg/80 mb-6">Readability and accessibility are paramount for long-term productivity. A
+          successful theme must balance these needs effectively.</p>
+        <div class="chart-container">
+          <canvas id="developerPrioritiesChart"></canvas>
+        </div>
+      </div>
+
+      <div
+        class="info-card bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 flex flex-col justify-center hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-4">Anatomy of a Theme</h2>
+        <div class="space-y-4">
+          <div class="bg-primary-bg p-4 rounded-lg border border-border-default flex items-center">
+            <span class="text-3xl mr-4">🎨</span>
+            <div>
+              <h3 class="font-bold text-syntax-keyword">`colors`</h3>
+              <p class="text-sm text-primary-fg/80">Defines the Workbench UI: sidebar, status bar, tabs, buttons.</p>
+            </div>
+          </div>
+          <div class="bg-primary-bg p-4 rounded-lg border border-border-default flex items-center">
+            <span class="text-3xl mr-4">✍️</span>
+            <div>
+              <h3 class="font-bold text-accent-primary">`tokenColors`</h3>
+              <p class="text-sm text-primary-fg/80">Styles code with TextMate scopes for keywords, strings, etc.</p>
+            </div>
+          </div>
+          <div class="bg-primary-bg p-4 rounded-lg border border-border-default flex items-center">
+            <span class="text-3xl mr-4">🧠</span>
+            <div>
+              <h3 class="font-bold text-syntax-string">`semanticTokenColors`</h3>
+              <p class="text-sm text-primary-fg/80">Provides more accurate, context-aware highlighting.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-2 text-center">A Spectrum of Choice: Theme Variations</h2>
+        <p class="text-primary-fg/80 mb-6 text-center max-w-4xl mx-auto">Modern themes cater to diverse needs, from
+          reducing eye strain to ensuring maximum legibility for users with visual impairments.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-center">
+          <div class="bg-primary-bg p-4 rounded-lg border border-border-default">
+            <h3 class="font-bold text-xl mb-2">Standard Light</h3>
+            <div class="bg-white text-left p-2 rounded text-sm font-mono text-gray-900 border border-gray-200">
+              <span style="color: #D73A49">const</span> <span style="color: #0366D6">theme</span> = <span
+                style="color: #032F62">'Crisp & Clear'</span>;
+            </div>
+          </div>
+          <div class="bg-primary-bg p-4 rounded-lg border border-border-default">
+            <h3 class="font-bold text-xl mb-2">Standard Dark</h3>
+            <div class="bg-[#1E1E1E] text-left p-2 rounded text-sm font-mono text-gray-200 border border-[#333333]">
+              <span style="color: #F97583">const</span> <span style="color: #58A6FF">theme</span> = <span
+                style="color: #A5D6FF">'Focused & Classic'</span>;
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-2 text-center">The Programmatic Development Workflow</h2>
+        <p class="text-primary-fg/80 mb-8 text-center max-w-4xl mx-auto">A programmatic workflow is the industry best
+          practice, ensuring consistency, maintainability, and scalability for multi-variation themes.</p>
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-2 w-full flex-wrap">
+          <div class="text-center p-2"><span class="text-3xl">🎨</span><br>Palette Definition</div>
+          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
+          <div class="text-center p-2"><span class="text-3xl">⚙️</span><br>Generator Script</div>
+          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
+          <div class="text-center p-2"><span class="text-3xl">📦</span><br>Theme JSON Files</div>
+          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
+          <div class="text-center p-2"><span class="text-3xl">🧪</span><br>Testing & Iteration</div>
+          <div class="flow-arrow transform md:-rotate-0 rotate-90">&rightarrow;</div>
+          <div class="text-center p-2"><span class="text-3xl">🚀</span><br>Marketplace</div>
+        </div>
+      </div>
+
+      <div
+        class="info-card lg:col-span-1 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-2">The Accessibility Imperative</h2>
+        <p class="text-primary-fg/80 mb-6">WCAG Level AA is the minimum standard for accessible design. These contrast
+          ratios are non-negotiable.</p>
+        <div class="chart-container">
+          <canvas id="wcagChart"></canvas>
+        </div>
+      </div>
+
+      <div
+        class="info-card lg:col-span-2 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-2">Strategic Landscape: SWOT Analysis</h2>
+        <p class="text-primary-fg/80 mb-6">Understanding the strategic landscape is key to creating a successful and
+          lasting product.</p>
+        <div class="swot-grid">
+          <div class="bg-accent-primary/10 p-4 rounded-lg border-l-4 border-accent-primary">
+            <h3 class="font-bold text-xl text-accent-primary">Strengths</h3>
+            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
+              <li>High demand in massive user base</li>
+              <li>Direct impact on developer productivity</li>
+            </ul>
+          </div>
+          <div class="bg-error/10 p-4 rounded-lg border-l-4 border-error">
+            <h3 class="font-bold text-xl text-error">Weaknesses</h3>
+            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
+              <li>Maintenance for VS Code updates</li>
+              <li>Complexity of numerous tokens</li>
+            </ul>
+          </div>
+          <div class="bg-syntax-string/10 p-4 rounded-lg border-l-4 border-syntax-string">
+            <h3 class="font-bold text-xl text-syntax-string">Opportunities</h3>
+            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
+              <li>Focus on accessibility as a feature</li>
+              <li>Niche themes for specific languages</li>
+            </ul>
+          </div>
+          <div class="bg-warning/10 p-4 rounded-lg border-l-4 border-warning">
+            <h3 class="font-bold text-xl text-warning">Threats</h3>
+            <ul class="list-disc list-inside text-primary-fg/90 mt-2 text-sm">
+              <li>High saturation in marketplace</li>
+              <li>Rise of AI-driven UI generation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="info-card md:col-span-2 lg:col-span-3 bg-neutral-bg border border-border-default rounded-2xl p-6 md:p-8 hover:border-accent-primary">
+        <h2 class="text-3xl font-bold mb-2">Future Outlook: Rise of Accessible Tooling</h2>
+        <p class="text-primary-fg/80 mb-6">Themes that prioritize WCAG compliance are becoming the expected standard for
+          high-quality developer tooling.</p>
+        <div class="chart-container">
+          <canvas id="trendsChart"></canvas>
+        </div>
+      </div>
+    </main>
+
+    <footer class="text-center text-primary-fg/60 mt-12 py-4">
+      <p>Infographic based on the Deep Research Report on VS Code Theme Development.</p>
+      <p>Data synthesized for illustrative purposes. &copy; 2025</p>
+    </footer>
+  </div>
+
+  <script>
+      (function() {
+        let developerPrioritiesChart, wcagChart, trendsChart
+        const themeToggle = document.getElementById('theme-toggle')
+        const themeToggleIcon = document.getElementById('theme-toggle-icon')
+
+        const getPalette = (mode) => {
+          if (mode === 'dark') {
+            return {
+              primaryFg: '#D4D4D4',
+              gridColor: 'rgba(255, 255, 255, 0.1)',
+              neutralBg: '#252526',
+              accentPrimary: '#58A6FF',
+              syntaxKeyword: '#F97583',
+              syntaxString: '#A5D6FF',
+              error: '#F85149',
+              warning: '#DBAB09'
+            }
+          }
+          return {
+            primaryFg: '#24292E',
+            gridColor: 'rgba(0, 0, 0, 0.1)',
+            neutralBg: '#F6F8FA',
+            accentPrimary: '#0366D6',
+            syntaxKeyword: '#D73A49',
+            syntaxString: '#032F62',
+            error: '#CB2431',
+            warning: '#B08800'
+          }
+        }
+
+        const wrapLabel = (label, maxWidth) => {
+          const words = label.split(' ')
+          const lines = []
+          let currentLine = words[0]
+          for (let i = 1; i < words.length; i++) {
+            if (currentLine.length + words[i].length + 1 < maxWidth) {
+              currentLine += ' ' + words[i]
+            } else {
+              lines.push(currentLine)
+              currentLine = words[i]
+            }
+          }
+          lines.push(currentLine)
+          return lines
+        }
+
+        const tooltipTitleCallback = (tooltipItems) => {
+          const item = tooltipItems[0]
+          let label = item.chart.data.labels[item.dataIndex]
+          return Array.isArray(label) ? label.join(' ') : label
+        }
+
+        const getChartOptions = (mode) => {
+          const palette = getPalette(mode)
+          return {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: { color: palette.primaryFg, font: { family: "'Inter', sans-serif" } }
+              },
+              tooltip: {
+                callbacks: { title: tooltipTitleCallback },
+                titleFont: { family: "'Inter', sans-serif" },
+                bodyFont: { family: "'Inter', sans-serif" }
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { color: palette.primaryFg, font: { family: "'Inter', sans-serif" } },
+                grid: { color: palette.gridColor }
+              },
+              x: {
+                ticks: { color: palette.primaryFg, font: { family: "'Inter', sans-serif" } },
+                grid: { color: 'transparent' }
+              }
+            }
+          }
+        }
+
+        const createCharts = (mode) => {
+          const palette = getPalette(mode)
+          const baseOptions = getChartOptions(mode)
+
+          const prioritiesCtx = document.getElementById('developerPrioritiesChart')
+          if (prioritiesCtx) {
+            if (developerPrioritiesChart) developerPrioritiesChart.destroy()
+            developerPrioritiesChart = new Chart(prioritiesCtx, {
+              type: 'doughnut',
+              data: {
+                labels: ['Readability & Clarity', 'Aesthetics & Visual Appeal', 'Accessibility', 'Customizability'],
+                datasets: [{
+                  data: [45, 30, 15, 10],
+                  backgroundColor: [palette.accentPrimary, palette.syntaxString, palette.warning, palette.syntaxKeyword],
+                  borderColor: mode === 'dark' ? '#1E1E1E' : '#FFFFFF',
+                  borderWidth: 4
+                }]
+              },
+              options: { ...baseOptions, scales: { y: { display: false }, x: { display: false } } }
+            })
+          }
+
+          const wcagCtx = document.getElementById('wcagChart')
+          if (wcagCtx) {
+            if (wcagChart) wcagChart.destroy()
+            wcagChart = new Chart(wcagCtx, {
+              type: 'bar',
+              data: {
+                labels: [wrapLabel('Normal AA', 16), wrapLabel('Large AA', 16), wrapLabel('Normal AAA', 16), wrapLabel('Large AAA', 16)],
+                datasets: [{
+                  label: 'Minimum Contrast Ratio',
+                  data: [4.5, 3, 7, 4.5],
+                  backgroundColor: [palette.warning, palette.warning, palette.error, palette.error],
+                  borderRadius: 4
+                }]
+              },
+              options: { ...baseOptions, plugins: { ...baseOptions.plugins, legend: { display: false } }, scales: { ...baseOptions.scales, y: { ...baseOptions.scales.y, title: { display: true, text: 'Ratio : 1', color: palette.primaryFg } } } }
+            })
+          }
+
+          const trendsCtx = document.getElementById('trendsChart')
+          if (trendsCtx) {
+            if (trendsChart) trendsChart.destroy()
+            trendsChart = new Chart(trendsCtx, {
+              type: 'line',
+              data: {
+                labels: ['2021', '2022', '2023', '2024', '2025 (Proj.)'],
+                datasets: [{
+                  label: 'Themes Highlighting Accessibility',
+                  data: [8, 12, 25, 40, 65],
+                  fill: true,
+                  backgroundColor: mode === 'dark' ? 'rgba(88, 166, 255, 0.2)' : 'rgba(3, 102, 214, 0.2)',
+                  borderColor: palette.accentPrimary,
+                  tension: 0.4,
+                  pointBackgroundColor: palette.accentPrimary,
+                  pointRadius: 5
+                }]
+              },
+              options: { ...baseOptions, plugins: { ...baseOptions.plugins, legend: { display: false } }, scales: { ...baseOptions.scales, y: { ...baseOptions.scales.y, title: { display: true, text: 'Themes (in thousands)', color: palette.primaryFg } } } }
+            })
+          }
+        }
+
+        const applyTheme = (theme) => {
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark')
+            themeToggleIcon.textContent = '☀️'
+          } else {
+            document.documentElement.classList.remove('dark')
+            themeToggleIcon.textContent = '🌙'
+          }
+          localStorage.setItem('infographic-theme', theme)
+          // Re-create charts with the new theme's colors
+          createCharts(theme)
+        }
+
+        themeToggle.addEventListener('click', () => {
+          const newTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
+          applyTheme(newTheme)
+        })
+
+        const savedTheme = localStorage.getItem('infographic-theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light')
+
+        document.documentElement.classList.toggle('dark', initialTheme === 'dark')
+        themeToggleIcon.textContent = initialTheme === 'dark' ? '☀️' : '🌙'
+        createCharts(initialTheme)
+      })();
+  </script>
+</body>
+
+</html>
