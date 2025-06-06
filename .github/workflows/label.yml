@@ -14,25 +14,4 @@ jobs:
           dot: true
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           sync-labels: true
-name: Auto-Label Issues
 on: [issues, pull_request_target]
-
-
-# TODO: Add to ci.yml?
-#   apply-labels:
-#     name: Auto-Label Issues and PRs
-#     runs-on: ubuntu-latest
-#     if: github.event_name == 'issues' || github.event_name == 'pull_request_target' || github.event_name == 'workflow_dispatch'
-#     permissions:
-#       contents: read
-#       pull-requests: write
-#     steps:
-#       - name: Checkout repository
-#         uses: actions/checkout@v4 # Labeler action might need access to .github/labeler.yml
-#       - name: Apply project labels
-#         uses: actions/labeler@v5
-#         with:
-#           configuration-path: .github/labeler.yml
-#           dot: true
-#           repo-token: ${{ secrets.GITHUB_TOKEN }}
-#           sync-labels: true
