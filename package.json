@@ -65,7 +65,6 @@
   },
   "packageManager": "npm@10.8.2",
   "peerDependencies": {
-    "markdownlint": "0.38.0",
     "typescript": "5.8.3",
     "yargs-parser": "22.0.0"
   },
