@@ -3,18 +3,28 @@
 If you use `git.starter-template` in your research or project, please consider
 citing it as follows:
 
-## APA Format
+> **Note**: This repository includes a `CITATION.cff` file in the root directory
+> that GitHub automatically recognizes. You can use the "Cite this repository"
+> button on the GitHub page to get properly formatted citations.
+
+## Quick Citation Formats
+
+### APA Format
 
 ```plaintext
-Archer, D. (2025). git.starter-template: A tool for architecting a hybrid "all-in-one" state manager. GitHub. https://github.com/dylarcher/git.starter-template
+Archer, D. (2025). git.starter-template: A tool for architecting a hybrid
+"all-in-one" state manager (Version 0.1.0) [Computer software].
+https://github.com/dylarcher/git.starter-template
 ```
 
-## BibTeX Format
+### BibTeX Format
 
 ```bibtex
-@software{stateman_cli,
+@software{git_starter_template,
   author       = {Archer, Dylan},
-  title        = {git.starter-template: A tool for architecting a hybrid "all-in-one" state manager},
+  title        = {git.starter-template: A tool for architecting a hybrid
+                  "all-in-one" state manager},
+  version      = {0.1.0},
   year         = {2025},
   publisher    = {GitHub},
   url          = {https://github.com/dylarcher/git.starter-template}

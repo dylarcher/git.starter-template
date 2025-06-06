@@ -86,5 +86,6 @@ The CodeQL configuration is designed to catch:
 4. Consider adding branch protection rules
 
 For more information, see the
-[GitHub Code Scanning documentation](<https://docs.github.com/en/code-security/co>
+[GitHub Code Scanning
+documentation](<https://docs.github.com/en/code-security/co>
 de-scanning).
