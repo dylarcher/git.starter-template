@@ -17,25 +17,31 @@ jobs:
         name: NodeJS environment setup (PR)
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
-      - if: matrix.language == 'javascript'
+          cache: npm
+          node-version: 20.19.2
+      - env:
+          NODE_ENV: production
+        if: matrix.language == 'javascript'
         name: Project build process (PR)
-        run: npm ci && npm run build
+        run: |
+          npm ci --prefer-offline --no-audit
+          npm run build
       - name: Initialize CodeQL (PR)
         uses: github/codeql-action/init@v3
         with:
           build-mode: ${{ matrix.build-mode }}
+          config-file: ./.github/configs/codeql-config.yml
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
       - name: Perform CodeQL Analysis (PR)
         uses: github/codeql-action/analyze@v3
         with:
-          category: /language:${{ matrix.language }}
+          category: pr-analysis-${{ matrix.language }}
       - if: always()
         name: Upload CodeQL SARIF (PR)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          category: ${{ matrix.language }}
+          category: pr-sarif-${{ matrix.language }}
     strategy:
       fail-fast: false
       matrix:
@@ -59,29 +65,35 @@ jobs:
         name: NodeJS environment setup (main)
         uses: actions/setup-node@v4
         with:
-          node-version: 20.x
-      - if: matrix.language == 'javascript'
+          cache: npm
+          node-version: 20.19.2
+      - env:
+          NODE_ENV: production
+        if: matrix.language == 'javascript'
         name: Project build process (main)
-        run: npm ci && npm run build
+        run: |
+          npm ci --prefer-offline --no-audit
+          npm run build
       - name: Initialize CodeQL (main)
         uses: github/codeql-action/init@v3
         with:
           build-mode: ${{ matrix.build-mode }}
+          config-file: ./.github/codeql/codeql-config.yml
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
       - name: Perform CodeQL Analysis (main)
         uses: github/codeql-action/analyze@v3
         with:
-          category: /language:${{ matrix.language }}
+          category: main-analysis-${{ matrix.language }}
       - if: always()
         name: Upload CodeQL SARIF (main)
         uses: github/codeql-action/upload-sarif@v3
         with:
-          category: ${{ matrix.language }}
+          category: main-sarif-${{ matrix.language }}
       - name: Attempt to autofix alerts for ${{ matrix.language }} (main)
         uses: github/codeql-action/autofix@v2
         with:
-          category: ${{ matrix.language }}
+          category: main-autofix-${{ matrix.language }}
           commit_message: Apply CodeQL autofixes for ${{ matrix.language }} on main
           pr_title: '[Auto] CodeQL Fixes for ${{ matrix.language }} (main)'
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -92,4 +104,10 @@ jobs:
           - build-mode: none
             language: javascript
 name: Analyze code with CodeQL
-'on': [pull_request]
+'on':
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+  schedule:
+    - cron: 0 2 * * 1
