@@ -18,7 +18,7 @@ We take all security vulnerabilities seriously. If you discover a security vulne
 **How to Report:**
 
 1. **Preferred Method: GitHub Issues:** Please open a new issue in our GitHub repository's issue tracker.
-    * Clearly title the issue with a security focus, e.g., "Security Vulnerability: [Brief Description]".
+    * Clearly title the issue with a security focus, e.g., "Security Vulnerability: (A Brief Description)".
     * Provide a detailed description of the vulnerability, including:
         * Steps to reproduce the vulnerability.
         * The version of the tool affected.

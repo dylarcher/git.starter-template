@@ -6,7 +6,6 @@
       "source.addMissingImports": "always",
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always",
       "source.fixAll.stylelint": "explicit",
       "source.organizeImports": "always"
     },
@@ -17,7 +16,6 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always"
     },
     "editor.defaultFormatter": "vscode.html-language-features",
     "editor.formatOnSave": true
@@ -27,7 +25,6 @@
       "source.addMissingImports": "always",
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always",
       "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "vscode.typescript-language-features",
@@ -37,7 +34,6 @@
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always",
       "source.fixAll.sort-json": "explicit"
     },
     "editor.defaultFormatter": "vscode.json-language-features",
@@ -48,7 +44,6 @@
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
       "source.fixAll.markdownlint": "explicit",
-      "source.fixAll.prettier": "always"
     },
     "editor.defaultFormatter": "vscode.markdown-language-features",
     "editor.formatOnSave": true
@@ -58,7 +53,6 @@
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
       "source.fixAll.jock-svg": "explicit",
-      "source.fixAll.prettier": "always"
     },
     "editor.defaultFormatter": "jock.svg",
     "editor.formatOnSave": true
@@ -68,7 +62,6 @@
       "source.addMissingImports": "always",
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always",
       "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "vscode.typescript-language-features",
@@ -131,6 +124,7 @@
       "stylelint.config.{yaml,yml}"
     ]
   },
+  "editor.defaultFormatter": "biomejs.biome",
   "cloudcode.yaml.trace.server": "messages",
   "cloudcode.yaml.validate": true,
   "css.format.enable": true,
