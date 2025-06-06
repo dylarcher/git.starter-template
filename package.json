@@ -73,10 +73,6 @@
         "url": "git+https://github.com/dylarcher/[REPOSITORY_NAMESPACE].git"
     },
     "scripts": {
-<<<<<<< HEAD
-        "docs:build": "echo \"[UNSET_SCRIPT_COMMANDS]\" && exit 0",
-        "test": "echo \"Error: no test specified\" && exit 1"
-=======
         "build": "echo \"Run github-action for building\" && exit 1",
         "build:maps": "echo \"Run github-action for building source maps\" && exit 1",
         "build:types": "echo \"Run github-action for building types\" && exit 1",
@@ -85,7 +81,6 @@
         "lint": "echo \"Run github-action for linting\" && exit 1",
         "test": "echo \"Run github-action for testing\" && exit 1",
         "test:coverage": "echo \"Run github-action for test:coverage\" && exit 1"
->>>>>>> b3c4d29 (updates scripts & configs)
     },
     "sideEffects": false,
     "type": "module",
