@@ -19,16 +19,12 @@
   },
   "Console Log": {
     "prefix": "log",
-    "body": [
-      "console.log(${1:object});"
-    ],
+    "body": ["console.log(${1:object});"],
     "description": "Log to the console"
   },
   "Import Statement": {
     "prefix": "imp",
-    "body": [
-      "import ${2:{ $3 }} from '${1:module}';"
-    ],
+    "body": ["import ${2:{ $3 }} from '${1:module}';"],
     "description": "Import a module"
   },
   "Try/Catch Block": {
