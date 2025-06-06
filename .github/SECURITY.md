@@ -22,24 +22,25 @@ vulnerability within this project, please report it to us as soon as possible.
 
 1. **Preferred Method: GitHub Issues:** Please open a new issue in our GitHub
    repository's issue tracker.
-    * Clearly title the issue with a security focus, e.g., "Security
-      Vulnerability: (A Brief Description)".
-    * Provide a detailed description of the vulnerability, including:
-        * Steps to reproduce the vulnerability.
-        * The version of the tool affected.
-        * Any potential impact.
-        * If possible, suggest a fix or mitigation.
+   * Clearly title the issue with a security focus, e.g., "Security
+     Vulnerability: (A Brief Description)".
+   * Provide a detailed description of the vulnerability, including:
+     * Steps to reproduce the vulnerability.
+     * The version of the tool affected.
+     * Any potential impact.
+     * If possible, suggest a fix or mitigation.
 2. **Sensitive Vulnerabilities:**
-    * If you believe the vulnerability is particularly sensitive and should not
-      be publicly disclosed immediately.
-        * please email the primary maintainer directly at
-          `dylarcher@zohomail.com`
-        * use the subject line "Security Vulnerability Report:
-          git.starter-template".
+   * If you believe the vulnerability is particularly sensitive and should not
+     be publicly disclosed immediately:
+     * Please email the primary maintainer directly at
+       `dylarcher@zohomail.com`
+     * Use the subject line "Security Vulnerability Report:
+       git.starter-template".
 
 **What to Expect:**
 
-* We aim to acknowledge receipt of your vulnerability report within 48-72 hours.
+* We aim to acknowledge receipt of your vulnerability report within 48-72
+  hours.
 * We will investigate the reported vulnerability and may ask for additional
   information.
 * You will be updated on the progress of our investigation and the planned
@@ -48,5 +49,5 @@ vulnerability within this project, please report it to us as soon as possible.
   credit will be given to the reporter if desired.
 
 This project utilizes automated security scanning tools like **GitHub CodeQL**
-and **Dependabot** to proactively identify and address potential
-vulnerabilities in the codebase and its dependencies.
+and **Dependabot** to proactively identify and address potential vulnerabilities
+in the codebase and its dependencies.
