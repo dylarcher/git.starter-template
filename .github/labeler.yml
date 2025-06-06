@@ -254,7 +254,7 @@ labels:
   - color: 7B1FA2
     description: 🔰 Good for newcomers
     name: good first issue
-  - color: 009688
+  - color: 9688
     description: 🆘 Extra attention is needed
     name: help wanted
   - color: CDDC39
