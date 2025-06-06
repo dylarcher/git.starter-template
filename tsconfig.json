@@ -3,11 +3,15 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "rootDirs": ["src", "dist"],
     "checkJs": true,
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "declarationDir": "dist",
     "esModuleInterop": true,
     "jsx": "preserve",
     "lib": [
@@ -30,22 +34,50 @@
     ],
     "module": "esnext",
     "moduleResolution": "node",
+    "incremental": true,
+    "inlineSourceMap": true,
     "noEmit": false,
     "outDir": "dist",
     "paths": {
-      "#/*": ["test/*"],
-      "@/*": ["src/*"],
-      "bin/*": ["src/bin/*"],
-      "conf/*": ["git/configs/*"],
-      "docs/*": ["docs/*"],
-      "git/*": [".github/*"],
-      "log/*": ["logs/*", "reports/*", "coverage/*", "#/coverage/*"],
-      "src/*": ["src/*"],
-      "test/*": ["test/*"],
-      "~/*": ["dist/*"]
+      "#/*": [
+        "test/*"
+      ],
+      "@/*": [
+        "src/*"
+      ],
+      "bin/*": [
+        "src/bin/*"
+      ],
+      "conf/*": [
+        "git/configs/*"
+      ],
+      "docs/*": [
+        "docs/*"
+      ],
+      "git/*": [
+        ".github/*"
+      ],
+      "log/*": [
+        "logs/*",
+        "reports/*",
+        "coverage/*",
+        "#/coverage/*"
+      ],
+      "src/*": [
+        "src/*"
+      ],
+      "test/*": [
+        "test/*"
+      ],
+      "~/*": [
+        "dist/*"
+      ]
     },
     "resolveJsonModule": true,
-    "sourceMap": true,
+    "rootDirs": [
+      "src",
+      "dist"
+    ],
     "strict": true,
     "target": "esnext"
   },
@@ -57,9 +89,17 @@
     "node_modules",
     "out"
   ],
-  "include": ["src", "docs"],
+  "include": [
+    "src",
+    "docs"
+  ],
   "typeAcquisition": {
     "enable": true,
-    "include": ["@types/node", "@types/vscode", "c8/experimental", "c8/globals"]
+    "include": [
+      "@types/node",
+      "@types/vscode",
+      "c8/experimental",
+      "c8/globals"
+    ]
   }
 }

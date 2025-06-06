@@ -1,0 +1,4 @@
+{
+  "extends": "default",
+  "ignores": [ "node_modules", "dist" ]
+}

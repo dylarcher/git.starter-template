@@ -1,25 +1,27 @@
 {
   "author": "Dylan Archer <dylarcher@gmail.com> (@dylarcher)",
   "bin": {
-    "[REPOSITORY_NAMESPACE]": "./bin/cli.js"
+    "git.starter-template": "./bin/cli.js"
   },
   "browser": "dist/index.umd.js",
   "bugs": {
-    "url": "https://github.com/dylarcher/[REPOSITORY_NAMESPACE]/issues"
+    "url": "https://github.com/dylarcher/git.starter-template/issues"
   },
-  "description": "[UNSET_PACKAGE_DESCRIPTION]",
+  "description": "A github starter template for creating a new repository with a predefined structures, documents and configurations.",
   "dependencies": {
     "yargs": "18.0.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@types/node": "22.15.30",
-    "@types/yargs": "17.0.33"
+    "@types/yargs": "17.0.33",
+    "markdownlint-cli": "0.45.0",
+    "yaml-lint": "1.7.0"
   },
   "directories": {
     ".github": ".github",
     "dist": "dist",
     "docs": "docs",
-    "lib": "lib",
     "node_modules": "node_modules",
     "src": "src",
     "test": "test"
@@ -41,7 +43,7 @@
     "README.md",
     "LICENSE"
   ],
-  "homepage": "https://dylarcher.github.io/[REPOSITORY_NAMESPACE]",
+  "homepage": "https://dylarcher.github.io/git.starter-template",
   "keywords": [
     "state",
     "management",
@@ -63,6 +65,7 @@
   },
   "packageManager": "npm@10.8.2",
   "peerDependencies": {
+    "markdownlint": "0.38.0",
     "typescript": "5.8.3",
     "yargs-parser": "22.0.0"
   },
@@ -73,16 +76,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dylarcher/[REPOSITORY_NAMESPACE].git"
+    "url": "git+https://github.com/dylarcher/git.starter-template.git"
   },
   "scripts": {
-    "build": "tsc --declaration --declarationMap false --emitDeclarationOnly false --outDir dist --declarationDir dist/types --moduleResolution node --module esnext --target esnext --sourceMap true --inlineSourceMap true && npm run bundle:types",
+    "build": "tsc --declarationMap false --emitDeclarationOnly false && npm run bundle:types",
     "bundle:types": "dts-bundle-generator -o dist/types.d.ts src/**/*.ts",
     "clean": "npm run clean:dist && npm run clean:libs",
     "clean:dist": "rimraf dist lib test/coverage .vscode-test types",
     "clean:libs": "rimraf node_modules package-lock.json .cache/npm",
-    "format": "biome format --write --config-path .github/configs/biome.json src && markdownlint --config .github/configs/.markdownlintrc --fix **/*.md",
-    "lint": "biome lint --write --config-path .github/configs/biome.json src && yamllint -c .github/configs/yamllint.yaml .github/**/*.yml",
+    "format": "biome format --write --config-path .github/configs/biome.json src && markdownlint --config .github/configs/.markdownlintrc.json --fix .github/**/*.md docs/**/*.md src/**/*.md README.md CHANGELOG.md",
+    "lint": "biome lint --write --config-path .github/configs/biome.json src && yamllint -c .github/configs/yaml-lint.yaml .github/**/*.yml",
     "test": "c8 --config .github/configs/.c8rc.json node --test"
   },
   "type": "module",

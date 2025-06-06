@@ -1,11 +1,11 @@
 # Citation
 
-If you use `[REPOSITORY_NAMESPACE]` in your research or project, please consider citing it as follows:
+If you use `git.starter-template` in your research or project, please consider citing it as follows:
 
 ## APA Format
 
 ```plaintext
-Archer, D. (2025). [REPOSITORY_NAMESPACE]: A tool for architecting a hybrid "all-in-one" state manager. GitHub. https://github.com/dylarcher/[REPOSITORY_NAMESPACE]
+Archer, D. (2025). git.starter-template: A tool for architecting a hybrid "all-in-one" state manager. GitHub. https://github.com/dylarcher/git.starter-template
 ```
 
 ## BibTeX Format
@@ -13,10 +13,10 @@ Archer, D. (2025). [REPOSITORY_NAMESPACE]: A tool for architecting a hybrid "all
 ```bibtex
 @software{stateman_cli,
   author       = {Archer, Dylan},
-  title        = {[REPOSITORY_NAMESPACE]: A tool for architecting a hybrid "all-in-one" state manager},
+  title        = {git.starter-template: A tool for architecting a hybrid "all-in-one" state manager},
   year         = {2025},
   publisher    = {GitHub},
-  url          = {https://github.com/dylarcher/[REPOSITORY_NAMESPACE]}
+  url          = {https://github.com/dylarcher/git.starter-template}
 }
 ```
 
@@ -29,7 +29,7 @@ If you contribute to this project and would like to be acknowledged in citations
 When citing this tool, it's helpful to include the specific version you used. You can find version information in the package.json file or by running:
 
 ```bash
-npm list [REPOSITORY_NAMESPACE]
+npm list git.starter-template
 ```
 
 ## Related Publications
