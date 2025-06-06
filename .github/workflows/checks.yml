@@ -35,60 +35,40 @@ jobs:
             language: GitHub Actions
           - build-mode: none
             language: javascript
-  format-code:
+
+  biome-check-and-fix:
+    name: Biome Check, Format & Lint
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
-    name: Format Code (Prettier)
+    runs-on: ubuntu-latest
     permissions:
       contents: write
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: NodeJS environment setup
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-      - name: Project prerequisites setup
-        run: npm ci
-      - name: Format project source code
-        run: npm run format
-      - name: Upload Prettier fixes
-        uses: actions/upload-artifact@v4
-        with:
-          name: prettier-fixes
-          path: |
-            ./
-            !node_modules/
-            !.git/
-          if-no-files-found: ignore
 
-  lint-code:
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
-    name: Lint Code (ESLint)
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
         with:
-          node-version: 18.x
-      - name: Project dependency setup
-        run: npm ci
-      - name: Lint project source code
-        run: npm run lint
-      - name: Upload ESLint fixes
-        uses: actions/upload-artifact@v4
-        with:
-          name: eslint-fixes
-          path: |
-            ./
-            !node_modules/
-            !.git/
-          if-no-files-found: ignore
+          version: latest # Consider pinning to a specific version for stability
+
+      - name: Run Biome check and apply fixes
+        run: biome check --write . # Using --write to apply changes
+
+      - name: Commit and push Biome changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --staged --quiet; then
+            git commit -m "CHORE: Apply Biome formatting and linting"
+            git push
+          else
+            echo "No changes to commit by Biome."
+          fi
+
   run-tests:
     if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
     name: Run Tests (Suite)
@@ -130,46 +110,6 @@ jobs:
         name: Add summary comment to issue
         run: |
           gh issue comment $ISSUE_NUMBER --body '### 📝 AI Summary\n\n${{ steps.inference.outputs.response }}'
-
-  commit-changes:
-    name: Commit Automated Changes
-    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch' # Ensure it runs under the same conditions
-    runs-on: ubuntu-latest
-    needs: [format-code, lint-code] # Depends on the formatter and linter jobs
-    permissions:
-      contents: write # Required to push changes
-    steps:
-      - name: Checkout PR branch
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }} # Checkout the head of the PR
-          token: ${{ secrets.GITHUB_TOKEN }} # Use GITHUB_TOKEN for commit/push
-
-      - name: Download Prettier fixes
-        uses: actions/download-artifact@v4
-        with:
-          name: prettier-fixes
-          path: ./ # Download to the root of the workspace
-
-      - name: Download ESLint fixes
-        uses: actions/download-artifact@v4
-        with:
-          name: eslint-fixes
-          path: ./ # Download to the root of the workspace, overwriting if necessary
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          # Add all changes that might have been applied from artifacts
-          git add -A
-          # Check if there are any staged changes and commit/push
-          if ! git diff --staged --quiet; then
-            git commit -m "CHORE: Automated code improvements (format & lint)"
-            git push
-          else
-            echo "No changes to commit."
-          fi
 
 name: Comprehensive CI Pipeline
 'on':
