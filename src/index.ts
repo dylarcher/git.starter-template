@@ -11,4 +11,4 @@ export const greet = (name: string = "World"): string => {
   return `Hello, ${name}!`;
 };
 
-export default { greet };
+export default greet;
