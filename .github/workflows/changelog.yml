@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref }}
@@ -53,7 +53,7 @@ jobs:
           git push origin HEAD:${{ github.head_ref }}
       - if: steps.generate-commits.outputs.commit_count != '0'
         name: Comment on PR with summary
-        uses: actions/github-script@v7
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
