@@ -18,5 +18,5 @@ export function exampleFunction() {
  * @type {Object}
  */
 export default {
-  exampleFunction
+  exampleFunction,
 };
