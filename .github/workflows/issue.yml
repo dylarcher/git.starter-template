@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@dcd7002c2b353f8e53fdd460ba018a180369ac25 # v4
       - id: inference
         name: Generate concise AI summary
         uses: actions/ai-inference@d645f067d89ee1d5d736a5990e327e504d1c5a4a # v1

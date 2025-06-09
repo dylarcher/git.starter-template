@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Repository source code (PR)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@dcd7002c2b353f8e53fdd460ba018a180369ac25 # v4
         with:
           fetch-depth: 0
       - if: matrix.language == 'javascript'
         name: NodeJS environment setup (PR)
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4
         with:
           cache: npm
           node-version: 20.11.1
@@ -54,10 +54,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository (main branch)
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@dcd7002c2b353f8e53fdd460ba018a180369ac25 # v4
       - if: matrix.language == 'javascript'
         name: NodeJS environment setup (main)
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@b39b52d1213e96004bfcb1c61a8a6fa8ab84f3e8 # v4
         with:
           cache: npm
           node-version: 20.11.1
