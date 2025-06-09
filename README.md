@@ -143,13 +143,21 @@ To adapt this template for a VSCode Extension:
 *   **Testing:**
     *   Use `vscode-test` or `@vscode/test-electron` to run integration tests against a VSCode instance. Your test scripts in `package.json` will need to be updated.
 
-*   **Files to Potentially Remove:**
-    *   `bin/cli.js` (unless your extension also provides a CLI tool).
-    *   `src/index.js`, `src/bin/cli.js`
-    *   `build/script.js`
-    *   `CHANGELOG.md` generation via `changelog.yml` workflow might still be useful.
-    *   Review GitHub Actions workflows. Linting, formatting, and CodeQL can be kept. The `test.yml` will need to be adapted for VSCode extension testing.
+### Files to Potentially Remove
 
+This section summarizes files that might need removal across different project types:
+
+#### VSCode Extensions
+*   `bin/cli.js` (unless your extension also provides a CLI tool).
+*   `src/index.js`, `src/bin/cli.js`
+*   `build/script.js`
+*   Review GitHub Actions workflows. Linting, formatting, and CodeQL can be kept. The `test.yml` will need to be adapted for VSCode extension testing.
+
+#### Browser Extensions
+*   Files specific to browser extensions (e.g., `manifest.json`).
+*   Review directory structure and remove unnecessary template files.
+
+Refer to this section when adapting the template for your specific project type.
 *   **Publishing:**
     *   Use `vsce` to package (`.vsix` file) and publish to the Visual Studio Code Marketplace.
 
