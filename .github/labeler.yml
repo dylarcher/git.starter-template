@@ -1,45 +1,36 @@
 automation:
-  - changed-files:
-      - .github/**/*.{yml,yaml,json}
-      - .github/action.yml
-      - .github/actions/**/*
-      - .github/dependabot.yml
-      - .github/labeler.yml
-      - .github/workflows/**/*
+  - .github/**/*.{yml,yaml,json}
+  - .github/action.yml
+  - .github/actions/**/*
+  - .github/dependabot.yml
+  - .github/labeler.yml
+  - .github/workflows/**/*
 configurational:
-  - changed-files:
-      - .*rc
-      - '**/*.{json5,json,jsonc,jsonl}'
-      - '**/*.{yaml,yml}'
-      - '**/*.config.*'
-      - config/**/*
-      - '*config*.*'
+  - .*rc
+  - '**/*.{json5,json,jsonc,jsonl}'
+  - '**/*.{yaml,yml}'
+  - '**/*.config.*'
+  - config/**/*
+  - '*config*.*'
 dependency:
-  - changed-files:
-      - package.json
-      - package-lock.json
-      - npm-shrinkwrap.json
-      - '**/*requirements*.txt'
+  - package.json
+  - package-lock.json
+  - npm-shrinkwrap.json
+  - '**/*requirements*.txt'
 documentation:
-  - changed-files:
-      - '**/*.md'
+  - '**/*.md'
 functional:
-  - changed-files:
-      - '**/*.{cjs,js,mjs}'
+  - '**/*.{cjs,js,mjs}'
 static_assets:
-  - changed-files:
-      - '**/*.{svg,png,jpg,jpeg,gif,webp,ico,avif}'
+  - '**/*.{svg,png,jpg,jpeg,gif,webp,ico,avif}'
 test_suite:
-  - changed-files:
-      - test/**/*
-      - .c8rc
-      - .c8rc.*
-      - '**/*.test.js'
-      - '**/*.spec.js'
+  - test/**/*
+  - .c8rc
+  - .c8rc.*
+  - '**/*.test.js'
+  - '**/*.spec.js'
 type_annotation:
-  - changed-files:
-      - '**/*.d.ts'
+  - '**/*.d.ts'
 version:
-  - changed-files:
-      - src/**/*version*.js
-      - src/**/*semver*.js
+  - src/**/*version*.js
+  - src/**/*semver*.js
