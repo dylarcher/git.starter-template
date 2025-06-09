@@ -1,6 +1,5 @@
 jobs:
   update-changelog:
-    if: startsWith(github.head_ref, 'release/')
     name: Update Changelog
     permissions:
       contents: write

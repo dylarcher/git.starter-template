@@ -96,7 +96,6 @@
     "enable": true,
     "include": [
       "@types/node",
-      "@types/vscode",
       "c8/experimental",
       "c8/globals"
     ]
