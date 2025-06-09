@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - id: inference
         name: Generate concise AI summary
-        uses: actions/ai-inference@v1
+        uses: actions/ai-inference@d645f067d89ee1d5d736a5990e327e504d1c5a4a # v1
         with:
           prompt: |
             Summarize the following GitHub issue clearly and concisely in one paragraph:
