@@ -12,8 +12,8 @@ valuable.
 2. **Clone Your Fork:** Clone your forked repository to your local machine.
 
     ```bash
-    git clone https://github.com/dylarcher/git.starter-template.git
-    cd git.starter-template
+    git clone https://github.com/YOUR_USERNAME/YOUR_REPOSITORY_NAME.git
+    cd YOUR_REPOSITORY_NAME
     ```
 
 3. **Create a Branch:** Create a new branch for your changes.
@@ -30,8 +30,7 @@ valuable.
 
 4. **Make Changes:** Implement your feature or bug fix.
 5. **Test Your Changes:** Ensure your changes work as expected and do not break
-   existing functionality. (While there isn't a formal test suite yet, manual
-   testing is appreciated).
+   existing functionality. Please ensure all tests pass by running `npm test` or equivalent commands as configured in the project.
 6. **Commit Your Changes:** Write clear and concise commit messages.
 
     ```bash
@@ -45,9 +44,9 @@ valuable.
     git push origin feature/your-feature-name
     ```
 
-8. **Open a Pull Request:** Go to the original git.starter-template
-   (<https://github.com/dylarcher/REPOSITORY_NAMESPACE>) and open a pull request
-   from your forked branch to the `dev` branch of the original repository.
+8. **Open a Pull Request:** Go to the `dylarcher/git.starter-template` repository
+   (<https://github.com/dylarcher/git.starter-template>) and open a pull request
+   from your forked branch to the `main` branch of the original repository.
    Provide a clear description of your changes.
 
 ## Reporting Bugs

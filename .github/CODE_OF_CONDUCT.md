@@ -69,6 +69,6 @@ If you experience or witness unacceptable behavior, or have any other concerns,
 please report it by contacting the project team at
 [dylarcher@gmail.com](mailto:dylarcher@gmail.com).
 
-**git.starter-template(../) Project Team**
+**The `git.starter-template` Project Team**
 
 [dylarcher@gmail.com](mailto:dylarcher@gmail.com)
