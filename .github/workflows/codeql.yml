@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: npm
-          node-version: 20.19.2
+          node-version: 20.11.1
       - env:
           NODE_ENV: production
         if: matrix.language == 'javascript'
@@ -60,7 +60,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           cache: npm
-          node-version: 20.19.2
+          node-version: 20.11.1
       - env:
           NODE_ENV: production
         if: matrix.language == 'javascript'

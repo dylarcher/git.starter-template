@@ -90,8 +90,7 @@
     "out"
   ],
   "include": [
-    "src",
-    "docs"
+    "src"
   ],
   "typeAcquisition": {
     "enable": true,

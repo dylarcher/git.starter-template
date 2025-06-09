@@ -8,12 +8,8 @@
     "url": "https://github.com/dylarcher/git.starter-template/issues"
   },
   "description": "A github starter template for creating a new repository with a set of predefined structures, documents and configurations.",
-  "dependencies": {
-    "yargs": "18.0.0"
-  },
   "devDependencies": {
-    "@types/node": "22.15.30",
-    "@types/yargs": "17.0.33"
+    "@types/node": "22.15.30"
   },
   "directories": {
     ".github": ".github",
@@ -24,7 +20,7 @@
     "test": "test"
   },
   "engines": {
-    "node": ">=20.19.2",
+    "node": ">=20.11.1",
     "npm": ">=10.8.2",
     "vscode": "1.100.0"
   },
@@ -52,7 +48,7 @@
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
-  "name": "enter-repository-namespace",
+  "name": "my-starter-package",
   "optionalDependencies": {
     "@types/chrome": "0.0.326",
     "@types/vscode": "1.100.0",
@@ -62,7 +58,7 @@
   "peerDependencies": {
     "typescript": "5.8.3"
   },
-  "private": true,
+  "private": false,
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
