@@ -14,8 +14,8 @@ jobs:
         run: npm ci
       - name: Install markdownlint-cli
         run: npm install -g markdownlint-cli
-      - name: Format project source code
-        run: npm run format
+      - name: Fix Markdown lint issues
+        run: markdownlint docs --fix
       - name: Check-in change(s) to project
         run: |
           git config --global user.name 'github-actions[bot]'
