@@ -1,21 +1,21 @@
 automation:
-  - .github/**/*.{yml,yaml,json}
-  - .github/action.yml
-  - .github/actions/**/*
-  - .github/dependabot.yml
-  - .github/labeler.yml
-  - .github/workflows/**/*
+  - '.github/**/*.{yml,yaml,json}'
+  - '.github/action.yml'
+  - '.github/actions/**/*'
+  - '.github/dependabot.yml'
+  - '.github/labeler.yml'
+  - '.github/workflows/**/*'
 configurational:
-  - .*rc
+  - '.*rc'
   - '**/*.{json5,json,jsonc,jsonl}'
   - '**/*.{yaml,yml}'
   - '**/*.config.*'
-  - config/**/*
+  - 'config/**/*'
   - '*config*.*'
 dependency:
-  - package.json
-  - package-lock.json
-  - npm-shrinkwrap.json
+  - 'package.json'
+  - 'package-lock.json'
+  - 'npm-shrinkwrap.json'
   - '**/*requirements*.txt'
 documentation:
   - '**/*.md'
@@ -24,13 +24,13 @@ functional:
 static_assets:
   - '**/*.{svg,png,jpg,jpeg,gif,webp,ico,avif}'
 test_suite:
-  - test/**/*
-  - .c8rc
-  - .c8rc.*
+  - 'test/**/*'
+  - '**/.c8rc'
+  - '**/.c8rc.*'
   - '**/*.test.js'
   - '**/*.spec.js'
 type_annotation:
   - '**/*.d.ts'
 version:
-  - src/**/*version*.js
-  - src/**/*semver*.js
+  - 'src/**/*version*.js'
+  - 'src/**/*semver*.js'
