@@ -70,9 +70,6 @@
   "scripts": {
     "build": "node build/script.js",
     "bundle:types": "echo 'Type declarations bundled by build script'",
-    "clean": "npm run clean:dist && npm run clean:libs",
-    "clean:dist": "npx rimraf dist lib test/coverage .vscode-test types bin",
-    "clean:libs": "npx rimraf node_modules package-lock.json .cache/npm",
     "format": "npx biome format --write --config-path .github/configs/biome.json src && node build/fix-markdown-lines.js && npx markdownlint-cli --config .github/configs/.markdownlint-fix.json --fix .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
     "lint": "npx biome lint --write --config-path .github/configs/biome.json src && npx yaml-lint -c .github/configs/yaml-lint.yaml .github/**/*.yml",
     "test": "c8 --config .github/configs/.c8rc.json node --test test/cli.test.js test/index.test.js",
