@@ -20,8 +20,8 @@ vulnerability within this project, please report it to us as soon as possible.
 
 **How to Report:**
 
-1. **Preferred Method: GitHub Issues:** Please open a new issue in our GitHub
-   repository's issue tracker.
+1. **Preferred Method: GitHub Issues:** Please open a new issue in the `git.starter-template` GitHub
+   repository's issue tracker (<https://github.com/dylarcher/git.starter-template/issues>).
    * Clearly title the issue with a security focus, e.g., "Security
      Vulnerability: (A Brief Description)".
    * Provide a detailed description of the vulnerability, including:
