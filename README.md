@@ -71,6 +71,21 @@ Be clear and compelling. This helps others understand the value and direction of
 `npm start`
 ```
 
+### Updating from the Original Template
+
+This project was generated from `https://github.com/dylarcher/git.starter-template`. To pull in the latest updates from this template repository, you can use the `update-template` script.
+
+This script will:
+1.  Ensure a git remote named `template` points to `https://github.com/dylarcher/git.starter-template.git`.
+2.  Fetch the latest changes from the `template` remote.
+3.  Merge the changes from `template/main` into your current branch, allowing for unrelated histories.
+
+To run the script:
+
+```bash
+npm run update-template
+```
+
 ## V. How to Contribute
 
 *   Briefly explain that contributions are welcome.
