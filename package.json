@@ -81,8 +81,8 @@
     "format": "npx biome format --write --config-path .github/configs/biome.json src && node build/fix-markdown-lines.js && npx markdownlint-cli --config .github/configs/.markdownlint-fix.json --fix .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
     "lint": "npx biome lint --write --config-path .github/configs/biome.json src && npx yaml-lint -c .github/configs/yaml-lint.yaml .github/**/*.yml",
     "test": "c8 --config .github/configs/.c8rc.json node --test test/cli.test.js test/index.test.js",
-    "update:dependencies": "npm update --save-dev && npm update --save",
-    "update-template": "git remote get-url template || git remote add template https://github.com/dylarcher/git.starter-template.git && git fetch template && git merge template/main --allow-unrelated-histories"
+    "update:project-deps": "npm update --save-dev && npm update --save",
+    "update:starter-temp": "git remote get-url template || git remote add template https://github.com/dylarcher/git.starter-template.git && git fetch template && git merge template/main --allow-unrelated-histories"
   },
   "type": "module",
   "types": "dist/index.d.ts",
