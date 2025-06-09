@@ -747,23 +747,23 @@ A mature repository setup includes robust practices for versioning software, man
 
 Semantic Versioning (SemVer) is a widely adopted standard for versioning software, providing a clear and consistent way to communicate the nature of changes between releases.107
 
-* Core Principles (MAJOR.MINOR.PATCH) 107: A version number takes the form X.Y.Z.
+## Core Principles (MAJOR.MINOR.PATCH) 107: A version number takes the form X.Y.Z.
 * MAJOR (X): Incremented for incompatible API changes. When X is incremented, Y and Z MUST be reset to 0.
 * MINOR (Y): Incremented when new functionality is added in a backward-compatible manner. It MAY also be incremented if substantial new functionality or improvements are introduced within private code or if public API functionality is marked as deprecated. When Y is incremented, Z MUST be reset to 0.
 * PATCH (Z): Incremented for backward-compatible bug fixes.
 * Initial development often starts at 0.1.0. Version 1.0.0 typically signifies the first stable, public API.
-* Pre-release Identifiers 107:
+## Pre-release Identifiers 107:
 * Appended to the patch version with a hyphen (e.g., 1.0.0-alpha, 1.0.0-beta.1, 2.3.0-rc.2).
 * Identifiers consist of ASCII alphanumerics and hyphens. Numeric identifiers MUST NOT have leading zeros.
 * Indicate that the version is unstable. Pre-release versions have lower precedence than their associated normal version (e.g., 1.0.0-alpha < 1.0.0).
-* Build Metadata 107:
+## Build Metadata 107:
 * Appended to the patch or pre-release version with a plus sign (e.g., 1.0.0+build.123, 1.0.0-alpha+001).
 * Identifiers consist of ASCII alphanumerics and hyphens.
 * Build metadata is ignored when determining version precedence. Two versions differing only in build metadata have the same precedence.
 
 Adherence to SemVer is vital for managing dependencies, as it allows developers and tools to understand the potential impact of updating to a new version.
 
-### Managing GitHub Releases
+## Managing GitHub Releases
 
 GitHub Releases provide a formal way to package and distribute specific versions of software to users, built on top of Git tags.1
 
