@@ -3,7 +3,7 @@
  * @module index
  */
 
-// TODO: Add library logic here.
+// TODO: Implement core library functionality, such as utility functions or data processing logic.
 
 /**
  * Example function.
