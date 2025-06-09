@@ -9,13 +9,13 @@
   },
   "description": "A github starter template for creating a new repository with a set of predefined structures, documents and configurations.",
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
+    "@biomejs/biome": "1.9.4",
     "@types/node": "22.15.30",
     "c8": "10.1.3",
-    "markdownlint-cli": "0.41.0",
-    "rimraf": "5.0.7",
+    "markdownlint-cli": "0.45.0",
+    "rimraf": "6.0.1",
     "typescript": "5.8.3",
-    "yaml-lint": "1.14.0"
+    "yaml-lint": "1.7.0"
   },
   "directories": {
     ".github": ".github",
@@ -83,5 +83,10 @@
   },
   "type": "module",
   "types": "dist/index.d.ts",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "optionalDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "markdownlint-cli": "0.41.0",
+    "rimraf": "5.0.7"
+  }
 }
