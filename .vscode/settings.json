@@ -188,6 +188,7 @@
     "MD010": true,
     "MD011": true,
     "MD012": true,
+    "MD013": false,
     "MD014": true,
     "MD018": true,
     "MD019": true,
@@ -214,7 +215,7 @@
       }
     }
   },
-  "markdownlint.configFile": ".github/configs/.markdownlintrc.json",
+  "markdownlint.configFile": "./github/**/.markdownlint.json",
   "sortJSON.contextMenu": {
     "sortJSON": true,
     "sortJSONAlphaNum": false,
@@ -262,5 +263,6 @@
   "yaml.validate": true,
   "yaml.yamlVersion": "1.2",
   "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": "file:///Users/darcher/dev/template.repo-starter/.github/workflows/log.yml"
   }
 }

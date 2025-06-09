@@ -9,13 +9,8 @@
   },
   "description": "A github starter template for creating a new repository with a set of predefined structures, documents and configurations.",
   "devDependencies": {
-    "@biomejs/biome": "1.8.3",
     "@types/node": "22.15.30",
-    "c8": "10.1.3",
-    "markdownlint-cli": "0.41.0",
-    "rimraf": "5.0.7",
-    "typescript": "5.8.3",
-    "yaml-lint": "1.14.0"
+    "c8": "10.1.3"
   },
   "directories": {
     ".github": ".github",
@@ -57,7 +52,14 @@
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "name": "my-starter-package",
+  "optionalDependencies": {
+    "@types/chrome": "0.0.326",
+    "@types/vscode": "1.100.0"
+  },
   "packageManager": "npm@10.8.2",
+  "peerDependencies": {
+    "typescript": "5.8.3"
+  },
   "private": false,
   "publishConfig": {
     "access": "public",
@@ -70,13 +72,13 @@
   "scripts": {
     "build": "node build/script.js",
     "bundle:types": "tsc --project tsconfig.json",
-    "clean": "npm run clean:dist-build && npm run clean:libs",
-    "clean:all": "npm run clean:dist-build && npm run clean && npm run clean:cache",
+    "clean": "npm run clean:dist && npm run clean:libs",
+    "clean:all": "npm run clean && npm run clean:cache && npm run clean:dist-build",
     "clean:dist-build": "npx rimraf dist lib test/coverage .vscode-test types bin build/.tsbuildinfo",
     "clean:cache": "npm cache clean --force",
     "clean:libs": "npx rimraf node_modules package-lock.json .cache/npm",
-    "format": "npx biome format --write --config-path .github/configs/biome.json src && node build/fix-markdown-lines.js && npx markdownlint-cli --config .github/configs/.markdownlint-fix.json --fix .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md && npx markdownlint-cli --config .github/configs/.markdownlintrc.json .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
-    "lint": "npx biome lint --write --config-path .github/configs/biome.json src && npx yaml-lint -c .github/configs/yaml-lint.yaml .github/**/*.yml && npx markdownlint-cli --config .github/configs/.markdownlintrc.json .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
+    "format": "npx biome format --write --config-path .github/configs/biome.json src && node build/fix-markdown-lines.js && npx markdownlint-cli --config .github/configs/.markdownlint-fix.json --fix .github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
+    "lint": "npx biome lint --write --config-path .github/configs/biome.json src && npx yaml-lint -c .github/configs/yaml-lint.yaml .github/**/*.yml",
     "test": "c8 --config .github/configs/.c8rc.json node --test test/cli.test.js test/index.test.js",
     "update:project-deps": "npm update --save-dev && npm update --save",
     "update:starter-temp": "git remote get-url template || git remote add template https://github.com/dylarcher/git.starter-template.git && git fetch template && git merge template/main --allow-unrelated-histories"

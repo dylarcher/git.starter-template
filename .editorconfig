@@ -16,7 +16,7 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 # good practice: ignore whitespace rules (optional)
-[{*.md,*.txt}]
+[{*.md,*.txt,*.json,*.yml}]
 trim_trailing_whitespace = false
 
 #* below this: specific language rules (optional)
