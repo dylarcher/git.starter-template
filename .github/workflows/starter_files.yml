@@ -1,5 +1,5 @@
 jobs:
-  update_template:
+  update-template:
     runs-on: ubuntu-latest
     permissions:
       contents: write # Required to push changes back to the repository

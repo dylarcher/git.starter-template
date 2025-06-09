@@ -42,7 +42,7 @@ jobs:
         include:
           - build-mode: none
             language: javascript
-  scan_and_autofix_main:
+  scan-and-autofix-main:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     name: CodeQL Scan and Autofix (${{ matrix.language }}) (main branch)
     permissions:
