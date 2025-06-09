@@ -2,17 +2,17 @@ jobs:
   label:
     permissions:
       contents: read
-      pull-requests: write
       issues: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
-          submodules: true
           fetch-depth: 0
+          submodules: true
       - name: Apply project labels
-        uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9 # v5
+        uses: actions/labeler@8558fd74291d67161a8a78ce36a881fa63b766a9
         with:
           configuration-path: .github/labeler.yml
           dot: true
