@@ -22,26 +22,28 @@ example: "Fixes #123" or "Related to #456".)*
 
 *(To help us categorize and understand the impact of your PR, please describe
 the type of change. For example:*
-*   ***Bug Fix:*** *Does it resolve an incorrect behavior? If so, what was the
+
+* ***Bug Fix:*** *Does it resolve an incorrect behavior? If so, what was the
     bug?*
-*   ***New Feature:*** *Does it introduce new functionality? What does it
+* ***New Feature:*** *Does it introduce new functionality? What does it
     enable?*
-*   ***Breaking Change:*** *Does this PR alter existing functionality in a way
+* ***Breaking Change:*** *Does this PR alter existing functionality in a way
     that might require users to change their current usage?*
-*   ***Documentation Update:*** *Are you improving or adding documentation?*
-*   ***Refactoring/Maintenance:*** *Is this primarily a code cleanup or internal
+* ***Documentation Update:*** *Are you improving or adding documentation?*
+* ***Refactoring/Maintenance:*** *Is this primarily a code cleanup or internal
     improvement with no direct functional change for the end-user?*
-*   ***Performance Improvement:*** *Does this enhance performance? How was this
+* ***Performance Improvement:*** *Does this enhance performance? How was this
     measured or observed?*
-*   ***Testing Updates:*** *Are you adding or modifying tests?*
-*   ***Other:*** *Please specify.)*
+* ***Testing Updates:*** *Are you adding or modifying tests?*
+* ***Other:*** *Please specify.)*
 
 ## Testing Done
 
 *(Please describe the testing you've performed to verify your changes.*
-*   *Did you add new tests? What do they cover?*
-*   *Did existing tests pass with your changes?*
-*   *If manual testing was done, what steps did you follow?)*
+
+* *Did you add new tests? What do they cover?*
+* *Did existing tests pass with your changes?*
+* *If manual testing was done, what steps did you follow?)*
 
 ## Important Considerations for Reviewers
 
@@ -51,11 +53,12 @@ potential impacts or trade-offs to be aware of?)*
 ## Self-Check Confirmation
 
 *(Before submitting, it's helpful to confirm a few things:*
-*   *Have you reviewed your own code changes?*
-*   *Does your code generally align with the project's style (if known)?*
-*   *Have you considered if documentation needs to be updated due to your
+
+* *Have you reviewed your own code changes?*
+* *Does your code generally align with the project's style (if known)?*
+* *Have you considered if documentation needs to be updated due to your
     changes?*
-*   *Have you checked for and resolved any merge conflicts?)*
+* *Have you checked for and resolved any merge conflicts?)*
 
 *(This section is for your reflection; no need to leave checkboxes, just confirm
 you've considered these points.)*
