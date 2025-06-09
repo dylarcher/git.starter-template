@@ -1,8 +1,10 @@
 extends: default
 ignore:
-  - node_modules/
-  - .idx/
-  - .vscode/
+  - .idx
+  - .vscode
+  - dist
+  - node_modules
+  - test
 rules:
   line-length:
     level: warning

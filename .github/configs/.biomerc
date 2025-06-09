@@ -1,0 +1,28 @@
+$schema: https://biomejs.dev/schemas/latest/schema.json
+css:
+  formatter:
+    enabled: true
+files:
+  ignore:
+    - '**/test/coverage/**'
+formatter:
+  bracketSpacing: true
+  enabled: true
+  indentStyle: space
+  indentWidth: 2
+  lineEnding: lf
+  lineWidth: 80
+javascript:
+  formatter:
+    enabled: true
+json:
+  formatter:
+    enabled: true
+linter:
+  enabled: true
+  rules:
+    recommended: true
+    style:
+      useFilenamingConvention: warn
+organizeImports:
+  enabled: true

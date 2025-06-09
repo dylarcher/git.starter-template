@@ -1,6 +1,21 @@
 {
   "IDX.aI.enableCodebaseIndexing": true,
   "IDX.aI.enableInlineCompletion": true,
+  "files.associations": {
+    ".npmrc": "properties",
+    ".nvmrc": "properties",
+    ".editorconfig": "ini",
+    ".gitattributes": "ini",
+    ".gitignore": "properties",
+    ".biomerc": "yaml",
+    ".commitlintrc": "yaml",
+    ".c8rc": "yaml",
+    ".markdownlintrc": "yaml",
+    ".stylelintrc": "yaml",
+    ".eslintrc": "yaml",
+    ".prettierrc": "yaml",
+    ".yamllintrc": "yaml",
+  },
   "[css]": {
     "editor.codeActionsOnSave": {
       "source.addMissingImports": "always",

@@ -1,0 +1,79 @@
+extends: default
+rules:
+  alias-check:
+    level: warning
+  anchor-check:
+    level: warning
+  comments:
+    level: warning
+  document-end:
+    level: warning
+  document-start:
+    level: warning
+  empty-keys:
+    level: warning
+  empty-lines:
+    level: warning
+    max: 1
+  empty-lines-between:
+    level: warning
+  empty-lines-between-anchors:
+    level: warning
+  empty-lines-between-comments:
+    level: warning
+  empty-lines-between-directives:
+    level: warning
+  empty-lines-between-documents:
+    level: warning
+  empty-lines-between-items:
+    level: warning
+  empty-lines-between-mappings:
+    level: warning
+  empty-lines-between-scalar:
+    level: warning
+  empty-lines-between-sequences:
+    level: warning
+  empty-lines-between-tags:
+    level: warning
+  empty-lines-between-top-level-items:
+    level: warning
+  empty-lines-end:
+    level: warning
+  empty-lines-start:
+    level: warning
+  empty-values:
+    level: warning
+  flow-mapping-compact:
+    level: warning
+  flow-sequence-compact:
+    level: warning
+  indentation:
+    level: warning
+    spaces: 2
+  key-duplicates:
+    level: error
+  key-ordering:
+    level: warning
+  line-length:
+    level: warning
+    max: 80
+  mapping-style:
+    level: warning
+    style: block
+  new-line-at-end-of-file:
+    level: warning
+  octal-values:
+    level: warning
+  quoted-strings:
+    level: warning
+  sequence-style:
+    level: warning
+    style: block
+  tag-check:
+    level: warning
+  timestamp-check:
+    level: warning
+  trailing-spaces:
+    level: warning
+  value-type:
+    level: warning

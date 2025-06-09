@@ -1,0 +1,34 @@
+rules:
+  - enabled: true
+    id: color-contrast
+  - enabled: true
+    id: button-name
+  - enabled: true
+    id: link-name
+  - enabled: true
+    id: image-alt
+  - enabled: true
+    id: input-image-alt
+  - enabled: true
+    id: label
+  - enabled: true
+    id: layout-table
+  - enabled: true
+    id: scope
+  - enabled: true
+    id: scrollable-region-focusable
+  - enabled: true
+    id: select-name
+  - enabled: true
+    id: server-side-image-map
+  - enabled: true
+    id: td-headers-attr
+  - enabled: true
+    id: th-has-data-cells
+  - enabled: true
+    id: video-caption
+  - enabled: true
+    id: video-description
+  - enabled: true
+    id: video-transcription
+version: 1

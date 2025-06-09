@@ -1,0 +1,16 @@
+default: true
+ignores:
+  - node_modules
+  - dist
+MD013:
+  code_block_line_length: 200
+  heading_line_length: 96
+  line_length: 80
+  stern: true
+  tables: true
+MD028: false
+MD033: true
+MD036: false
+MD041: true
+MD046:
+  style: hyphenated
