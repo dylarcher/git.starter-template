@@ -1,0 +1,60 @@
+all: true
+allProbes: true
+branches: 87.5
+check-coverage: false
+exclude: [node_modules]
+excludeNodeModules: true
+extension:
+  - .js
+functions: 90
+include:
+  - src/**/*.js
+lines: 95
+report-dir: test/coverage
+reporter:
+  - text
+  - lcov
+  - text-summary
+  - html
+  - json
+  - json-summary
+  - cobertura
+  - clover
+reporterOptions:
+  clover:
+    file: clover.xml
+    subdir: clover
+  cobertura:
+    file: cobertura.xml
+    subdir: cobertura
+  html:
+    subdir: html
+  json:
+    file: coverage.json
+    subdir: json
+  json-summary:
+    file: coverage-summary.json
+    subdir: json
+  lcov:
+    file: coverage.lcov
+    subdir: lcov
+  text:
+    file: coverage.txt
+    subdir: text
+  text-summary:
+    file: coverage-summary.txt
+    subdir: text
+statements: 92.5
+watermarks:
+  branches:
+    - 36
+    - 80
+  functions:
+    - 32
+    - 64
+  lines:
+    - 48
+    - 72
+  statements:
+    - 48
+    - 96
