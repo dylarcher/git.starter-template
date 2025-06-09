@@ -1,24 +1,12 @@
-'@types':
-  - changed-files:
-      - '**/*.d.ts'
 automation:
   - changed-files:
-      - .github/**/*.yml
-      - .github/**/*.yaml
-      - .github/**/*.json
-      - .github/workflows/**
-      - .github/actions/**
-      - .github/workflows/*.yml
-      - .github/actions/*.js
-      - action.yml
+      - .github/**/*.{yml,yaml,json}
       - .github/action.yml
-chore:
-  - changed-files:
-      - .github/*
-      - .gitignore
-      - .eslintrc*
-      - .prettier*
-config:
+      - .github/actions/**/*
+      - .github/dependabot.yml
+      - .github/labeler.yml
+      - .github/workflows/**/*
+configurational:
   - changed-files:
       - .*rc
       - '**/*.{json5,json,jsonc,jsonl}'
@@ -26,35 +14,31 @@ config:
       - '**/*.config.*'
       - config/**/*
       - '*config*.*'
-deps:
+dependency:
   - changed-files:
       - package.json
       - package-lock.json
       - npm-shrinkwrap.json
       - '**/*requirements*.txt'
-docs:
+documentation:
   - changed-files:
       - '**/*.md'
 functional:
   - changed-files:
       - '**/*.{cjs,js,mjs}'
-media:
+static_assets:
   - changed-files:
-      - '**/*.svg'
-      - '**/*.png'
-      - '**/*.jpg'
-      - '**/*.jpeg'
-      - '**/*.gif'
-      - '**/*.webp'
-      - '**/*.ico'
-      - '**/*.avif'
-test:
+      - '**/*.{svg,png,jpg,jpeg,gif,webp,ico,avif}'
+test_suite:
   - changed-files:
       - test/**/*
       - .c8rc
       - .c8rc.*
       - '**/*.test.js'
       - '**/*.spec.js'
+type_annotation:
+  - changed-files:
+      - '**/*.d.ts'
 version:
   - changed-files:
       - src/**/*version*.js
