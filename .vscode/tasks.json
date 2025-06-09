@@ -46,8 +46,7 @@
           "endsPattern": "Server started"
         }
       }
-    }
-    ,
+    },
     {
       "label": "test",
       "type": "shell",

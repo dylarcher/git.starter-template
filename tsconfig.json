@@ -3,17 +3,15 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "rootDirs": [
-      "bin",
-      "docs",
-      "src",
-      "test",
-      "lib"
-    ],
     "checkJs": true,
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "declarationDir": "dist",
     "esModuleInterop": true,
     "jsx": "preserve",
     "lib": [
@@ -36,6 +34,8 @@
     ],
     "module": "esnext",
     "moduleResolution": "node",
+    "incremental": true,
+    "inlineSourceMap": true,
     "noEmit": false,
     "outDir": "dist",
     "paths": {
@@ -46,7 +46,7 @@
         "src/*"
       ],
       "bin/*": [
-        "bin/*"
+        "src/bin/*"
       ],
       "conf/*": [
         "git/configs/*"
@@ -61,7 +61,7 @@
         "logs/*",
         "reports/*",
         "coverage/*",
-        "#/coverage/*",
+        "#/coverage/*"
       ],
       "src/*": [
         "src/*"
@@ -74,30 +74,28 @@
       ]
     },
     "resolveJsonModule": true,
-    "sourceMap": true,
+    "rootDirs": [
+      "src",
+      "dist"
+    ],
     "strict": true,
     "target": "esnext"
   },
   "exclude": [
-    "build",
-    "bundles",
-    "coverage",
     "release",
     "dist",
+    "test",
     "lib",
     "node_modules",
     "out"
   ],
   "include": [
-    "bin",
-    "docs",
     "src"
-, "lib/bin", "lib/index.js"  ],
+  ],
   "typeAcquisition": {
     "enable": true,
     "include": [
       "@types/node",
-      "@types/vscode",
       "c8/experimental",
       "c8/globals"
     ]

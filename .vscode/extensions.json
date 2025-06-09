@@ -1,7 +1,10 @@
 {
   "recommendations": [
     "PascalReitermann93.vscode-yaml-sort",
+    "biomejs.biome",
+    "davidanson.vscode-markdownlint",
+    "jock.svg",
     "richie5um2.vscode-sort-json",
-    "ritwickdey.LiveServer",
+    "ritwickdey.LiveServer"
   ]
 }

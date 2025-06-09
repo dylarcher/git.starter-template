@@ -4,7 +4,7 @@ updates:
     schedule:
       interval: daily
   - directory: /
-    package-ecosystem: gitsubmodule
+    package-ecosystem: docker
     schedule:
       interval: daily
   - directory: /

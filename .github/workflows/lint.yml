@@ -1,15 +1,26 @@
 jobs:
   lint:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
-          node-version: 18.x
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20.11.1
       - name: Project dependency setup
-        run: npm install
+        run: npm ci
       - name: Lint project source code
-        run: npx eslint src/**/*.js
-name: ESLint
-on: [pull_request, workflow_dispatch]
+        run: npm run lint
+      - name: Check-in change(s) to project
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --staged --quiet || (git commit -m "Automated linting fixes" && git push)
+name: Lint code using Biome
+'on': [pull_request]

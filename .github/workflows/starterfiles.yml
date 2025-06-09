@@ -1,0 +1,44 @@
+name: Update from Template
+
+on:
+  workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+
+jobs:
+  update_template:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to push changes back to the repository
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: '.nvmrc' # Uses version from .nvmrc
+          cache: 'npm' # Cache npm dependencies
+
+      - name: Install dependencies
+        run: npm ci # Use ci for cleaner installs in CI
+
+      - name: Update from template repository
+        run: npm run update:starter-temp
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          # Check if there are any changes to commit
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git add .
+          git commit -m "chore: update from starter template"
+          # Pull before pushing to avoid conflicts if the branch was updated since checkout
+          git pull --rebase
+          git push
