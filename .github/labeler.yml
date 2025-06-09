@@ -1,31 +1,31 @@
 automation:
-  - .github/**/*
+  - ".github/**/*"
 configurational:
-  - .*rc
-  - '**/*.{json5,json,jsonc,jsonl}'
-  - '**/*.{yaml,yml}'
-  - '**/*.config.*'
-  - config/**/*
-  - '*config*.*'
+  - ".*rc"
+  - "**/*.{json5,json,jsonc,jsonl}"
+  - "**/*.{yaml,yml}"
+  - "**/*.config.*"
+  - "config/**/*"
+  - "*config*.*"
 dependency:
-  - package.json
-  - package-lock.json
-  - npm-shrinkwrap.json
-  - '**/*requirements*.txt'
+  - "package.json"
+  - "package-lock.json"
+  - "npm-shrinkwrap.json"
+  - "**/*requirements*.txt"
 documentation:
-  - '**/*.md'
+  - "**/*.md"
 functional:
-  - '**/*.{cjs,js,mjs}'
+  - "**/*.{cjs,js,mjs}"
 static_assets:
-  - '**/*.{svg,png,jpg,jpeg,gif,webp,ico,avif}'
+  - "**/*.{svg,png,jpg,jpeg,gif,webp,ico,avif}"
 test_suite:
-  - test/**/*
-  - '**/.c8rc'
-  - '**/.c8rc.*'
-  - '**/*.test.js'
-  - '**/*.spec.js'
+  - "test/**/*"
+  - "**/.c8rc"
+  - "**/.c8rc.*"
+  - "**/*.test.js"
+  - "**/*.spec.js"
 type_annotation:
-  - '**/*.d.ts'
+  - "**/*.d.ts"
 version:
-  - '**/*version*.js'
-  - '**/*semver*.js'
+  - "**/*version*.js"
+  - "**/*semver*.js"
