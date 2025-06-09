@@ -68,5 +68,4 @@ name: Update CHANGELOG.md automatically
 on:
   pull_request:
     branches: [main]
-    paths: [CHANGELOG.md]
     types: [opened, reopened, synchronize]
