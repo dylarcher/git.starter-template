@@ -119,24 +119,21 @@ new features from this template into your own project.
 1. Clone the repository: `git clone https://github.com/yourusername/yourproject.git`
 2. Navigate to the project directory: `cd yourproject`
 3. Install dependencies: `npm install`
-
-1. **Ensure your project was created from this template.**
-2. **Go to the "Actions" tab in your repository.**
-3. **Select the "Update from Template" workflow** from the list of workflows.
-4. **Click the "Run workflow" button.** You can usually leave the default
+4. **Ensure your project was created from this template.**
+5. **Go to the "Actions" tab in your repository.**
+6. **Select the "Update from Template" workflow** from the list of workflows.
+7. **Click the "Run workflow" button.** You can usually leave the default
     branch (`main` or `master`) selected.
-5. This workflow will fetch the latest changes from
+8. This workflow will fetch the latest changes from
     `dylarcher/git.starter-template`, create a new branch in your repository
     with these changes, and open a pull request.
-6. **Review the pull request** carefully. It will contain all the commits made
+9. **Review the pull request** carefully. It will contain all the commits made
     to this template since you last updated or since your project was created.
-7. **Merge the pull request** to incorporate the updates. You may need to
+10. **Merge the pull request** to incorporate the updates. You may need to
     resolve merge conflicts if you've made changes to the same files that were
     updated in the template.
 
 `npm start`
-
-```
 
 ### Updating from the Original Template
 
