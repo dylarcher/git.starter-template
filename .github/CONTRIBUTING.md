@@ -30,7 +30,8 @@ valuable.
 
 4. **Make Changes:** Implement your feature or bug fix.
 5. **Test Your Changes:** Ensure your changes work as expected and do not break
-   existing functionality. Please ensure all tests pass by running `npm test` or equivalent commands as configured in the project.
+   existing functionality. Please ensure all tests pass by running `npm test` or
+   equivalent commands as configured in the project.
 6. **Commit Your Changes:** Write clear and concise commit messages.
 
     ```bash
@@ -44,7 +45,8 @@ valuable.
     git push origin feature/your-feature-name
     ```
 
-8. **Open a Pull Request:** Go to the `dylarcher/git.starter-template` repository
+8. **Open a Pull Request:** Go to the `dylarcher/git.starter-template`
+   repository
    (<https://github.com/dylarcher/git.starter-template>) and open a pull request
    from your forked branch to the `main` branch of the original repository.
    Provide a clear description of your changes.
