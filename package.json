@@ -71,7 +71,7 @@
     "build": "node build/script.js",
     "bundle:types": "tsc --project tsconfig.json",
     "clean": "npm run clean:dist-build && npm run clean:libs",
-    "clean:all": "npm run clean && npm run clean:cache",
+    "clean:all": "npm run clean:dist-build && npm run clean && npm run clean:cache",
     "clean:dist-build": "npx rimraf dist lib test/coverage .vscode-test types bin build/.tsbuildinfo",
     "clean:cache": "npm cache clean --force",
     "clean:libs": "npx rimraf node_modules package-lock.json .cache/npm",
