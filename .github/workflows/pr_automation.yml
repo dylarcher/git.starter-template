@@ -44,14 +44,13 @@ jobs:
             LABEL_TO_ADD="style"
           elif [[ "$BRANCH_NAME" == build/* ]]; then
             LABEL_TO_ADD="build"
+          else
+            echo "No valid branch prefix found. Skipping label application."
+            exit 0
           fi
 
-          if [ -n "$LABEL_TO_ADD" ]; then
-            gh pr edit ${{ github.event.pull_request.number }} --add-label "$LABEL_TO_ADD"
-            echo "Label '$LABEL_TO_ADD' added."
-          else
-            echo "No matching branch prefix found for labeling."
-          fi
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "$LABEL_TO_ADD"
+          echo "Label '$LABEL_TO_ADD' added."
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
