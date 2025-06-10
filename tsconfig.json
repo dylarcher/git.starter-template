@@ -57,7 +57,7 @@
       "log/*": [
         "logs/*",
         "reports/*",
-        "test/coverage/*"
+        "#/coverage/*"
       ],
       "src/*": [
         "src/*"
