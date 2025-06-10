@@ -23,7 +23,7 @@ jobs:
       - name: Install linting and fixing tools
         run: |
           python -m pip install --upgrade pip
-          pip install yamllint yamlfixer-opt-nc
+          pip install yamllint==1.32.0 yamlfixer-opt-nc==0.5.1
 
       - name: Run yamlfixer (includes yamllint)
         run: |
