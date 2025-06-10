@@ -5,7 +5,7 @@
       "label": "lint",
       "type": "shell",
       "command": "npm run lint",
-      "problemMatcher": [],
+      "problemMatcher": ["$eslint-stylish"],
       "group": {
         "kind": "test",
         "isDefault": true
