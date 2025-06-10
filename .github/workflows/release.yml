@@ -44,8 +44,7 @@ jobs:
         # This assumes 'dist' is the primary build output directory.
         # Add other files/directories if needed.
 
-      - name: Move archive to release directory
-        run: mv release/release-${{ steps.get_version.outputs.VERSION }}.zip release/
+# Removed redundant 'mv' step as the ZIP file is already created in the 'release/' directory.
 
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
