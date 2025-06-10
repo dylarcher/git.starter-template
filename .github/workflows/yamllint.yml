@@ -20,12 +20,14 @@ jobs:
         with:
           python-version: '3.x' # Or your preferred Python version
 
-      - name: Install yamllint
-        run: pip install yamllint
-
-      - name: Run yamllint
+      - name: Install linting and fixing tools
         run: |
-          yamllint --config-file .github/configs/yaml-lint.yaml --fix .
+          python -m pip install --upgrade pip
+          pip install yamllint==1.32.0 yamlfixer-opt-nc==0.5.1
+
+      - name: Run yamlfixer (includes yamllint)
+        run: |
+          yamlfixer --config-file .github/configs/yaml-lint.yaml --recurse -1 .
 
       - name: Check for changes
         id: check_changes
@@ -61,7 +63,7 @@ jobs:
           git commit -m "Automated YAML linting fixes"
 
           echo "Pushing branch $BRANCH_NAME"
-          git push --set-upstream origin $BRANCH_NAME
+          git push -u origin $BRANCH_NAME
 
           echo "Creating Pull Request"
           gh pr create \
