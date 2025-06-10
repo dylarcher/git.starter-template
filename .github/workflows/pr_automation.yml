@@ -16,7 +16,7 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           LABEL_TO_ADD=""
           if [[ "$BRANCH_NAME" == feat/* ]]; then
-            LABEL_TO_ADD="feat"
+            LABEL_TO_ADD="new"
           elif [[ "$BRANCH_NAME" == fix/* ]]; then
             LABEL_TO_ADD="fix"
           elif [[ "$BRANCH_NAME" == chore/* ]]; then
@@ -24,16 +24,16 @@ jobs:
           elif [[ "$BRANCH_NAME" == docs/* ]]; then
             LABEL_TO_ADD="docs"
           elif [[ "$BRANCH_NAME" == ci/* ]]; then
-            LABEL_TO_ADD="ci"
-          elif [[ "$BRANCH_NAME" == refac/* ]]; then
-            LABEL_TO_ADD="refac"
+            LABEL_TO_ADD="auto"
+          elif [[ "$BRANCH_NAME" == rework/* ]]; then
+            LABEL_TO_ADD="redo"
           elif [[ "$BRANCH_NAME" == test/* ]]; then
             LABEL_TO_ADD="test"
           elif [[ "$BRANCH_NAME" == perf/* ]]; then
             LABEL_TO_ADD="perf"
           elif [[ "$BRANCH_NAME" == css/* ]]; then
-            LABEL_TO_ADD="css"
-          elif [[ "$BRANCH_NAME" == make/* ]]; then
+            LABEL_TO_ADD="ui"
+          elif [[ "$BRANCH_NAME" == build/* ]]; then
             LABEL_TO_ADD="make"
           fi
           if [ -n "$LABEL_TO_ADD" ]; then

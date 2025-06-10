@@ -5,9 +5,6 @@ auto:
   - .github/dependabot.yml
   - .github/labeler.yml
   - .github/CODEOWNERS
-bug:
-  - bug/*
-ci:
   - ci/*
 conf:
   - .*
@@ -46,8 +43,11 @@ docs:
 fix:
   - hotfix/*
   - bugfix/*
+  - bug/*
   - fix/*
-func:
+make:
+  - build/*
+new:
   - '**/*.js'
   - '**/*.cjs'
   - '**/*.mjs'
@@ -56,11 +56,9 @@ func:
   - '**/*.tsx'
   - '**/*.ejs'
   - '**/*.py'
-make:
-  - build/*
 perf:
   - perf/*
-refac:
+redo:
   - refactor/*
 res:
   - '**/*.avif'
