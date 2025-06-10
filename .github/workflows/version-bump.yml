@@ -7,14 +7,10 @@ jobs:
         with:
           fetch-depth: 0 # Fetches all history for all branches and tags
           tags: true # Ensures tags are fetched
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-      - name: Install dependencies
-        run: |
-          npm ci
-          npm install semver
+      - name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
+      - name: Install semver utility
+        run: npm install semver
       - id: get_version
         name: Determine last version
         run: |
@@ -162,6 +158,9 @@ jobs:
           git push
           git push --tags
 name: Automated Version Bump
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches:
