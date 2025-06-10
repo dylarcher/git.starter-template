@@ -1,6 +1,4 @@
-name: Code Quality
-'on': [pull_request]
-
+---
 jobs:
   code-quality:
     permissions:
@@ -34,12 +32,12 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -A
           git diff --staged --quiet || (git commit -m "Automated linting fixes" && git push)
-      - name: Check for persistent Biome issues
+      - continue-on-error: true
         id: check_biome
+        name: Check for persistent Biome issues
         run: npx biome lint src --config-path .github/configs/biome.json
-        continue-on-error: true
-      - name: Add 'action needed' label
-        if: steps.check_biome.outcome == 'failure'
+      - if: steps.check_biome.outcome == 'failure'
+        name: Add 'action needed' label
         uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -50,3 +48,5 @@ jobs:
               issue_number: context.issue.number,
               labels: ['action needed']
             });
+name: Code Quality
+'on': [pull_request]
