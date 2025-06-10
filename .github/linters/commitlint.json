@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json.schemastore.org/commitlintrc.json",
+  "extends": [
+    "@commitlint/config-conventional"
+  ],
+  "ignore": [
+    "node_modules/**",
+    ".git/**",
+    ".github/**",
+    ".vscode/**",
+    ".idea/**",
+    ".idx/**",
+    ".vscode-test/**",
+    "lib/**",
+    "build/**",
+    "scripts/**",
+    "test/**",
+    "docs/**",
+    ".tmp/**",
+    ".temp/**",
+    ".cache/**",
+    "dist/**"
+  ]
+}

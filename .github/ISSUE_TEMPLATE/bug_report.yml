@@ -36,19 +36,19 @@ body:
     validations:
       required: true
   - attributes:
-      description: What version of our software are you running?
+      description: Template Version (if applicable, e.g., if forked from a specific release of the template)
       label: Version
       placeholder: e.g. 1.1.0
     id: version
     type: input
     validations:
-      required: true
+      required: false
   - attributes:
       description: |
         Examples:
         - **OS**: Ubuntu 20.04
-        - **Node**: 14.15.0
-        - **npm**: 6.14.8
+        - **Node**: 20.x.x
+        - **npm**: 10.x.x
       label: Environment
       value: |
         - OS:
@@ -67,6 +67,6 @@ body:
     id: terms
     type: checkboxes
 description: Report a problem or unexpected behavior
-labels: ["bugfix"]
+labels: ["bug"]
 name: Bug Report
 title: "[BUG]: "

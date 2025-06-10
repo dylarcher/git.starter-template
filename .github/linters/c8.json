@@ -1,0 +1,79 @@
+{
+  "$schema": "https://raw.githubusercontent.com/istanbuljs/schema/master/coverage.schema.json",
+  "all": true,
+  "allProbes": true,
+  "branches": 87.5,
+  "check-coverage": false,
+  "exclude": [
+    ".cache/**/*",
+    ".git/**/*",
+    ".github/**/*",
+    ".idea/**/*",
+    ".idx/**/*",
+    ".temp/**/*",
+    ".tmp/**/*",
+    ".vs/**/*",
+    ".vscode-test/**/*",
+    ".vscode/**/*",
+    "build/**/*",
+    "dist/**/*",
+    "docs/**/*",
+    "lib/**/*",
+    "node_modules/**/*",
+    "scripts/**/*",
+    "test/**/*"
+  ],
+  "excludeNodeModules": true,
+  "extension": [
+    ".js"
+  ],
+  "functions": 90,
+  "include": [
+    "src/**/*.js"
+  ],
+  "lines": 95,
+  "reporterOptions": {
+    "clover": {
+      "file": "clover.xml",
+      "subdir": "clover"
+    },
+    "cobertura": {
+      "file": "cobertura.xml",
+      "subdir": "cobertura"
+    },
+    "html": {
+      "subdir": "html"
+    },
+    "json": {
+      "file": "coverage.json",
+      "subdir": "json"
+    },
+    "lcov": {
+      "file": "coverage.lcov",
+      "subdir": "lcov"
+    },
+    "text": {
+      "file": "coverage.txt",
+      "subdir": "text"
+    }
+  },
+  "statements": 92.5,
+  "watermarks": {
+    "branches": [
+      36,
+      80
+    ],
+    "functions": [
+      32,
+      64
+    ],
+    "lines": [
+      48,
+      72
+    ],
+    "statements": [
+      48,
+      96
+    ]
+  }
+}
