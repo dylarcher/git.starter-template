@@ -126,7 +126,7 @@ Please review the issue content and take necessary action.`,
                   await github.rest.git.deleteRef({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    ref: `heads/${branchName}`,
+                    ref: `refs/heads/${branchName}`,
                   });
                   console.log(`Cleaned up branch ${branchName} after PR creation failure.`);
                 } catch (cleanupError) {
