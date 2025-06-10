@@ -161,3 +161,4 @@ jobs:
           git push
           git push --tags
 name: Automated Version Bump
+on: [release, workflow_dispatch]
