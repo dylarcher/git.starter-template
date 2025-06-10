@@ -124,7 +124,7 @@ jobs:
             echo "No fixes were applied by the script."
             echo "fixes_applied=false" >> $GITHUB_OUTPUT
           fi
-        continue-on-error: true # Allow workflow to continue to PR step regardless of script errors for now
+        # Removed continue-on-error to ensure workflow fails on critical errors
 
       - name: Create Pull Request
         if: steps.apply_fixes.outputs.fixes_applied == 'true'
