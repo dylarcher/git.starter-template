@@ -1,5 +1,6 @@
-import fs from 'fs/promises';
-import path from 'path';
+import fs from 'node:fs/promises';
+import * as nodeFs from 'node:fs';
+import path from 'node:path';
 import { execSync } from 'child_process';
 
 const conventionalCommitTypes = {
