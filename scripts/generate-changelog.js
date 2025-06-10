@@ -1,5 +1,4 @@
 import fs from 'node:fs/promises';
-import * as nodeFs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'child_process';
 
