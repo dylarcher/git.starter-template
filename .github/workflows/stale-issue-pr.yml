@@ -1,1 +1,151 @@
 ---
+jobs:
+  create_draft_pr:
+    if: github.event.label.name == 'stale' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - id: get_stale_issues
+        name: Get Stale Issues
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            console.log('Event name:', github.event_name);
+            if (github.event_name === 'schedule') {
+              const response = await github.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: 'stale',
+                state: 'open',
+              });
+              console.log('Fetched stale issues:', response.data.length);
+              // Output the list of issues
+              core.setOutput('issues', JSON.stringify(response.data));
+            } else if (github.event_name === 'issues' && github.event.action === 'labeled' && github.event.label.name === 'stale') {
+              // Process the specific issue that was just labeled
+              const issue = context.payload.issue;
+              console.log('Processing issue from label event:', issue.number);
+              core.setOutput('issues', JSON.stringify([issue]));
+            } else {
+              console.log('Not a schedule event or a stale label event. Skipping issue fetching.');
+              core.setOutput('issues', JSON.stringify([]));
+            }
+      - id: check_for_stale_issues
+        name: Check for Stale Issues
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: |
+            const issues = JSON.parse('${{ steps.get_stale_issues.outputs.issues }}');
+            if (issues && issues.length > 0 && issues[0]) {
+              core.setOutput('has_issues', 'true');
+            } else {
+              core.setOutput('has_issues', 'false');
+            }
+      - if: steps.check_for_stale_issues.outputs.has_issues == 'true'
+        name: Process Issues
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const issues = JSON.parse(steps.get_stale_issues.outputs.issues);
+            if (!issues || issues.length === 0) {
+              console.log('No issues to process.');
+              return;
+            }
+            console.log(`Processing ${issues.length} issue(s)`);
+            for (const issue of issues) {
+              const issueNumber = issue.number;
+              const issueTitle = issue.title;
+              const issueBody = issue.body || 'No description provided.';
+              const branchName = `stale-issue-${issueNumber}`;
+              const fileName = `ISSUES/ISSUE-${issueNumber}.md`;
+              const prTitle = `Draft PR for Stale Issue #${issueNumber}: ${issueTitle}`;
+              const needsActionLabel = 'needs action'; // Label to add to the PR
+              console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
+              // 1. Create a new branch
+              try {
+                await github.rest.git.createRef({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  ref: `refs/heads/${branchName}`,
+                  sha: context.sha, // Create branch from current commit
+                });
+                console.log(`Branch ${branchName} created successfully.`);
+              } catch (error) {
+                if (error.message.includes('Reference already exists')) {
+                  console.log(`Branch ${branchName} already exists. Skipping PR creation for this issue.`);
+                  continue; // Skip to the next issue if branch exists
+                }
+                console.error(`Error creating branch ${branchName}:`, error);
+                continue; // Skip to next issue on error
+              }
+              // 2. Create a new file with issue content
+              const fileContent = `# ${issueTitle} ${issueBody}`;
+              try {
+                await github.rest.repos.createOrUpdateFileContents({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  path: fileName,
+                  message: `Add details for stale issue #${issueNumber}`,
+                  content: Buffer.from(fileContent).toString('base64'),
+                  branch: branchName,
+                });
+                console.log(`File ${fileName} created in branch ${branchName}.`);
+              } catch (error) {
+                console.error(`Error creating file ${fileName} in branch ${branchName}:`, error);
+                continue;
+              }
+              // 3. Create a Draft Pull Request
+              let prNumber;
+              try {
+                const pr = await github.rest.pulls.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: prTitle,
+                  head: branchName,
+                  base: context.payload.repository.default_branch, // Or your desired base branch
+                  body: `This is a draft PR for stale issue #${issueNumber}. Please review the issue content and take necessary action.`,
+                  draft: true,
+                });
+                prNumber = pr.data.number;
+                console.log(`Draft PR #${prNumber} created for branch ${branchName}.`);
+              } catch (error) {
+                console.error(`Error creating PR for branch ${branchName}:`, error);
+                // Attempt to clean up the branch if PR creation fails
+                try {
+                  await github.rest.git.deleteRef({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    ref: `refs/heads/${branchName}`,
+                  });
+                  console.log(`Cleaned up branch ${branchName} after PR creation failure.`);
+                } catch (cleanupError) {
+                  console.error(`Error cleaning up branch ${branchName}:`, cleanupError);
+                }
+                continue;
+              }
+              // 4. Add "needs action" label to the PR
+              if (prNumber) {
+                try {
+                  await github.rest.issues.addLabels({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    issue_number: prNumber,
+                    labels: [needsActionLabel],
+                  });
+                  console.log(`Label "${needsActionLabel}" added to PR #${prNumber}.`);
+                } catch (error) {
+                  console.error(`Error adding label "${needsActionLabel}" to PR #${prNumber}:`, error);
+                }
+              }
+            }
+name: "Create PR (Draft) for Stale Issues"
+on:
+  issues:
+    types: [labeled]
+  schedule:
+    - cron: 0 0 * * * # Runs daily at midnight UTC
