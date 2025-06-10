@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+import * as nodeFs from 'fs'; // Added import
 import path from 'path';
 import { execSync } from 'child_process';
 
@@ -219,7 +220,15 @@ ${olderContent}
     // 7. Write updated CHANGELOG.md
     await fs.writeFile(changelogPath, finalChangelog.trim() + '\n', 'utf8');
     console.log(`Successfully updated ${changelogPath} for version ${currentVersion}`);
-    console.log(`::set-output name=new_version::${currentVersion}`); // <-- ADD THIS LINE
+
+    // Correctly set output for GitHub Actions
+    if (process.env.GITHUB_OUTPUT) {
+      nodeFs.appendFileSync(process.env.GITHUB_OUTPUT, `new_version=${currentVersion}\n`);
+      console.log(`Output 'new_version' set for GitHub Actions: ${currentVersion}`);
+    } else {
+      // Fallback for local testing or if GITHUB_OUTPUT is not set
+      console.log(`Simulated GITHUB_OUTPUT: new_version=${currentVersion}`);
+    }
 
   } catch (error) {
     console.error('Error generating changelog:', error);
