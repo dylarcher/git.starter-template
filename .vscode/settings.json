@@ -5,7 +5,7 @@
     "editor.codeActionsOnSave": {
       "source.addMissingImports": "always",
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
+      "source.fixAll.biome": "always",
       "source.fixAll.stylelint": "explicit",
       "source.organizeImports": "always"
     },
@@ -15,7 +15,8 @@
   "[html]": {
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
+      "source.fixAll.biome": "always",
+      "source.fixAll.axe": "explicit"
     },
     "editor.defaultFormatter": "vscode.html-language-features",
     "editor.formatOnSave": true
@@ -24,7 +25,7 @@
     "editor.codeActionsOnSave": {
       "source.addMissingImports": "always",
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
+      "source.fixAll.biome": "always",
       "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "vscode.typescript-language-features",
@@ -33,8 +34,8 @@
   "[json]": {
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
-      "source.fixAll.sort-json": "explicit"
+      "source.fixAll.biome": "always",
+      "source.fixAll.sort": "explicit"
     },
     "editor.defaultFormatter": "vscode.json-language-features",
     "editor.formatOnSave": true
@@ -42,8 +43,7 @@
   "[markdown]": {
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
-      "source.fixAll.markdownlint": "explicit",
+      "source.fixAll.biome": "always",
     },
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.formatOnSave": true
@@ -51,8 +51,7 @@
   "[svg]": {
     "editor.codeActionsOnSave": {
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
-      "source.fixAll.jock-svg": "explicit",
+      "source.fixAll.svgo": "always",
     },
     "editor.defaultFormatter": "jock.svg",
     "editor.formatOnSave": true
@@ -61,7 +60,7 @@
     "editor.codeActionsOnSave": {
       "source.addMissingImports": "always",
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
+      "source.fixAll.biome": "always",
       "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "vscode.typescript-language-features",
@@ -71,9 +70,8 @@
     "editor.codeActionsOnSave": {
       "source.addMissingImports": "always",
       "source.fixAll": "always",
-      "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always",
-      "source.fixAll.yaml-sort": "explicit",
+      "source.fixAll.biome": "always",
+      "source.fixAll.sort": "explicit",
       "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "googlecloudtools.cloudcode",
@@ -95,13 +93,13 @@
   "cloudcode.yaml.format.proseWrap": "preserve",
   "cloudcode.yaml.format.singleQuote": true,
   "cloudcode.yaml.schemas": {
-    "https://json.schemastore.org/browserslist": [
-      ".browserslistrc.{yaml,yml}",
-      "browserslist.config.{yaml,yml}"
-    ],
     "https://biomejs.dev/schemas/latest/schema.json": [
       ".biomerc.{yaml,yml}",
       "biome.{yaml,yml}"
+    ],
+    "https://json.schemastore.org/browserslist": [
+      ".browserslistrc.{yaml,yml}",
+      "browserslist.config.{yaml,yml}"
     ],
     "https://json.schemastore.org/commitlint.config.json": [
       ".commitlintrc.{yaml,yml}",
@@ -124,12 +122,12 @@
       "stylelint.config.{yaml,yml}"
     ]
   },
-  "editor.defaultFormatter": "biomejs.biome",
   "cloudcode.yaml.trace.server": "messages",
   "cloudcode.yaml.validate": true,
   "css.format.enable": true,
   "css.trace.server": "messages",
   "css.validate": true,
+  "editor.defaultFormatter": "biomejs.biome",
   "editor.detectIndentation": true,
   "editor.formatOnPaste": false,
   "editor.formatOnSave": false,
@@ -161,6 +159,26 @@
   "editor.suggestSelection": "first",
   "editor.tabSize": 2,
   "editor.wordBasedSuggestions": "currentDocument",
+  "files.associations": {
+    ".biomejsrc": "yaml",
+    ".biomerc": "yaml",
+    ".browserslistrc": "yaml",
+    ".c8rc": "yaml",
+    ".codeqlrc": "yaml",
+    ".commitlintrc": "yaml",
+    ".editorconfig": "ini",
+    ".eslintrc": "yaml",
+    ".gitattributes": "ini",
+    ".gitignore": "ignore",
+    ".markdownlintrc": "yaml",
+    ".npmrc": "properties",
+    ".nvmrc": "properties",
+    ".prettierrc": "yaml",
+    ".stylelintrc": "yaml",
+    ".yamllintrc": "yaml",
+    ".yarnrc": "properties",
+    "CITATION.cff": "yaml"
+  },
   "html.format.enable": true,
   "html.trace.server": "messages",
   "html.validate.scripts": true,
@@ -214,7 +232,7 @@
       }
     }
   },
-  "markdownlint.configFile": ".github/configs/.markdownlintrc.json",
+  "markdownlint.configFile": ".github/linters/.markdownlintrc",
   "sortJSON.contextMenu": {
     "sortJSON": true,
     "sortJSONAlphaNum": false,
@@ -232,7 +250,9 @@
     "package-lock.json",
     "npm-shrinkwrap.json"
   ],
-  "sortJSON.excludedPaths": ["**/node_modules/*"],
+  "sortJSON.excludedPaths": [
+    "**/node_modules/*"
+  ],
   "yaml.completion": true,
   "yaml.customTags": [
     "!include",
@@ -255,12 +275,13 @@
   "yaml.maxItemsComputed": 6400,
   "yaml.schemaStore.enable": true,
   "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-issue-config.json": "file:///Users/darcher/dev/git.starter-template/.github/ISSUE_TEMPLATE/config.yml"
+  },
   "yaml.style.flowMapping": "allow",
   "yaml.style.flowSequence": "allow",
   "yaml.suggest.parentSkeletonSelectedFirst": true,
   "yaml.trace.server": "messages",
   "yaml.validate": true,
-  "yaml.yamlVersion": "1.2",
-  "yaml.schemas": {
-  }
+  "yaml.yamlVersion": "1.2"
 }
