@@ -49,3 +49,7 @@ body:
           required: true
     id: terms
     type: checkboxes
+description: Ask a question about this project
+labels: ["ask", "help"]
+name: Question
+title: "Question: ${{ github.event.issue.title }}"

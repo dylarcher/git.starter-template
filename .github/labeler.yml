@@ -6,7 +6,7 @@ auto:
   - .github/labeler.yml
   - .github/CODEOWNERS
 bug:
-  - fix/*
+  - bug/*
 ci:
   - ci/*
 conf:
@@ -43,6 +43,10 @@ docs:
   - '**/.md'
   - '**/*.markdown'
   - '**/*.mdx'
+fix:
+  - hotfix/*
+  - bugfix/*
+  - fix/*
 func:
   - '**/*.js'
   - '**/*.cjs'
@@ -54,7 +58,11 @@ func:
   - '**/*.py'
 make:
   - build/*
-media:
+perf:
+  - perf/*
+refac:
+  - refactor/*
+res:
   - '**/*.avif'
   - '**/*.bmp'
   - '**/*.eps'
@@ -81,10 +89,6 @@ media:
   - '**/*.png'
   - '**/*.svg'
   - '**/*.webp'
-perf:
-  - perf/*
-refac:
-  - refactor/*
 task:
   - .github/linters/*
   - .gitignore

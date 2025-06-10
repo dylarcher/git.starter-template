@@ -85,6 +85,6 @@ body:
     id: terms
     type: checkboxes
 description: Report a performance problem or bottleneck
-labels: ["performance"]
+labels: ["perf", "bug"]
 name: ⚡ Performance Issue
 title: '⚡ Performance: '

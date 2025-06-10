@@ -29,8 +29,8 @@
     "test": "test"
   },
   "engines": {
-    "node": ">=20.11.1",
-    "npm": ">=10.8.2",
+    "node": ">=20.x",
+    "npm": ">=10.x",
     "vscode": "1.100.0"
   },
   "exports": {

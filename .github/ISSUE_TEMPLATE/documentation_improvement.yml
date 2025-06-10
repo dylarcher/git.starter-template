@@ -59,6 +59,6 @@ body:
     id: terms
     type: checkboxes
 description: Suggest improvements to our documentation
-labels: ["documentation"]
+labels: ["docs"]
 name: 📚 Documentation Improvement
 title: '📚 Documentation: '

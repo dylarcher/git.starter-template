@@ -37,6 +37,6 @@ body:
     id: terms
     type: checkboxes
 description: Propose a new feature or enhancement
-labels: ["new"]
+labels: ["new", "make"]
 name: Feature Request
-title: "[feat]: "
+title: "Feature: "

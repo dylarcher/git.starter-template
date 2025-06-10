@@ -28,6 +28,9 @@ ignore:
   - .github/linters/markdownlint.json
 # Configure the line-length rule
 rules:
-  line-length:
+  - ordered:
+    keys: true
+    level: warning
+  - line-length:
     level: warning
     max: 120

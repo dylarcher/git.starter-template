@@ -149,23 +149,23 @@ npm run update:starter-files
 
 This script will:
 
-1.  Ensure a git remote named `template` points to `https://github.com/dylarcher/git.starter-template.git`.
-2.  Fetch the latest changes from the `template` remote.
-3.  Merge the changes from `template/main` into your current branch, allowing for unrelated histories.
+1. Ensure a git remote named `template` points to `https://github.com/dylarcher/git.starter-template.git`.
+2. Fetch the latest changes from the `template` remote.
+3. Merge the changes from `template/main` into your current branch, allowing for unrelated histories.
 
 #### Automated Updates with GitHub Actions
 
 This repository includes a GitHub Action workflow named "**Update from Template**" (defined in `.github/workflows/starterfiles.yml`) that automates the update process.
 
-*   **Functionality:** This workflow uses the `npm run update:starter-files` script to fetch and merge changes from the template repository. If changes are found, it creates a pull request with these updates.
-*   **Schedule:** It runs automatically on a daily basis (at midnight UTC).
-*   **Manual Trigger:** You can also manually trigger this workflow from the "Actions" tab of your GitHub repository.
-*   **Process:**
-    1.  Go to the "Actions" tab in your repository.
-    2.  Select the "Update from Template" workflow.
-    3.  Click the "Run workflow" button.
-    4.  If updates are available, a pull request will be automatically created.
-    5.  Review the pull request and merge it to incorporate the updates. You may need to resolve merge conflicts if you've made changes to the same files that were updated in the template.
+* **Functionality:** This workflow uses the `npm run update:starter-files` script to fetch and merge changes from the template repository. If changes are found, it creates a pull request with these updates.
+* **Schedule:** It runs automatically on a daily basis (at midnight UTC).
+* **Manual Trigger:** You can also manually trigger this workflow from the "Actions" tab of your GitHub repository.
+* **Process:**
+    1. Go to the "Actions" tab in your repository.
+    2. Select the "Update from Template" workflow.
+    3. Click the "Run workflow" button.
+    4. If updates are available, a pull request will be automatically created.
+    5. Review the pull request and merge it to incorporate the updates. You may need to resolve merge conflicts if you've made changes to the same files that were updated in the template.
 
 Using the GitHub Action is the recommended way to keep your project up-to-date with the template.
 
@@ -175,20 +175,22 @@ This project uses GitHub Actions to automate the release process. New versions a
 
 ### Creating a Release
 
-1.  **Determine the next version number:** Based on Semantic Versioning (MAJOR.MINOR.PATCH), decide the appropriate next version for your changes.
-2.  **Create and push a new tag:**
+1. **Determine the next version number:** Based on Semantic Versioning (MAJOR.MINOR.PATCH), decide the appropriate next version for your changes.
+2. **Create and push a new tag:**
+
     ```bash
     git tag vX.Y.Z
     git push origin vX.Y.Z
     ```
+
     (Replace `vX.Y.Z` with the actual version number).
-3.  **Automated Release:** Pushing the tag will trigger the "Create Release" GitHub Actions workflow. This workflow will:
-    *   Build the project.
-    *   Create a `release/` directory locally on the runner.
-    *   Package distributable files (`dist/` directory, `README.md`, `LICENSE`, `package.json`) into a ZIP archive named `release-vX.Y.Z.zip` inside the runner's `release/` directory.
-    *   Create a new GitHub Release named "Release vX.Y.Z".
-    *   Upload the `release-vX.Y.Z.zip` archive from the runner as an asset to the GitHub Release.
-    *   Automatically generate release notes based on the commit messages since the last tag.
+3. **Automated Release:** Pushing the tag will trigger the "Create Release" GitHub Actions workflow. This workflow will:
+    * Build the project.
+    * Create a `release/` directory locally on the runner.
+    * Package distributable files (`dist/` directory, `README.md`, `LICENSE`, `package.json`) into a ZIP archive named `release-vX.Y.Z.zip` inside the runner's `release/` directory.
+    * Create a new GitHub Release named "Release vX.Y.Z".
+    * Upload the `release-vX.Y.Z.zip` archive from the runner as an asset to the GitHub Release.
+    * Automatically generate release notes based on the commit messages since the last tag.
 
 ### Accessing Release Artifacts
 
@@ -204,7 +206,10 @@ Contributions to improve this template are welcome! Please see the
 ```markdown
 ## How to Contribute
 
-We welcome contributions! Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines on how to get involved, report issues, and submit pull requests.
+We welcome contributions! Please see our 
+[CONTRIBUTING.md](.github/CONTRIBUTING.md)
+ for detailed guidelines on how to get involved, report issues, and submit pull
+requests.
 ```
 
 ## VI. License
@@ -217,7 +222,8 @@ We welcome contributions! Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.
 ```markdown
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE)
+ file for details.
 ```
 
 ## VII. (Optional) Further Sections

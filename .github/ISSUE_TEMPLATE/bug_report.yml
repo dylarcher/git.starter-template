@@ -2,7 +2,7 @@ body:
   - attributes:
       value: |
         Thanks for taking the time to fill out this bug report!
-        
+
         Please check our documentation first:
         - [Security Policy](.github/SECURITY.md) (for security vulnerabilities)
         - [Changelog](.github/CHANGELOG.md) (to see if this has been fixed in a newer version)
@@ -67,6 +67,6 @@ body:
     id: terms
     type: checkboxes
 description: Report a problem or unexpected behavior
-labels: ["bug"]
+labels: ["bug", "bad", "fix", "help", "ask"]
 name: Bug Report
-title: "[BUG]: "
+title: "BUG: "
