@@ -45,11 +45,8 @@
       "@/*": [
         "src/*"
       ],
-      "bin/*": [
-        "src/bin/*"
-      ],
       "conf/*": [
-        "git/configs/*"
+        ".github/linters/*"
       ],
       "docs/*": [
         "docs/*"
@@ -60,8 +57,7 @@
       "log/*": [
         "logs/*",
         "reports/*",
-        "coverage/*",
-        "#/coverage/*"
+        "test/coverage/*"
       ],
       "src/*": [
         "src/*"
