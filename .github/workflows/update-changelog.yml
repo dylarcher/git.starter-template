@@ -1,0 +1,49 @@
+name: Update Changelog
+
+on:
+  pull_request:
+    paths:
+      - 'package.json'
+
+permissions:
+  contents: write # Required to commit and push changes
+
+jobs:
+  update_changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for changelog generation
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc' # Use version from .nvmrc
+          cache: 'npm' # Cache npm dependencies
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate changelog
+        id: changelog_script # <-- ADD THIS ID
+        run: node scripts/generate-changelog.js
+
+      - name: Commit and Push Changelog
+        env:
+          NEW_VERSION: ${{ steps.changelog_script.outputs.new_version }} # <-- ADD ENV VAR
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if CHANGELOG.md has changes
+          if git diff --quiet CHANGELOG.md; then
+            echo "No changes to CHANGELOG.md, skipping commit."
+          else
+            echo "CHANGELOG.md updated, committing and pushing."
+            git add CHANGELOG.md
+            # Use the NEW_VERSION env var in the commit message
+            git commit -m "docs: Update CHANGELOG.md for version ${NEW_VERSION}"
+            git push
+          fi

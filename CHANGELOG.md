@@ -1,9 +1,7 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic
-Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
+
+## [0.2.0] - 2025-06-10
+### Miscellaneous
+- Apply patch /tmp/e79c83dd-053f-4a43-9486-2256657f6b9f.patch ([0749168])

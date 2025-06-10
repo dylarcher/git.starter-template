@@ -86,8 +86,5 @@
   },
   "type": "module",
   "types": "dist/index.d.ts",
-  "version": "0.2.0",
-  "dependencies": {
-    "semver": "7.7.2"
-  }
+  "version": "0.2.0"
 }
