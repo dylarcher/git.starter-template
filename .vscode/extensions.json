@@ -5,6 +5,9 @@
     "davidanson.vscode-markdownlint",
     "jock.svg",
     "richie5um2.vscode-sort-json",
-    "ritwickdey.LiveServer"
+    "ritwickdey.LiveServer",
+    "googlecloudtools.cloudcode",
+    "redhat.vscode-yaml",
+    "vivaxy.vscode-conventional-commits"
   ]
 }
