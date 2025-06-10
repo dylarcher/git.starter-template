@@ -5,11 +5,8 @@ auto:
   - .github/dependabot.yml
   - .github/labeler.yml
   - .github/CODEOWNERS
-build:
-  - build/*
-chore:
-  - .github/linters/*
-  - .gitignore
+bug:
+  - fix/*
 ci:
   - ci/*
 conf:
@@ -46,9 +43,7 @@ docs:
   - '**/.md'
   - '**/*.markdown'
   - '**/*.mdx'
-fix:
-  - fix/*
-logic:
+func:
   - '**/*.js'
   - '**/*.cjs'
   - '**/*.mjs'
@@ -57,6 +52,8 @@ logic:
   - '**/*.tsx'
   - '**/*.ejs'
   - '**/*.py'
+make:
+  - build/*
 media:
   - '**/*.avif'
   - '**/*.bmp'
@@ -88,16 +85,19 @@ perf:
   - perf/*
 refac:
   - refactor/*
-style:
+task:
+  - .github/linters/*
+  - .gitignore
+test:
+  - test/**/*
+  - '**/*.test.*'
+  - '**/*.spec.*'
+ui:
   - '**/*.css'
   - '**/*.scss'
   - '**/*.sass'
   - '**/*.less'
   - '**/*.styl'
-test:
-  - test/**/*
-  - '**/*.test.*'
-  - '**/*.spec.*'
 vers:
   - '**/*version*.*'
   - '**/*semver*.*'
