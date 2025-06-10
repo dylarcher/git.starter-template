@@ -219,7 +219,12 @@ ${olderContent}
     // 7. Write updated CHANGELOG.md
     await fs.writeFile(changelogPath, finalChangelog.trim() + '\n', 'utf8');
     console.log(`Successfully updated ${changelogPath} for version ${currentVersion}`);
-    console.log(`::set-output name=new_version::${currentVersion}`); // <-- ADD THIS LINE
+    const githubOutputPath = process.env.GITHUB_OUTPUT;
+    if (githubOutputPath) {
+        await fs.appendFile(githubOutputPath, `new_version=${currentVersion}\n`, 'utf8');
+    } else {
+        console.warn('GITHUB_OUTPUT environment variable is not set. Unable to write output.');
+    }
 
   } catch (error) {
     console.error('Error generating changelog:', error);
