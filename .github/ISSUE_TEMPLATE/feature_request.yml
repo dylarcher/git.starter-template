@@ -2,7 +2,7 @@ body:
   - attributes:
       value: |
         Thanks for taking the time to fill out this feature request!
-        
+
         Please check our documentation first:
         - [Contributing Guidelines](.github/CONTRIBUTING.md)
         - [Code of Conduct](.github/CODE_OF_CONDUCT.md)
@@ -37,6 +37,6 @@ body:
     id: terms
     type: checkboxes
 description: Propose a new feature or enhancement
-labels: ["enhancement"]
+labels: ["new"]
 name: Feature Request
-title: "[FEATURE]: "
+title: "[feat]: "
