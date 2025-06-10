@@ -10,7 +10,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          result-encoding: string # Keep this as string
+          result-encoding: string
           script: |
             console.log('Event name:', github.event_name);
             if (github.event_name === 'schedule') {
@@ -142,7 +142,7 @@ jobs:
                 }
               }
             }
-name: Create Draft PR for Stale Issues
+name: "Create PR (Draft) for Stale Issues"
 on:
   issues:
     types: [labeled]
