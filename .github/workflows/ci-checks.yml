@@ -1,0 +1,107 @@
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+jobs:
+  lint-commits:
+    name: Lint Commit Messages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Needs full history for commit linting
+      - name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
+      - env:
+          FROM_COMMIT: ${{ github.event.pull_request.base.sha }}
+          TO_COMMIT: ${{ github.event.pull_request.head.sha }}
+        name: Lint Commits
+        run: npm run lint:git
+  lint-format-code:
+    name: Lint & Format Code
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+      - name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
+      - name: Format JS/TS project source code
+        run: npm run format
+      - name: Check-in JS/TS formatting changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --staged --quiet || (git commit -m "Automated formatting" && git push)
+      - name: Lint JS/TS project source code
+        run: npm run lint
+      - name: Check-in JS/TS linting changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --staged --quiet || (git commit -m "Automated linting fixes" && git push)
+      - continue-on-error: true
+        id: check_biome
+        name: Check for persistent Biome issues
+        run: npx biome lint src --config-path .github/linters/biome.json
+      - if: steps.check_biome.outcome == 'failure'
+        name: Add 'action needed' label for Biome issues
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              labels: ['action needed']
+            });
+      - name: Set up Python for YAML lint
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Install yamllint
+        run: pip install yamllint
+      - name: Run yamllint
+        run: yamllint --config-file .github/linters/.yamllintrc .
+      - id: check_yaml_changes
+        name: Check for YAML changes and commit (PR)
+        run: echo "has_changes=$(if [[ -n $(git status --porcelain) ]]; then echo true; else echo false; fi)" >> $GITHUB_OUTPUT
+      - if: steps.check_yaml_changes.outputs.has_changes == 'true'
+        name: Commit and Push YAML Lint PR Changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git diff --staged --quiet || (git commit -m "Automated YAML lint fixes" && git push)
+  run-tests:
+    name: Run Tests & Coverage
+    permissions:
+      actions: write # For uploading artifacts
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
+      - name: Test project source code
+        run: npm test
+      - if: always()
+        name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-reports-${{ github.run_id }}-${{ matrix.os }}-${{ matrix.node-version }}
+          path: test/coverage
+          retention-days: 7
+name: CI Checks
+on:
+  pull_request:
+    branches: [ main ]

@@ -52,47 +52,47 @@ your project.
 *   **Module C:** Integrates with External Service Q.
 ```
 
-* **Pre-configured Linters & Formatters:**
-  * [Biome](https://biomejs.dev/) for JavaScript/TypeScript linting and formatting.
-  * `markdownlint` for Markdown file consistency.
-  * `yaml-lint` for YAML file validation.
-* **GitHub Actions Workflows:**
-  * `format.yml`: Automatically formats code on pull requests and commits changes to the PR branch.
-  * `lint.yml`: Lints code (JavaScript, Markdown, YAML) on pull requests and commits changes to the PR branch.
-  * `test.yml`: Runs tests (example setup included).
-  * `codeql.yml`: Integrates GitHub's CodeQL for security analysis.
-  * `changelog.yml`: Generates a changelog from commit messages.
-  * `stale.yml`: Marks inactive issues and pull requests as stale.
-  * `issue.yml`: Summarizes new issues using AI and comments on them.
-  * `label.yml`: Automatically labels pull requests based on conventional commit prefixes.
-  * `update-from-template.yml`: A reusable workflow to help update projects generated from this template.
-* **Issue and Pull Request Templates:**
-  * Comprehensive templates for bug reports, feature requests, documentation improvements, and more.
-  * A default pull request template.
-* **Dependabot Configuration:**
-  * `dependabot.yml` is set up to help keep dependencies up-to-date.
-* **EditorConfig & VSCode Settings:**
-  * `.editorconfig` for consistent coding styles across different editors.
-  * Recommended VSCode extensions and settings in `.vscode/`.
-* **Code Ownership:**
-  * `.github/CODEOWNERS` file to define default reviewers.
-* **Security Policy:**
-  * `SECURITY.md` outlining how to report vulnerabilities.
-* **Node.js Versioning:**
-  * `.nvmrc` to specify the recommended Node.js version.
+- **Pre-configured Linters & Formatters:**
+  - [Biome](https://biomejs.dev/) for JavaScript/TypeScript linting and formatting.
+  - `markdownlint` for Markdown file consistency.
+  - `yaml-lint` for YAML file validation.
+- **GitHub Actions Workflows:**
+  - `format.yml`: Automatically formats code on pull requests and commits changes to the PR branch.
+  - `lint.yml`: Lints code (JavaScript, Markdown, YAML) on pull requests and commits changes to the PR branch.
+  - `test.yml`: Runs tests (example setup included).
+  - `codeql.yml`: Integrates GitHub's CodeQL for security analysis.
+  - `changelog.yml`: Generates a changelog from commit messages.
+  - `stale.yml`: Marks inactive issues and pull requests as stale.
+  - `issue.yml`: Summarizes new issues using AI and comments on them.
+  - `label.yml`: Automatically labels pull requests based on conventional commit prefixes.
+  - `update-from-template.yml`: A reusable workflow to help update projects generated from this template.
+- **Issue and Pull Request Templates:**
+  - Comprehensive templates for bug reports, feature requests, documentation improvements, and more.
+  - A default pull request template.
+- **Dependabot Configuration:**
+  - `dependabot.yml` is set up to help keep dependencies up-to-date.
+- **EditorConfig & VSCode Settings:**
+  - `.editorconfig` for consistent coding styles across different editors.
+  - Recommended VSCode extensions and settings in `.vscode/`.
+- **Code Ownership:**
+  - `.github/CODEOWNERS` file to define default reviewers.
+- **Security Policy:**
+  - `SECURITY.md` outlining how to report vulnerabilities.
+- **Node.js Versioning:**
+  - `.nvmrc` to specify the recommended Node.js version.
 
-* **Prerequisites:** List any software or tools users need before they can use
+- **Prerequisites:** List any software or tools users need before they can use
     your project (e.g., Node.js version, Python version, specific libraries).
-* **Installation Steps:** Provide clear, step-by-step instructions on how to
+- **Installation Steps:** Provide clear, step-by-step instructions on how to
     install your project.
-* **Basic Usage:** A simple example of how to run or use the project once
+- **Basic Usage:** A simple example of how to run or use the project once
     installed.
 
 1. **Create a New Repository:**
-    * Click the "**Use this template**" button on the GitHub page of this repository.
-    * Select "**Create a new repository**".
-    * Choose an owner, provide a repository name, and set its visibility.
-    * Click "**Create repository**".
+    - Click the "**Use this template**" button on the GitHub page of this repository.
+    - Select "**Create a new repository**".
+    - Choose an owner, provide a repository name, and set its visibility.
+    - Click "**Create repository**".
 
 2. **Clone Your New Repository:**
 
@@ -102,15 +102,15 @@ your project.
     ```
 
 3. **Customize the Project:**
-    * **Search and Replace:** Globally search for `dylarcher/git.starter-template` and replace it with `YOUR_USERNAME/YOUR_REPOSITORY_NAME` in files like `README.md`, `CITATION.cff`, and potentially workflow files if they contain direct repository references. Also, update any author-specific information (e.g., in `CITATION.cff`).
-    * **Project Name & Description:** Update `package.json` (if it's a Node.js project) and other relevant files with your project's specific name, description, author, etc.
-    * **LICENSE:** While this template uses the MIT License, ensure it's appropriate for your project or replace `LICENSE` with your chosen license.
-    * **Remove Unnecessary Files:** Delete any example code (`src/`, `test/`), documentation (`docs/`), or configuration files that are not relevant to your project. For instance, if your project isn't JavaScript-based, remove `package.json`, `.npmrc`, `.nvmrc`, and Biome configurations.
-    * **Update `CHANGELOG.md`:** You might want to clear or re-initialize the `CHANGELOG.md` for your new project.
-    * **Review Workflows:** Adjust the GitHub Actions workflows in `.github/workflows/` to suit your project's needs (e.g., specific build steps, deployment configurations).
+    - **Search and Replace:** Globally search for `dylarcher/git.starter-template` and replace it with `YOUR_USERNAME/YOUR_REPOSITORY_NAME` in files like `README.md`, `CITATION.cff`, and potentially workflow files if they contain direct repository references. Also, update any author-specific information (e.g., in `CITATION.cff`).
+    - **Project Name & Description:** Update `package.json` (if it's a Node.js project) and other relevant files with your project's specific name, description, author, etc.
+    - **LICENSE:** While this template uses the MIT License, ensure it's appropriate for your project or replace `LICENSE` with your chosen license.
+    - **Remove Unnecessary Files:** Delete any example code (`src/`, `test/`), documentation (`docs/`), or configuration files that are not relevant to your project. For instance, if your project isn't JavaScript-based, remove `package.json`, `.npmrc`, `.nvmrc`, and Biome configurations.
+    - **Update `CHANGELOG.md`:** You might want to clear or re-initialize the `CHANGELOG.md` for your new project.
+    - **Review Workflows:** Adjust the GitHub Actions workflows in `.github/workflows/` to suit your project's needs (e.g., specific build steps, deployment configurations).
 
-* Node.js (v14 or higher)
-* npm (v6 or higher)
+- Node.js (v14 or higher)
+- npm (v6 or higher)
 
 This template includes a reusable workflow
 (`.github/workflows/update-from-template.yml`) to help you pull in updates and
@@ -149,23 +149,23 @@ npm run update:starter-files
 
 This script will:
 
-1.  Ensure a git remote named `template` points to `https://github.com/dylarcher/git.starter-template.git`.
-2.  Fetch the latest changes from the `template` remote.
-3.  Merge the changes from `template/main` into your current branch, allowing for unrelated histories.
+1. Ensure a git remote named `template` points to `https://github.com/dylarcher/git.starter-template.git`.
+2. Fetch the latest changes from the `template` remote.
+3. Merge the changes from `template/main` into your current branch, allowing for unrelated histories.
 
 #### Automated Updates with GitHub Actions
 
 This repository includes a GitHub Action workflow named "**Update from Template**" (defined in `.github/workflows/starterfiles.yml`) that automates the update process.
 
-*   **Functionality:** This workflow uses the `npm run update:starter-files` script to fetch and merge changes from the template repository. If changes are found, it creates a pull request with these updates.
-*   **Schedule:** It runs automatically on a daily basis (at midnight UTC).
-*   **Manual Trigger:** You can also manually trigger this workflow from the "Actions" tab of your GitHub repository.
-*   **Process:**
-    1.  Go to the "Actions" tab in your repository.
-    2.  Select the "Update from Template" workflow.
-    3.  Click the "Run workflow" button.
-    4.  If updates are available, a pull request will be automatically created.
-    5.  Review the pull request and merge it to incorporate the updates. You may need to resolve merge conflicts if you've made changes to the same files that were updated in the template.
+- **Functionality:** This workflow uses the `npm run update:starter-files` script to fetch and merge changes from the template repository. If changes are found, it creates a pull request with these updates.
+- **Schedule:** It runs automatically on a daily basis (at midnight UTC).
+- **Manual Trigger:** You can also manually trigger this workflow from the "Actions" tab of your GitHub repository.
+- **Process:**
+    1. Go to the "Actions" tab in your repository.
+    2. Select the "Update from Template" workflow.
+    3. Click the "Run workflow" button.
+    4. If updates are available, a pull request will be automatically created.
+    5. Review the pull request and merge it to incorporate the updates. You may need to resolve merge conflicts if you've made changes to the same files that were updated in the template.
 
 Using the GitHub Action is the recommended way to keep your project up-to-date with the template.
 
@@ -175,20 +175,22 @@ This project uses GitHub Actions to automate the release process. New versions a
 
 ### Creating a Release
 
-1.  **Determine the next version number:** Based on Semantic Versioning (MAJOR.MINOR.PATCH), decide the appropriate next version for your changes.
-2.  **Create and push a new tag:**
+1. **Determine the next version number:** Based on Semantic Versioning (MAJOR.MINOR.PATCH), decide the appropriate next version for your changes.
+2. **Create and push a new tag:**
+
     ```bash
     git tag vX.Y.Z
     git push origin vX.Y.Z
     ```
+
     (Replace `vX.Y.Z` with the actual version number).
-3.  **Automated Release:** Pushing the tag will trigger the "Create Release" GitHub Actions workflow. This workflow will:
-    *   Build the project.
-    *   Create a `release/` directory locally on the runner.
-    *   Package distributable files (`dist/` directory, `README.md`, `LICENSE`, `package.json`) into a ZIP archive named `release-vX.Y.Z.zip` inside the runner's `release/` directory.
-    *   Create a new GitHub Release named "Release vX.Y.Z".
-    *   Upload the `release-vX.Y.Z.zip` archive from the runner as an asset to the GitHub Release.
-    *   Automatically generate release notes based on the commit messages since the last tag.
+3. **Automated Release:** Pushing the tag will trigger the "Create Release" GitHub Actions workflow. This workflow will:
+    - Build the project.
+    - Create a `release/` directory locally on the runner.
+    - Package distributable files (`dist/` directory, `README.md`, `LICENSE`, `package.json`) into a ZIP archive named `release-vX.Y.Z.zip` inside the runner's `release/` directory.
+    - Create a new GitHub Release named "Release vX.Y.Z".
+    - Upload the `release-vX.Y.Z.zip` archive from the runner as an asset to the GitHub Release.
+    - Automatically generate release notes based on the commit messages since the last tag.
 
 ### Accessing Release Artifacts
 
@@ -212,8 +214,8 @@ requests.
 
 ## VI. License
 
-* State the license under which your project is released.
-* Link to the `LICENSE` file in your repository.
+- State the license under which your project is released.
+- Link to the `LICENSE` file in your repository.
 
 **Example:**
 
@@ -228,12 +230,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE)
 
 Consider adding other sections as your project grows or based on its nature:
 
-* **API Documentation:** If your project is a library or API.
-* **Examples:** More detailed usage examples.
-* **Roadmap:** Future plans for the project.
-* **Acknowledgements:** If you want to credit inspirations or major
+- **API Documentation:** If your project is a library or API.
+- **Examples:** More detailed usage examples.
+- **Roadmap:** Future plans for the project.
+- **Acknowledgements:** If you want to credit inspirations or major
     contributors.
-* **Contact/Support:** How users can get help.
+- **Contact/Support:** How users can get help.
 
 ---
 

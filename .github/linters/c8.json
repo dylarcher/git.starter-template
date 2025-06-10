@@ -1,22 +1,29 @@
 {
+  "$schema": "https://raw.githubusercontent.com/istanbuljs/schema/master/coverage.schema.json",
   "all": true,
   "allProbes": true,
   "branches": 87.5,
   "check-coverage": false,
   "exclude": [
-    "dist",
-    "test",
-    "docs",
-    "build",
-    "lib",
-    ".github",
-    ".vscode",
-    ".vscode-test",
-    ".cache",
-    ".tmp",
-    ".idx",
-    "scripts",
-    "node_modules"
+    "node_modules/**",
+    ".git/**",
+    "build/**",
+    "dist/**",
+    "coverage/**",
+    "test/coverage/**",
+    ".vscode/**",
+    ".github/**",
+    "docs/**",
+    "scripts/**",
+    "lib/**",
+    ".cache/**/*",
+    ".idea/**/*",
+    ".idx/**/*",
+    ".temp/**/*",
+    ".tmp/**/*",
+    ".vs/**/*",
+    ".vscode-test/**/*",
+    "test/**/*"
   ],
   "excludeNodeModules": true,
   "extension": [
@@ -43,20 +50,12 @@
       "file": "coverage.json",
       "subdir": "json"
     },
-    "json-summary": {
-      "file": "coverage-summary.json",
-      "subdir": "json"
-    },
     "lcov": {
       "file": "coverage.lcov",
       "subdir": "lcov"
     },
     "text": {
       "file": "coverage.txt",
-      "subdir": "text"
-    },
-    "text-summary": {
-      "file": "coverage-summary.txt",
       "subdir": "text"
     }
   },
