@@ -45,9 +45,9 @@ jobs:
       - name: Apply File-based Labels
         uses: actions/labeler@v5
         with:
-          configuration-path: .github/labeler.yml # Explicitly point to the config file
+          configuration-path: .github/labeler.yml
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          sync-labels: true # Ensures labels are removed if files change and no longer match
+          sync-labels: true
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: github.event.action == 'opened' || github.event.action == 'reopened'
