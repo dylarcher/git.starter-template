@@ -40,13 +40,13 @@ body:
     validations:
       required: true
   - attributes:
-      description: Which version of the project are you using?
+      description: Template Version (if applicable, e.g., if this issue pertains to the template's own tooling)
       label: Version
       placeholder: e.g., 1.0.0
     id: version
     type: input
     validations:
-      required: true
+      required: false
   - attributes:
       description: 'Please share details about your environment:'
       label: Environment

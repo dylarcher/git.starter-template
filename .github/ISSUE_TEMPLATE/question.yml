@@ -12,7 +12,7 @@ body:
     validations:
       required: true
   - attributes:
-      description: Which version of the project are you using?
+      description: Template Version (if applicable, e.g., if your question is about a specific state of the template)
       label: Version
       placeholder: e.g., 1.0.0
     id: version
