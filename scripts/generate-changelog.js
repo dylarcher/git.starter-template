@@ -158,9 +158,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         // This logic assumes [Unreleased] is followed by a blank line or another header.
         const nextHeaderPos = changelogContent.indexOf('\n## [', insertPosition);
         if (nextHeaderPos !== -1) {
-             // This needs to be smarter; we want to insert *after* [Unreleased] and its current content,
-             // but *before* any actual version.
-             // The current logic with replace and then re-add [Unreleased] is simpler.
+            // Adjust the insertion position to be before the next version header.
+            insertPosition = nextHeaderPos;
         }
     } else {
         // Fallback: if [Unreleased] is not found, insert after the main changelog title and description.
