@@ -1,7 +1,5 @@
 # Changelog
 
-
-
 ## [0.3.0] - 2025-06-10
 ### Miscellaneous
 - Setup test files for output mechanism dry run ([006e6a1])

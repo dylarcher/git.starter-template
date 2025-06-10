@@ -1,6 +1,6 @@
-import fs from 'fs/promises';
-import * as nodeFs from 'fs'; // Added import
-import path from 'path';
+import fs from 'node:fs/promises';
+import * as nodeFs from 'node:fs';
+import path from 'node:path';
 import { execSync } from 'child_process';
 
 const conventionalCommitTypes = {
@@ -159,9 +159,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         // This logic assumes [Unreleased] is followed by a blank line or another header.
         const nextHeaderPos = changelogContent.indexOf('\n## [', insertPosition);
         if (nextHeaderPos !== -1) {
-             // This needs to be smarter; we want to insert *after* [Unreleased] and its current content,
-             // but *before* any actual version.
-             // The current logic with replace and then re-add [Unreleased] is simpler.
+            // Adjust the insertion position to be before the next version header.
+            insertPosition = nextHeaderPos;
         }
     } else {
         // Fallback: if [Unreleased] is not found, insert after the main changelog title and description.
@@ -220,14 +219,11 @@ ${olderContent}
     // 7. Write updated CHANGELOG.md
     await fs.writeFile(changelogPath, finalChangelog.trim() + '\n', 'utf8');
     console.log(`Successfully updated ${changelogPath} for version ${currentVersion}`);
-
-    // Correctly set output for GitHub Actions
-    if (process.env.GITHUB_OUTPUT) {
-      nodeFs.appendFileSync(process.env.GITHUB_OUTPUT, `new_version=${currentVersion}\n`);
-      console.log(`Output 'new_version' set for GitHub Actions: ${currentVersion}`);
+    const githubOutputPath = process.env.GITHUB_OUTPUT;
+    if (githubOutputPath) {
+        await fs.appendFile(githubOutputPath, `new_version=${currentVersion}\n`, 'utf8');
     } else {
-      // Fallback for local testing or if GITHUB_OUTPUT is not set
-      console.log(`Simulated GITHUB_OUTPUT: new_version=${currentVersion}`);
+        console.warn('GITHUB_OUTPUT environment variable is not set. Unable to write output.');
     }
 
   } catch (error) {

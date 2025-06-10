@@ -169,6 +169,31 @@ This repository includes a GitHub Action workflow named "**Update from Template*
 
 Using the GitHub Action is the recommended way to keep your project up-to-date with the template.
 
+## Release Process
+
+This project uses GitHub Actions to automate the release process. New versions are released when a tag matching the pattern `v*.*.*` (e.g., `v1.0.0`, `v0.2.1`) is pushed to the repository.
+
+### Creating a Release
+
+1.  **Determine the next version number:** Based on Semantic Versioning (MAJOR.MINOR.PATCH), decide the appropriate next version for your changes.
+2.  **Create and push a new tag:**
+    ```bash
+    git tag vX.Y.Z
+    git push origin vX.Y.Z
+    ```
+    (Replace `vX.Y.Z` with the actual version number).
+3.  **Automated Release:** Pushing the tag will trigger the "Create Release" GitHub Actions workflow. This workflow will:
+    *   Build the project.
+    *   Create a `release/` directory locally on the runner.
+    *   Package distributable files (`dist/` directory, `README.md`, `LICENSE`, `package.json`) into a ZIP archive named `release-vX.Y.Z.zip` inside the runner's `release/` directory.
+    *   Create a new GitHub Release named "Release vX.Y.Z".
+    *   Upload the `release-vX.Y.Z.zip` archive from the runner as an asset to the GitHub Release.
+    *   Automatically generate release notes based on the commit messages since the last tag.
+
+### Accessing Release Artifacts
+
+The primary way to get release artifacts is through the [Releases](https://github.com/dylarcher/git.starter-template/releases) page of the GitHub repository. Each release will have the versioned ZIP archive (`release-vX.Y.Z.zip`) available for download. The `release/` directory mentioned in the workflow steps is created on the GitHub Actions runner during the release process for packaging and is not committed to the repository itself.
+
 ## V. How to Contribute
 
 Contributions to improve this template are welcome! Please see the
@@ -179,7 +204,10 @@ Contributions to improve this template are welcome! Please see the
 ```markdown
 ## How to Contribute
 
-We welcome contributions! Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines on how to get involved, report issues, and submit pull requests.
+We welcome contributions! Please see our 
+[CONTRIBUTING.md](.github/CONTRIBUTING.md)
+ for detailed guidelines on how to get involved, report issues, and submit pull
+requests.
 ```
 
 ## VI. License
@@ -192,7 +220,8 @@ We welcome contributions! Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.
 ```markdown
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE)
+ file for details.
 ```
 
 ## VII. (Optional) Further Sections

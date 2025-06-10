@@ -1,4 +1,5 @@
 {
+  "ignores": [ "node_modules", "dist" ],
   "default": true,
   "MD013": {
     "line_length": 80,
@@ -8,11 +9,12 @@
     "stern": true
   },
   "MD036": false,
-  "MD028": false,
   "MD046": {
     "style": "consistent"
   },
   "MD033": {
     "allowed_elements": ["br"]
-  }
+  },
+  "MD028": false,
+  "MD041": true
 }
