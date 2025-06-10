@@ -45,7 +45,7 @@ docs:
   - LICENSE
   - '**/.md'
   - '**/*.markdown'
-  - '**/.mdx'
+  - '**/*.mdx'
 fix:
   - fix/*
 logic:
