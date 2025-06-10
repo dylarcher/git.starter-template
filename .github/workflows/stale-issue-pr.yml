@@ -24,13 +24,20 @@ jobs:
               console.log('Fetched stale issues:', response.data.length);
               // Output the list of issues
               core.setOutput('issues', JSON.stringify(response.data));
-            } else if (github.event_name === 'issues' && github.event.action === 'labeled' && github.event.label.name === 'stale') {
+            } else if (
+              github.event_name === 'issues' &&
+              github.event.action === 'labeled' &&
+              github.event.label.name === 'stale'
+            ) {
               // Process the specific issue that was just labeled
               const issue = context.payload.issue;
               console.log('Processing issue from label event:', issue.number);
               core.setOutput('issues', JSON.stringify([issue]));
             } else {
-              console.log('Not a schedule event or a stale label event. Skipping issue fetching.');
+              console.log(
+                'Not a schedule event or a stale label event. ' +
+                'Skipping issue fetching.'
+              );
               core.setOutput('issues', JSON.stringify([]));
             }
       - id: check_for_stale_issues
@@ -39,7 +46,8 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const issues = JSON.parse('${{ steps.get_stale_issues.outputs.issues }}');
+            const issuesJson = '${{ steps.get_stale_issues.outputs.issues }}';
+            const issues = JSON.parse(issuesJson);
             if (issues && issues.length > 0 && issues[0]) {
               core.setOutput('has_issues', 'true');
             } else {
@@ -63,7 +71,8 @@ jobs:
               const issueBody = issue.body || 'No description provided.';
               const branchName = `stale-issue-${issueNumber}`;
               const fileName = `ISSUES/ISSUE-${issueNumber}.md`;
-              const prTitle = `Draft PR for Stale Issue #${issueNumber}: ${issueTitle}`;
+              const prTitle = `Draft PR for Stale Issue #${issueNumber}: ` +
+                                issueTitle;
               const needsActionLabel = 'needs action'; // Label to add to the PR
               console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
               // 1. Create a new branch
@@ -77,7 +86,10 @@ jobs:
                 console.log(`Branch ${branchName} created successfully.`);
               } catch (error) {
                 if (error.message.includes('Reference already exists')) {
-                  console.log(`Branch ${branchName} already exists. Skipping PR creation for this issue.`);
+                  console.log(
+                    `Branch ${branchName} already exists. ` +
+                    'Skipping PR creation for this issue.'
+                  );
                   continue; // Skip to the next issue if branch exists
                 }
                 console.error(`Error creating branch ${branchName}:`, error);
@@ -112,9 +124,15 @@ jobs:
                   draft: true,
                 });
                 prNumber = pr.data.number;
-                console.log(`Draft PR #${prNumber} created for branch ${branchName}.`);
+                console.log(
+                  `Draft PR #${prNumber} created for ` +
+                  `branch ${branchName}.`
+                );
               } catch (error) {
-                console.error(`Error creating PR for branch ${branchName}:`, error);
+                console.error(
+                  `Error creating PR for branch ${branchName}:`,
+                  error
+                );
                 // Attempt to clean up the branch if PR creation fails
                 try {
                   await github.rest.git.deleteRef({
@@ -122,9 +140,15 @@ jobs:
                     repo: context.repo.repo,
                     ref: `refs/heads/${branchName}`,
                   });
-                  console.log(`Cleaned up branch ${branchName} after PR creation failure.`);
+                  console.log(
+                    `Cleaned up branch ${branchName} ` +
+                    'after PR creation failure.'
+                  );
                 } catch (cleanupError) {
-                  console.error(`Error cleaning up branch ${branchName}:`, cleanupError);
+                  console.error(
+                    `Error cleaning up branch ${branchName}:`,
+                    cleanupError
+                  );
                 }
                 continue;
               }
@@ -137,9 +161,16 @@ jobs:
                     issue_number: prNumber,
                     labels: [needsActionLabel],
                   });
-                  console.log(`Label "${needsActionLabel}" added to PR #${prNumber}.`);
+                  console.log(
+                    `Label "${needsActionLabel}" added to PR ` +
+                    `#${prNumber}.`
+                  );
                 } catch (error) {
-                  console.error(`Error adding label "${needsActionLabel}" to PR #${prNumber}:`, error);
+                  console.error(
+                    `Error adding label "${needsActionLabel}" to PR ` +
+                    `#${prNumber}:`,
+                    error
+                  );
                 }
               }
             }
