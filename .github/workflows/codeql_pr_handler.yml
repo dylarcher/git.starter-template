@@ -1,0 +1,211 @@
+name: Handle CodeQL Autofix PRs
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened] # Trigger when PR is opened or updated
+    branches: [ main ]
+
+jobs:
+  handle_codeql_pr:
+    name: Handle CodeQL PR
+    # Only run if the PR title indicates it's an autofix PR
+    if: startsWith(github.event.pull_request.title, '[Auto] CodeQL Fixes for')
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write # To merge PRs
+      contents: write      # To commit log files to the PR branch
+      statuses: read       # To read PR check statuses
+      actions: read        # To inspect workflow runs (optional, for more advanced check status)
+
+    steps:
+      - name: Checkout base branch (main)
+        uses: actions/checkout@v4
+        # This checks out the base branch (main) because of pull_request_target
+
+      - name: Wait for PR Checks
+        id: wait_for_checks
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "Waiting for checks on PR #$PR_NUMBER..."
+          TIMEOUT_MINUTES=10 # Maximum time to wait for checks
+          POLL_INTERVAL_SECONDS=30
+          MAX_ATTEMPTS=$((TIMEOUT_MINUTES * 60 / POLL_INTERVAL_SECONDS))
+
+          CHECKS_PASSED="false"
+
+          for ((i=1; i<=MAX_ATTEMPTS; i++)); do
+            echo "Attempt $i/$MAX_ATTEMPTS: Fetching checks for PR #$PR_NUMBER"
+            # Fetch all check runs for the PR's head SHA
+            # The head SHA is github.event.pull_request.head.sha
+            CHECKS_OUTPUT=$(gh api \
+              -H "Accept: application/vnd.github.v3+json" \
+              /repos/$REPO/commits/${{ github.event.pull_request.head.sha }}/check-runs)
+
+            echo "API Response: $CHECKS_OUTPUT"
+
+            # Check if there are any check runs
+            TOTAL_CHECKS=$(echo "$CHECKS_OUTPUT" | jq '.total_count')
+            if [ "$TOTAL_CHECKS" -eq 0 ]; then
+              echo "No checks found yet. Assuming checks are pending or not configured."
+              # Consider this as pending, might need adjustment based on how soon checks appear
+              # If no checks are expected for some PRs, this logic might need refinement.
+              # For now, if no checks appear after some time, we might assume success or failure based on policy.
+              # Let's assume for now that if no checks are found, it's not an error state yet.
+              sleep $POLL_INTERVAL_SECONDS
+              continue
+            fi
+
+            # Filter for checks that are not 'completed'
+            PENDING_CHECKS=$(echo "$CHECKS_OUTPUT" | jq '.check_runs[] | select(.status != "completed") | .name')
+            # Filter for checks that are 'completed' but have a 'failure' or 'cancelled' conclusion
+            FAILED_CHECKS=$(echo "$CHECKS_OUTPUT" | jq '.check_runs[] | select(.status == "completed" and (.conclusion == "failure" or .conclusion == "cancelled" or .conclusion == "timed_out")) | .name')
+
+            if [ -n "$FAILED_CHECKS" ]; then
+              echo "::error::One or more checks failed or were cancelled:"
+              echo "$FAILED_CHECKS"
+              CHECKS_PASSED="false"
+              echo "checks_status=failure" >> $GITHUB_OUTPUT
+              exit 0 # Exit script, do not continue loop
+            fi
+
+            if [ -z "$PENDING_CHECKS" ]; then
+              # All checks are completed and none have failed (previous check would have caught that)
+              echo "All checks completed successfully."
+              CHECKS_PASSED="true"
+              echo "checks_status=success" >> $GITHUB_OUTPUT
+              exit 0 # Exit script, do not continue loop
+            else
+              echo "Pending checks:"
+              echo "$PENDING_CHECKS"
+            fi
+
+            echo "Sleeping for $POLL_INTERVAL_SECONDS seconds..."
+            sleep $POLL_INTERVAL_SECONDS
+          done
+
+          if [ "$CHECKS_PASSED" == "false" ]; then
+            echo "::error::Timeout reached or checks did not pass within $TIMEOUT_MINUTES minutes."
+            echo "checks_status=timeout" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Merge or Log
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }} # Branch name of the PR
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }} # SHA of the PR head
+        run: |
+          CHECKS_CONCLUSION="${{ steps.wait_for_checks.outputs.checks_status }}"
+          echo "Checks conclusion: $CHECKS_CONCLUSION"
+
+          if [ "$CHECKS_CONCLUSION" == "success" ]; then
+            echo "All checks passed. Merging PR #$PR_NUMBER."
+            gh pr merge "$PR_NUMBER" --squash --admin --repo "$REPO"
+            MERGE_STATUS=$?
+            if [ $MERGE_STATUS -eq 0 ]; then
+              echo "PR #$PR_NUMBER merged successfully."
+            else
+              echo "::error::Failed to merge PR #$PR_NUMBER. Exit code: $MERGE_STATUS"
+              # As a fallback, create a log file on the PR branch if merge fails
+              CHECKS_CONCLUSION="merge_failed" # Update status for logging
+            fi
+          fi
+
+          # If checks failed, timed out, or merge failed
+          if [ "$CHECKS_CONCLUSION" == "failure" ] || [ "$CHECKS_CONCLUSION" == "timeout" ] || [ "$CHECKS_CONCLUSION" == "merge_failed" ]; then
+            if [ "$CHECKS_CONCLUSION" == "failure" ]; then
+              LOG_MESSAGE="PR #$PR_NUMBER checks failed."
+            elif [ "$CHECKS_CONCLUSION" == "timeout" ]; then
+              LOG_MESSAGE="PR #$PR_NUMBER checks timed out."
+            elif [ "$CHECKS_CONCLUSION" == "merge_failed" ]; then
+              LOG_MESSAGE="PR #$PR_NUMBER merged successfully by checks, but merge command failed."
+            fi
+            echo "$LOG_MESSAGE Creating log file."
+
+            LOG_DIR=".tmp/codeql/security"
+            mkdir -p "$LOG_DIR"
+            LOG_FILE="$LOG_DIR/pr_failure_$PR_NUMBER.log"
+            echo "$LOG_MESSAGE (Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ"))" > "$LOG_FILE"
+            echo "See details at https://github.com/$REPO/pull/$PR_NUMBER/checks" >> "$LOG_FILE"
+
+            echo "Attempting to commit log file to branch $PR_HEAD_REF..."
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+            # We are on the base branch (main). We need to switch to the PR's head branch.
+            # Fetch the specific ref for the PR head
+            git fetch origin "refs/pull/$PR_NUMBER/head:$PR_HEAD_REF"
+            git checkout "$PR_HEAD_REF"
+
+            # Verify checkout was successful and we are on the correct branch
+            CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+            if [ "$CURRENT_BRANCH" != "$PR_HEAD_REF" ]; then
+                echo "::error::Failed to checkout PR head branch. Expected $PR_HEAD_REF but got $CURRENT_BRANCH."
+                exit 1
+            fi
+
+            # Ensure the .tmp directory from the base branch isn't carried over if it existed there
+            # and wasn't part of the PR branch. A clean way is to re-create.
+            mkdir -p "$LOG_DIR"
+            echo "$LOG_MESSAGE (Timestamp: $(date -u +"%Y-%m-%dT%H:%M:%SZ"))" > "$LOG_FILE"
+            echo "See details at https://github.com/$REPO/pull/$PR_NUMBER/checks" >> "$LOG_FILE"
+
+            git add "$LOG_FILE"
+            # Check if there's anything to commit (e.g. if the log file already existed with same content)
+            if git diff --staged --quiet; then
+                echo "No changes to commit regarding log file. It might already exist or be identical."
+            else
+                git commit -m "Log CodeQL PR #$PR_NUMBER check failure"
+                echo "Pushing log file to $PR_HEAD_REF..."
+                git push origin "$PR_HEAD_REF"
+            fi
+            # Optionally, switch back to main or clean up
+            # git checkout main
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # gh cli often uses GH_TOKEN
+          GH_HOST: github.com # ensure gh targets github.com
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+
+          # Note: This GITHUB_TOKEN is passed to the run step
+          # The gh cli will pick it up automatically.
+          # The --admin flag for merge might require more than default GITHUB_TOKEN permissions
+          # depending on repo settings (e.g. if branch protection rules require admin override)
+          # For committing to PR branch, the default GITHUB_TOKEN should be fine as it's triggered
+          # by pull_request_target from the same repo.
+
+  # Placeholder for lewagon/wait-on-check-action if the above script is too complex or unreliable
+  # wait-for-pr-checks:
+  #   name: Wait for PR Checks (alternative)
+  #   runs-on: ubuntu-latest
+  #   needs: handle_codeql_pr # Ensure this job runs before this one, or integrate into handle_codeql_pr
+  #   if: always() # Or a specific condition
+  #   steps:
+  #     - name: Wait for all checks to succeed
+  #       uses: lewagon/wait-on-check-action@v1.3.1
+  #       with:
+  #         ref: ${{ github.event.pull_request.head.sha }}
+  #         running-workflow-name: 'Wait for PR Checks (alternative)' # Name of this workflow job
+  #         repo-token: ${{ secrets.GITHUB_TOKEN }}
+  #         wait-interval: 30 # seconds
+  #         allowed-conclusions: success,skipped # Skipped checks are also considered "passing"
+  #         # Note: This action might not give a granular "failed" vs "timed_out" status
+  #         # It primarily waits for success or a general failure/timeout.
+  #         # It also has a 'timeout' input for overall timeout.
+  #       id: wait_checks_lewagon
+
+  #     - name: Handle result from lewagon action
+  #       if: always() # Ensure this runs to see the outcome
+  #       run: |
+  #         echo "Lewagon check status: ${{ steps.wait_checks_lewagon.outputs.conclusion }}"
+  #         # Based on this, you'd then have a separate job or steps to merge or log.
+  #         # This approach splits waiting from acting, which can be cleaner.
+  #         # However, the subtask asks for it in one job.
