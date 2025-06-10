@@ -1,0 +1,23 @@
+name: Commit Linter
+
+on: [push, pull_request]
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for commitlint
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*' # Use the latest LTS version of Node.js
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint Commits
+        env:
+          FROM_COMMIT: ${{ github.event.before }}
+          TO_COMMIT: ${{ github.sha }}
+        run: npm run lint:commit
