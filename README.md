@@ -204,7 +204,10 @@ Contributions to improve this template are welcome! Please see the
 ```markdown
 ## How to Contribute
 
-We welcome contributions! Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md) for detailed guidelines on how to get involved, report issues, and submit pull requests.
+We welcome contributions! Please see our 
+[CONTRIBUTING.md](.github/CONTRIBUTING.md)
+ for detailed guidelines on how to get involved, report issues, and submit pull
+requests.
 ```
 
 ## VI. License
@@ -217,7 +220,8 @@ We welcome contributions! Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.
 ```markdown
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE)
+ file for details.
 ```
 
 ## VII. (Optional) Further Sections
