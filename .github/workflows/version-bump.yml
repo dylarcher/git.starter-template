@@ -1,3 +1,5 @@
+concurrency:
+  cancel-in-progress: true
 jobs:
   bump-version:
     runs-on: ubuntu-latest
@@ -158,9 +160,6 @@ jobs:
           git push
           git push --tags
 name: Automated Version Bump
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 on:
   push:
     branches:

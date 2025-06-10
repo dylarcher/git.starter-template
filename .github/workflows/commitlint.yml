@@ -1,3 +1,7 @@
+---
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   commitlint:
     runs-on: ubuntu-latest
@@ -14,9 +18,6 @@ jobs:
         name: Lint Commits
         run: npm run lint:commit
 name: Commit Linter
-on:
-  push:
-  pull_request:
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+'on':
+  pull_request: null
+  push: null

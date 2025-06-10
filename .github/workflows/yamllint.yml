@@ -1,3 +1,7 @@
+---
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
 jobs:
   lint_and_fix:
     runs-on: ubuntu-latest
@@ -43,10 +47,7 @@ jobs:
             --base main \
             --head $BRANCH_NAME
 name: YAML Lint and Fix
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-on:
+'on':
   push:
     branches:
       - main
