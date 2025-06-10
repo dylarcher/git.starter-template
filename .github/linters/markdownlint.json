@@ -1,0 +1,44 @@
+{
+  "$schema": "https://raw.githubusercontent.com/markdownlint/markdownlint/master/schema.json",
+  "default": true,
+  "ignores": [
+    "node_modules",
+    ".git",
+    "build",
+    "dist",
+    "coverage",
+    "test/coverage",
+    ".tmp",
+    ".temp",
+    ".cache",
+    "logs",
+    "*.log",
+    ".vscode",
+    ".idea",
+    ".idx",
+    ".vscode-test",
+    ".vs",
+    "lib",
+    ".github/workflows",
+    ".github/linters",
+    ".github/actions"
+  ],
+  "MD013": {
+    "code_block_line_length": 280,
+    "heading_line_length": 128,
+    "line_length": 240,
+    "stern": true,
+    "tables": true
+  },
+  "MD028": false,
+  "MD033": true,
+  "MD036": false,
+  "MD046": {
+    "style": "consistent"
+  },
+  "MD049": {
+    "first": true,
+    "prefix": " ",
+    "style": "dash"
+  }
+}

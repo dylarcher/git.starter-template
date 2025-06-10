@@ -3,38 +3,29 @@ $schema: https://raw.githubusercontent.com/adrienverge/yamllint/master/schema/co
 extends: default
 # List of files and directories to ignore
 ignore:
-  # Ignore the node_modules directory
   - node_modules
-  # Ignore the .git directory
   - .git
-  # Ignore the .github directory
-  - .github
-  # Ignore the .vscode directory
-  - .vscode
-  # Ignore the .idea directory
-  - .idea
-  # Ignore the .idx directory
-  - .idx
-  # Ignore the .vscode-test directory
-  - .vscode-test
-  # Ignore the lib directory
-  - lib
-  # Ignore the build directory
   - build
-  # Ignore the scripts directory
-  - scripts
-  # Ignore the test directory
-  - test
-  # Ignore the docs directory
-  - docs
-  # Ignore the .tmp directory
-  - .tmp
-  # Ignore the .temp directory
-  - .temp
-  # Ignore the .cache directory
-  - .cache
-  # Ignore the dist directory
   - dist
+  - coverage
+  - test/coverage
+  - .tmp
+  - .temp
+  - .cache
+  - logs
+  - "*.log"
+  - .vscode
+  - .idea
+  - .idx
+  - .vscode-test
+  - .vs
+  - lib
+  # Specific .github subdirectories that might not contain YAML or are handled by other tools
+  - .github/actions
+  - .github/linters/biome.json # It's JSON, not YAML
+  - .github/linters/c8.json
+  - .github/linters/commitlint.json
+  - .github/linters/markdownlint.json
 # Configure the line-length rule
 rules:
   line-length:

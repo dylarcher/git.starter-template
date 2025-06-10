@@ -8,13 +8,8 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           fetch-depth: 0
-      - name: Set up Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version-file: .nvmrc # Uses version from .nvmrc
-          cache: npm # Cache npm dependencies
-      - name: Install dependencies
-        run: npm ci # Use ci for cleaner installs in CI
+      - name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
       - name: Update from template repository
         run: npm run update:starter-files
       - name: Commit and push changes
@@ -32,6 +27,9 @@ jobs:
           git pull --rebase
           git push
 name: Update from Template
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }} # For scheduled runs, ref is the default branch
+  cancel-in-progress: true
 on:
   workflow_dispatch: # Allows manual triggering
   schedule:

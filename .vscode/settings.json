@@ -160,17 +160,17 @@
   "editor.tabSize": 2,
   "editor.wordBasedSuggestions": "currentDocument",
   "files.associations": {
-    ".biomejsrc": "yaml",
+    "biome.json": "json",
     ".biomerc": "yaml",
     ".browserslistrc": "yaml",
-    ".c8rc": "yaml",
+    "c8.json": "json",
     ".codeqlrc": "yaml",
-    ".commitlintrc": "yaml",
+    "commitlint.json": "json",
     ".editorconfig": "ini",
     ".eslintrc": "yaml",
     ".gitattributes": "ini",
     ".gitignore": "ignore",
-    ".markdownlintrc": "yaml",
+    "markdownlint.json": "json",
     ".npmrc": "properties",
     ".nvmrc": "properties",
     ".prettierrc": "yaml",
@@ -232,7 +232,7 @@
       }
     }
   },
-  "markdownlint.configFile": ".github/linters/.markdownlintrc",
+  "markdownlint.configFile": ".github/linters/markdownlint.json",
   "sortJSON.contextMenu": {
     "sortJSON": true,
     "sortJSONAlphaNum": false,
@@ -275,9 +275,7 @@
   "yaml.maxItemsComputed": 6400,
   "yaml.schemaStore.enable": true,
   "yaml.schemaStore.url": "https://www.schemastore.org/api/json/catalog.json",
-  "yaml.schemas": {
-    "https://json.schemastore.org/github-issue-config.json": "file:///Users/darcher/dev/git.starter-template/.github/ISSUE_TEMPLATE/config.yml"
-  },
+  "yaml.schemas": {},
   "yaml.style.flowMapping": "allow",
   "yaml.style.flowSequence": "allow",
   "yaml.suggest.parentSkeletonSelectedFirst": true,

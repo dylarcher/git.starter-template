@@ -20,7 +20,7 @@ async function main() {
   try {
     console.log("Starting changelog generation...")
 
-    // 1. Read package.json (existing code)
+    // 1. Read package.json
     const packageJsonPath = path.resolve("./package.json")
     const packageJsonContent = await fs.readFile(packageJsonPath, "utf8")
     const packageJson = JSON.parse(packageJsonContent)
@@ -28,7 +28,33 @@ async function main() {
     console.log(`Current version from package.json: ${currentVersion}`)
     if (!currentVersion) throw new Error("Version not found in package.json")
 
-    // 2. Get latest tag (existing code)
+    // Determine repository URL
+    let repoUrl = ""
+    if (packageJson.repository) {
+      if (typeof packageJson.repository === 'string') {
+        if (packageJson.repository.startsWith('http')) {
+          repoUrl = packageJson.repository.replace('.git', '');
+        }
+      } else if (typeof packageJson.repository === 'object' && packageJson.repository.url) {
+        repoUrl = packageJson.repository.url.replace('git+', '').replace('.git', '');
+      }
+    }
+    // Try to get from git remote if not in package.json or not a usable URL
+    if (!repoUrl || !repoUrl.includes('github.com')) { // Added check for github.com
+        try {
+           const remoteUrl = execSync('git remote get-url origin').toString().trim();
+           if (remoteUrl.includes('github.com')) { // Ensure it's a github remote
+               repoUrl = remoteUrl.replace('git@github.com:', 'https://github.com/').replace('.git', '');
+           } else {
+               console.warn('Origin remote is not a GitHub URL.');
+               repoUrl = ''; // Reset if not a GitHub URL
+           }
+        } catch (e) { console.warn('Could not determine repository URL from git remote.'); repoUrl = ''; }
+    }
+    console.log(`Determined repository URL: ${repoUrl || 'Not found (will not link commits)'}`);
+
+
+    // 2. Get latest tag
     let previousVersionTag = ""
     try {
       previousVersionTag = execSync(
@@ -51,7 +77,7 @@ async function main() {
       }
     }
 
-    // 3. Get commit messages (existing code)
+    // 3. Get commit messages
     const commitLogFormat = "%H%x00%s%x00%b%x00"
     let commitLog = ""
     if (previousVersionTag) {
@@ -74,21 +100,20 @@ async function main() {
       })
 
     if (commits.length === 0 && !process.env.FORCE_UPDATE_CHANGELOG) {
-      // Added a way to force update if needed
       console.log(
         "No new commits found. Changelog will not be updated unless forced.",
       )
-      // It's important that the workflow step that commits checks if the file changed.
-      // So, we can simply exit here if no commits.
-      return // Exit if no commits and not forced
+      return
     }
     console.log(
       `Found ${commits.length} commits since ${previousVersionTag || "the beginning"}.`,
     )
 
-    // 4. Categorize commits (existing code)
+    // 4. Categorize commits
     const categorizedCommits = {}
     const miscellaneousCategory = "Miscellaneous"
+    let versionLinkDefinitions = {}; // Initialize here for the current version
+
     for (const commit of commits) {
       let type = null
       let subject = commit.subject
@@ -101,13 +126,21 @@ async function main() {
       }
       const category = conventionalCommitTypes[type] || miscellaneousCategory
       if (!categorizedCommits[category]) categorizedCommits[category] = []
+
+      const fullHash = commit.hash;
+      const shortHash = fullHash.substring(0, 7);
+      const commitLinkRef = `${shortHash}-commit`;
+
       categorizedCommits[category].push(
-        `- ${subject} ([${commit.hash.substring(0, 7)}])`,
+        `- ${subject} ([${shortHash}][${commitLinkRef}])`,
       )
+      if (repoUrl) { // Only add if repoUrl is found
+        versionLinkDefinitions[commitLinkRef] = `${repoUrl}/commit/${fullHash}`;
+      }
     }
     console.log("Commits categorized.")
 
-    // 5. Read existing CHANGELOG.md (existing code)
+    // 5. Read existing CHANGELOG.md
     const changelogPath = path.resolve("./CHANGELOG.md")
     let changelogContent = ""
     try {
@@ -136,19 +169,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     let newEntry = `## [${currentVersion}] - ${today}`
 
     if (commits.length === 0) {
-      newEntry += "### No notable changes\n" // Or some other placeholder
+      newEntry += "\n### No notable changes\n"
     } else {
       for (const category in categorizedCommits) {
-        newEntry += `### ${category}`
-        for (const commitMsg in categorizedCommits[category]) {
-          newEntry += `${commitMsg}`
+        newEntry += `\n### ${category}\n`;
+        let commitMessagesForCategory = "";
+        for (const commitMsg of categorizedCommits[category]) { // Use 'of' for array iteration
+            commitMessagesForCategory += `  ${commitMsg}\n`;
         }
-        newEntry += "\n" // Add a blank line after each category section
+        newEntry += commitMessagesForCategory.trimEnd(); // Add messages and remove last newline
+        newEntry += "\n" // Ensure a newline after the list of commits for the category
       }
-      newEntry = `${newEntry.trim()}\n` // Remove trailing newline and add one back
-    }
+      newEntry = `${newEntry.trim()}\n`;
 
-    // Ensure there's an [Unreleased] section, either the existing one or a new one.
+      const collectedDefs = Object.entries(versionLinkDefinitions)
+                               .map(([ref, url]) => `[${ref}]: ${url}`)
+                               .join("\n");
+      if (collectedDefs) {
+        newEntry += "\n" + collectedDefs + "\n";
+      }
+    }
+    versionLinkDefinitions = {}; // Reset for safety, though script exits
+
     const unreleasedHeader = "## [Unreleased]"
     let existingUnreleasedContent = ""
     const unreleasedMatch = changelogContent.match(
@@ -158,55 +200,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     if (unreleasedMatch?.[1]) {
       existingUnreleasedContent = unreleasedMatch[1].trim()
         ? unreleasedMatch[1]
-        : "\n" // Preserve content or ensure a newline
+        : "\n"
     } else {
-      // If [Unreleased] section doesn't exist at all, ensure we add it above the new version.
-      existingUnreleasedContent = "\n" // Default to a newline if not found or empty
+      existingUnreleasedContent = "\n"
     }
 
-    // Remove the old [Unreleased] section and its content before re-adding it.
-    changelogContent = changelogContent.replace(
-      /## \[Unreleased\]([\s\S]*?)(?=\n## \[|$)/,
-      "$1",
-    )
-    if (!changelogContent.includes("## [")) {
-      // If no other versions, ensure Unreleased is at the top
-      changelogContent = changelogContent.replace(
-        /# Changelog\n\n/,
-        `# Changelog\n\n${unreleasedHeader}\n${existingUnreleasedContent.trim()}\n\n`,
-      )
-    }
-
-    // Find the position to insert the new entry.
-    // It should be right after the "## [Unreleased]" section or after the main header if [Unreleased] is not present.
-    const insertionMarker = "## [Unreleased]"
-    const headerEndMarker = "# Changelog" // Fallback if [Unreleased] is somehow missing after logic above
-
-    let insertPosition = changelogContent.indexOf(insertionMarker)
-    if (insertPosition !== -1) {
-      insertPosition = changelogContent.indexOf("\n", insertPosition) + 1 // After the [Unreleased] line
-      // If there was content under [Unreleased], find the end of that content.
-      // This logic assumes [Unreleased] is followed by a blank line or another header.
-      const nextHeaderPos = changelogContent.indexOf("\n## [", insertPosition)
-      if (nextHeaderPos !== -1) {
-        // Adjust the insertion position to be before the next version header.
-        insertPosition = nextHeaderPos
-      }
-    } else {
-      // Fallback: if [Unreleased] is not found, insert after the main changelog title and description.
-      insertPosition = changelogContent.indexOf(headerEndMarker)
-      if (insertPosition !== -1) {
-        // Find the end of the main header block (usually followed by two newlines)
-        const headerBlockEnd = changelogContent.indexOf("\n\n", insertPosition)
-        insertPosition =
-          headerBlockEnd !== -1 ? headerBlockEnd + 2 : changelogContent.length
-      } else {
-        // If even "# Changelog" is not found (e.g. totally empty file), prepend.
-        insertPosition = 0
-      }
-    }
-
-    // A simpler way to insert: always put the new [Unreleased] at the top, then the new version, then the rest.
     const topPart = changelogContent.match(
       /^# Changelog[\s\S]*?(?=\n## \[Unreleased\]|$)/,
     )
@@ -223,33 +221,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       ? changelogContent.substring(
         Number(unreleasedMatch?.index) + unreleasedMatch[0].length,
       )
-      : changelogContent.includes(headerEndMarker)
+      : changelogContent.includes("# Changelog") // Check for "# Changelog"
         ? changelogContent.substring(
-          changelogContent.indexOf(headerEndMarker) + headerEndMarker.length,
+          changelogContent.indexOf("# Changelog") + "# Changelog".length,
         )
         : changelogContent
 
-    // Reconstruct the changelog
-    // 1. Main header (e.g., "# Changelog\n\nDescription") // Removed ...
-    // 2. New [Unreleased] section (empty or with its previous content if any)
-    // 3. The new version's entry
-    // 4. The rest of the old changelog entries
 
-    // If [Unreleased] was empty or just newlines, ensure it's just the header + one newline.
     const unreleasedSectionContent = existingUnreleasedContent.trim()
       ? existingUnreleasedContent
       : "\n"
-    if (unreleasedSectionContent === "\n" && commits.length > 0) {
-      // If we just added commits, the [Unreleased] section should be empty for next time.
-    }
 
     let finalChangelog = `${mainHeaderPart.trim()}
 
 ${unreleasedHeader}
 ${unreleasedSectionContent.trim() ? `${unreleasedSectionContent.trim()}\n\n` : "\n"}${newEntry.trim()}
 `
-
-    // Append older versions. Remove any existing entry for currentVersion to avoid duplicates.
     const olderVersionsRegex = new RegExp(
       `\n## \\[${currentVersion.replace(/\./g, "\\.")}\\][\\s\\S]*?(?=\n## \\[|$)`,
       "g",
@@ -257,13 +244,13 @@ ${unreleasedSectionContent.trim() ? `${unreleasedSectionContent.trim()}\n\n` : "
     const olderContent = restOfChangelog.replace(olderVersionsRegex, "").trim()
 
     if (olderContent) {
-      finalChangelog += `
-${olderContent}
-`
+      finalChangelog += `\n\n${olderContent}\n` // Added \n\n for spacing if older content exists
+    } else {
+      finalChangelog += `\n` // Ensure a final newline
     }
 
     // 7. Write updated CHANGELOG.md
-    await fs.writeFile(changelogPath, `${finalChangelog.trim()}\n`, "utf8")
+    await fs.writeFile(changelogPath, `${finalChangelog.trim()}\n`, "utf8") // Trim and add one final newline
     console.log(
       `Successfully updated ${changelogPath} for version ${currentVersion}`,
     )

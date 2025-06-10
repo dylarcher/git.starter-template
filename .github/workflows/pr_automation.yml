@@ -50,12 +50,12 @@ jobs:
           sync-labels: true # Ensures labels are removed if files change and no longer match
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event.action == 'opened'
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
         name: Assign PR to @dylarcher
         run: gh pr edit ${{ github.event.pull_request.number }} --add-assignee "@dylarcher"
       - env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        if: github.event.action == 'opened'
+        if: github.event.action == 'opened' || github.event.action == 'reopened'
         name: Request Review from Copilot
         run: gh pr edit ${{ github.event.pull_request.number }} --add-reviewer "copilot"
       - continue-on-error: true
