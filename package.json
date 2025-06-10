@@ -18,7 +18,14 @@
     "npm-run-all": "4.1.5",
     "rimraf": "6.0.1",
     "typescript": "5.8.3",
-    "yaml-lint": "1.7.0"
+    "yaml-lint": "1.7.0",
+    "semantic-release": "*",
+    "@semantic-release/changelog": "*",
+    "@semantic-release/git": "*",
+    "@semantic-release/github": "*",
+    "@semantic-release/npm": "*",
+    "conventional-changelog-conventionalcommits": "*",
+    "semver": "7.7.2"
   },
   "directories": {
     ".github": ".github",
@@ -94,7 +101,5 @@
   "type": "commonjs",
   "types": "dist/index.d.ts",
   "version": "2.0.0",
-  "dependencies": {
-    "semver": "7.7.2"
-  }
+  "dependencies": {}
 }

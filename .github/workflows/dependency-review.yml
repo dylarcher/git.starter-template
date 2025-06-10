@@ -1,0 +1,29 @@
+name: Dependency Review
+
+on: [pull_request]
+
+permissions:
+  contents: read          # To read dependency files
+  pull-requests: write   # To add comments or fail PR checks
+
+jobs:
+  dependency-review:
+    name: Scan for Vulnerable Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f # Pinned SHA
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@da24556b548a50705dd671f47852072ea4c105d9 # Pinned SHA
+        with:
+          # Example: Fail build if any vulnerability with 'critical' or 'high' severity is found
+          fail-on-severity: 'high'
+          # Example: Allow specific CVEs (e.g., if a fix is not yet available but risk is accepted)
+          # allow-ghsas: 'GHSA-xxxx-xxxx-xxxx, GHSA-yyyy-yyyy-yyyy'
+          # Example: Deny specific licenses
+          # deny-licenses: 'AGPL-3.0, GPL-2.0'
+          # Example: Allow specific licenses
+          # allow-licenses: 'MIT, Apache-2.0, BSD-3-Clause'
+          # For more configuration options, see:
+          # https://github.com/actions/dependency-review-action#configuration-options

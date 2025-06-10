@@ -1,0 +1,49 @@
+{
+  "branches": ["main"],
+  "plugins": [
+    ["@semantic-release/commit-analyzer", {
+      "preset": "conventionalcommits",
+      "releaseRules": [
+        {"type": "docs", "scope": "README", "release": "patch"},
+        {"type": "fix", "release": "patch"},
+        {"type": "feat", "release": "minor"},
+        {"type": "perf", "release": "patch"},
+        {"breaking": true, "release": "major"},
+        {"type": "build", "release": "patch"},
+        {"type": "chore", "release": null},
+        {"type": "ci", "release": null},
+        {"type": "docs", "release": "patch"},
+        {"type": "refactor", "release": "patch"},
+        {"type": "style", "release": null},
+        {"type": "test", "release": null}
+      ],
+      "parserOpts": {
+        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+      }
+    }],
+    ["@semantic-release/release-notes-generator", {
+      "preset": "conventionalcommits",
+      "writerOpts": {
+        "commitsSort": ["subject", "scope"]
+      }
+    }],
+    ["@semantic-release/changelog", {
+      "changelogFile": "CHANGELOG.md"
+    }],
+    ["@semantic-release/npm", {
+      "npmPublish": true,
+      "pkgRoot": "."
+    }],
+    ["@semantic-release/github", {
+      "assets": [
+        {"path": "dist/**", "label": "Distribution Assets"},
+        {"path": "README.md", "label": "README"},
+        {"path": "LICENSE", "label": "LICENSE"}
+      ]
+    }],
+    ["@semantic-release/git", {
+      "assets": ["package.json", "package-lock.json", "CHANGELOG.md"],
+      "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+    }]
+  ]
+}

@@ -1,0 +1,41 @@
+name: Mark and Close Stale Issues and PRs
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Run daily at midnight UTC
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  stale:
+    name: Process Stale Items
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mark and close stale issues and PRs
+        uses: actions/stale@f78de9780efb7a789cf4745957fa3374cbb94fd5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          days-before-stale: 60
+          days-before-close: 7
+          stale-issue-label: 'stale'
+          stale-pr-label: 'stale'
+          stale-issue-message: >
+            This issue has been automatically marked as stale because it has not had
+            recent activity. It will be closed if no further activity occurs.
+            Thank you for your contributions.
+          stale-pr-message: >
+            This PR has been automatically marked as stale because it has not had
+            recent activity. It will be closed if no further activity occurs.
+            Thank you for your contributions.
+          # Optional: Add labels to exempt from stale processing
+          # exempt-issue-labels: 'keep,security'
+          # exempt-pr-labels: 'keep,work-in-progress'
+          # Optional: Set to true to remove stale labels if an item is updated
+          remove-stale-when-updated: true
+          # Optional: Set to true to close stale PRs that have the 'stale' label
+          # (requires delete-branch permission if also deleting branches)
+          # close-stale-pr: true
+          # Optional: Set to true to delete the branch of a closed stale PR
+          # delete-branch: true # Requires contents: write as well for branch deletion

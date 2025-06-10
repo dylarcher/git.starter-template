@@ -1,0 +1,34 @@
+name: Main Release
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write # For NPM OIDC
+
+jobs:
+  release:
+    name: Semantic Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@09d2acae674a48949e3602304ab46fd20ae0c42f
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Node.js environment
+        uses: ./.github/actions/setup-node-env # Uses the local composite action
+        # Ensure this composite action installs dependencies (npm ci)
+
+      - name: Build
+        run: npm run build
+
+      - name: Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # Not needed if OIDC is configured for NPM
+        run: npx semantic-release
