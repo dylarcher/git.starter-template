@@ -135,27 +135,39 @@ new features from this template into your own project.
 
 `npm start`
 
-### Updating from the Original Template
+### Repository Updates
 
-This project was generated from
-`https://github.com/dylarcher/git.starter-template`. To pull in the latest
-updates from this template repository, you can use the `update-template` script.
+This project includes mechanisms to keep it updated with the latest changes from the original template repository (`dylarcher/git.starter-template`).
+
+#### Manual Updates with `npm run update:starter-files`
+
+You can manually fetch and merge updates by running the following command in your local repository:
+
+```bash
+npm run update:starter-files
+```
 
 This script will:
 
-1. Ensure a git remote named `template` points to
-    `https://github.com/dylarcher/git.starter-template.git`.
-2. Fetch the latest changes from the `template` remote.
-3. Merge the changes from `template/main` into your current branch, allowing
-    for unrelated histories.
+1.  Ensure a git remote named `template` points to `https://github.com/dylarcher/git.starter-template.git`.
+2.  Fetch the latest changes from the `template` remote.
+3.  Merge the changes from `template/main` into your current branch, allowing for unrelated histories.
 
-To run the script:
+#### Automated Updates with GitHub Actions
 
-```bash
-npm run update-template
-```
+This repository includes a GitHub Action workflow named "**Update from Template**" (defined in `.github/workflows/starterfiles.yml`) that automates the update process.
 
-It's recommended to use the workflow for a more streamlined process.
+*   **Functionality:** This workflow uses the `npm run update:starter-files` script to fetch and merge changes from the template repository. If changes are found, it creates a pull request with these updates.
+*   **Schedule:** It runs automatically on a daily basis (at midnight UTC).
+*   **Manual Trigger:** You can also manually trigger this workflow from the "Actions" tab of your GitHub repository.
+*   **Process:**
+    1.  Go to the "Actions" tab in your repository.
+    2.  Select the "Update from Template" workflow.
+    3.  Click the "Run workflow" button.
+    4.  If updates are available, a pull request will be automatically created.
+    5.  Review the pull request and merge it to incorporate the updates. You may need to resolve merge conflicts if you've made changes to the same files that were updated in the template.
+
+Using the GitHub Action is the recommended way to keep your project up-to-date with the template.
 
 ## V. How to Contribute
 
