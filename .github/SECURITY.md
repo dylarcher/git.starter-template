@@ -24,30 +24,30 @@ vulnerability within this project, please report it to us as soon as possible.
    `git.starter-template` GitHub
    repository's issue tracker
    (<https://github.com/dylarcher/git.starter-template/issues>).
-   * Clearly title the issue with a security focus, e.g., "Security
+   - Clearly title the issue with a security focus, e.g., "Security
      Vulnerability: (A Brief Description)".
-   * Provide a detailed description of the vulnerability, including:
-     * Steps to reproduce the vulnerability.
-     * The version of the tool affected.
-     * Any potential impact.
-     * If possible, suggest a fix or mitigation.
+   - Provide a detailed description of the vulnerability, including:
+     - Steps to reproduce the vulnerability.
+     - The version of the tool affected.
+     - Any potential impact.
+     - If possible, suggest a fix or mitigation.
 2. **Sensitive Vulnerabilities:**
-   * If you believe the vulnerability is particularly sensitive and should not
+   - If you believe the vulnerability is particularly sensitive and should not
      be publicly disclosed immediately:
-     * Please email the primary maintainer directly at
+     - Please email the primary maintainer directly at
        `dylarcher@zohomail.com`
-     * Use the subject line "Security Vulnerability Report:
+     - Use the subject line "Security Vulnerability Report:
        git.starter-template".
 
 **What to Expect:**
 
-* We aim to acknowledge receipt of your vulnerability report within 48-72
+- We aim to acknowledge receipt of your vulnerability report within 48-72
   hours.
-* We will investigate the reported vulnerability and may ask for additional
+- We will investigate the reported vulnerability and may ask for additional
   information.
-* You will be updated on the progress of our investigation and the planned
+- You will be updated on the progress of our investigation and the planned
   remediation.
-* We will publicly disclose the vulnerability once a fix is available, and
+- We will publicly disclose the vulnerability once a fix is available, and
   credit will be given to the reporter if desired.
 
 This project utilizes automated security scanning tools like **GitHub CodeQL**

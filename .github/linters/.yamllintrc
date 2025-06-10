@@ -1,0 +1,36 @@
+$schema: https://raw.githubusercontent.com/adrienverge/yamllint/master/schema/configuration-schema.json
+# Extend the default yamllint configuration
+extends: default
+# List of files and directories to ignore
+ignore:
+  - node_modules
+  - .git
+  - build
+  - dist
+  - coverage
+  - test/coverage
+  - .tmp
+  - .temp
+  - .cache
+  - logs
+  - "*.log"
+  - .vscode
+  - .idea
+  - .idx
+  - .vscode-test
+  - .vs
+  - lib
+  # Specific .github subdirectories that might not contain YAML or are handled by other tools
+  - .github/actions
+  - .github/linters/biome.json # It's JSON, not YAML
+  - .github/linters/c8.json
+  - .github/linters/commitlint.json
+  - .github/linters/markdownlint.json
+# Configure the line-length rule
+rules:
+  - ordered:
+    keys: true
+    level: warning
+  - line-length:
+    level: warning
+    max: 120

@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "preset-default",
+    {
+      "name": "removeAttrs",
+      "params": {
+        "attrs": "(data-name|id)"
+      }
+    },
+    "removeDimensions",
+    "removeScriptElement",
+    "removeStyleElement"
+  ]
+}

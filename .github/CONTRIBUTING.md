@@ -19,13 +19,13 @@ valuable.
 3. **Create a Branch:** Create a new branch for your changes.
 
     ```bash
-    git checkout -b feature/the-feature-alias
+    git checkout -b feat/the-feature-alias
     ```
 
     or
 
     ```bash
-    git checkout -b bugfix/issue-description
+    git checkout -b fix/issue-description
     ```
 
 4. **Make Changes:** Implement your feature or bug fix.

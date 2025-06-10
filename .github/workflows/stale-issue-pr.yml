@@ -1,24 +1,16 @@
-name: Create Draft PR for Stale Issues
-
-on:
-  schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
-  issues:
-    types: [labeled]
-
 jobs:
   create_draft_pr:
-    runs-on: ubuntu-latest
     if: github.event.label.name == 'stale' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Get Stale Issues
-        id: get_stale_issues
+      - id: get_stale_issues
+        name: Get Stale Issues
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
           script: |
             console.log('Event name:', github.event_name);
             if (github.event_name === 'schedule') {
@@ -40,12 +32,11 @@ jobs:
               console.log('Not a schedule event or a stale label event. Skipping issue fetching.');
               core.setOutput('issues', JSON.stringify([]));
             }
-          result-encoding: string # Keep this as string
-
-      - name: Check for Stale Issues
-        id: check_for_stale_issues
+      - id: check_for_stale_issues
+        name: Check for Stale Issues
         uses: actions/github-script@v6
         with:
+          result-encoding: string
           script: |
             const issues = JSON.parse('${{ steps.get_stale_issues.outputs.issues }}');
             if (issues && issues.length > 0 && issues[0]) {
@@ -53,10 +44,8 @@ jobs:
             } else {
               core.setOutput('has_issues', 'false');
             }
-          result-encoding: string
-
-      - name: Process Issues
-        if: steps.check_for_stale_issues.outputs.has_issues == 'true'
+      - if: steps.check_for_stale_issues.outputs.has_issues == 'true'
+        name: Process Issues
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,7 +56,6 @@ jobs:
               return;
             }
             console.log(`Processing ${issues.length} issue(s)`);
-
             for (const issue of issues) {
               const issueNumber = issue.number;
               const issueTitle = issue.title;
@@ -76,9 +64,7 @@ jobs:
               const fileName = `ISSUES/ISSUE-${issueNumber}.md`;
               const prTitle = `Draft PR for Stale Issue #${issueNumber}: ${issueTitle}`;
               const needsActionLabel = 'needs action'; // Label to add to the PR
-
               console.log(`Processing issue #${issueNumber}: ${issueTitle}`);
-
               // 1. Create a new branch
               try {
                 await github.rest.git.createRef({
@@ -96,11 +82,8 @@ jobs:
                 console.error(`Error creating branch ${branchName}:`, error);
                 continue; // Skip to next issue on error
               }
-
               // 2. Create a new file with issue content
-              const fileContent = `# ${issueTitle}
-
-${issueBody}`;
+              const fileContent = `# ${issueTitle} ${issueBody}`;
               try {
                 await github.rest.repos.createOrUpdateFileContents({
                   owner: context.repo.owner,
@@ -115,7 +98,6 @@ ${issueBody}`;
                 console.error(`Error creating file ${fileName} in branch ${branchName}:`, error);
                 continue;
               }
-
               // 3. Create a Draft Pull Request
               let prNumber;
               try {
@@ -125,9 +107,7 @@ ${issueBody}`;
                   title: prTitle,
                   head: branchName,
                   base: context.payload.repository.default_branch, // Or your desired base branch
-                  body: `This is a draft PR for stale issue #${issueNumber}.
-
-Please review the issue content and take necessary action.`,
+                  body: `This is a draft PR for stale issue #${issueNumber}. Please review the issue content and take necessary action.`,
                   draft: true,
                 });
                 prNumber = pr.data.number;
@@ -147,7 +127,6 @@ Please review the issue content and take necessary action.`,
                 }
                 continue;
               }
-
               // 4. Add "needs action" label to the PR
               if (prNumber) {
                 try {
@@ -163,3 +142,9 @@ Please review the issue content and take necessary action.`,
                 }
               }
             }
+name: "Create PR (Draft) for Stale Issues"
+on:
+  issues:
+    types: [labeled]
+  schedule:
+    - cron: 0 0 * * * # Runs daily at midnight UTC

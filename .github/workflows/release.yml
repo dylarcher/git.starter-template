@@ -1,56 +1,37 @@
-name: Create Release
-
-on:
-  push:
-    tags:
-      - 'v*.*.*' # Trigger on version tags like v1.0.0, v0.1.0
-
 jobs:
   build-and-release:
     name: Build and Release
-    runs-on: ubuntu-latest
     permissions:
       contents: write # To create releases and upload assets
       pull-requests: read # Optional: if you want to link PRs in release notes
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0 # Fetch all history for release note generation
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc' # Read version from .nvmrc
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
+      - name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
       - name: Run build script
         run: npm run build
-
-      - name: Get version from tag
-        id: get_version
+      - id: get_version
+        name: Get version from tag
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
-
       - name: Create release directory
         run: mkdir -p release
-
       - name: Package release artifacts
         run: |
           zip -r release/release-${{ steps.get_version.outputs.VERSION }}.zip dist README.md LICENSE package.json
-        # This assumes 'dist' is the primary build output directory.
-        # Add other files/directories if needed.
-
-# Removed redundant 'mv' step as the ZIP file is already created in the 'release/' directory.
-
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/release-${{ steps.get_version.outputs.VERSION }}.zip"
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ github.ref_name }}
-          name: "Release ${{ github.ref_name }}"
+          artifacts: release/release-${{ steps.get_version.outputs.VERSION }}.zip
           generateReleaseNotes: true # Automatically generate release notes
+          name: Release ${{ github.ref_name }}
+          tag: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+name: Create Release
+on:
+  push:
+    tags:
+      - v*.*.* # Trigger on version tags like v1.0.0, v0.1.0
