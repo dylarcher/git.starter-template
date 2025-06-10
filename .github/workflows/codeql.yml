@@ -15,11 +15,8 @@ jobs:
           fetch-depth: 0
           submodules: recursive
       - if: matrix.language == 'javascript'
-        name: NodeJS environment setup (PR)
-        uses: actions/setup-node@v4
-        with:
-          cache: npm
-          node-version-file: .nvmrc
+        name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
@@ -28,9 +25,7 @@ jobs:
           NODE_ENV: production
         if: matrix.language == 'javascript'
         name: Project build process (PR)
-        run: |
-          npm ci --prefer-offline --no-audit
-          npm run build
+        run: npm run build
       - name: Initialize CodeQL (PR)
         uses: github/codeql-action/init@v3
         with:
@@ -64,18 +59,13 @@ jobs:
           fetch-depth: 0
           submodules: recursive
       - if: matrix.language == 'javascript'
-        name: NodeJS environment setup (main)
-        uses: actions/setup-node@v4
-        with:
-          cache: npm
-          node-version-file: .nvmrc
+        name: Setup Node Env and Install Dependencies
+        uses: ./.github/actions/setup-node-env
       - env:
           NODE_ENV: production
         if: matrix.language == 'javascript'
         name: Project build process (main)
-        run: |
-          npm ci --prefer-offline --no-audit
-          npm run build
+        run: npm run build
       - name: Initialize CodeQL (main)
         uses: github/codeql-action/init@v3
         with:
@@ -173,6 +163,9 @@ jobs:
           - build-mode: none
             language: javascript
 name: Analyze code with CodeQL
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/main' && github.sha || github.head_ref || github.run_id }}
+  cancel-in-progress: true
 on:
   pull_request:
     branches: [ main ]
