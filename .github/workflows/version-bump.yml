@@ -1,0 +1,183 @@
+name: Automated Version Bump
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetches all history for all branches and tags
+          tags: true # Ensures tags are fetched
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: |
+          npm ci
+          npm install semver
+      - name: Determine last version
+        id: get_version
+        run: |
+          git fetch --tags --force # Ensure all tags are fetched
+          LAST_VERSION_TAG=$(git tag --list --sort=-v:refname 'v[0-9]*.[0-9]*.[0-9]*' '[0-9]*.[0-9]*.[0-9]*' | head -n 1)
+          if [ -z "$LAST_VERSION_TAG" ]; then
+            echo "No previous version tag found. Starting with 0.1.0 or as per package.json."
+            # Attempt to get version from package.json as a fallback or default
+            PACKAGE_VERSION=$(node -p "require('./package.json').version")
+            echo "package_version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+            echo "LAST_VERSION_TAG_EFFECTIVE=v$PACKAGE_VERSION" >> $GITHUB_OUTPUT # Use package.json version
+            echo "BUMP_TYPE=minor" >> $GITHUB_OUTPUT # Default to minor for first release
+          else
+            echo "Last version tag found: $LAST_VERSION_TAG"
+            echo "package_version=${LAST_VERSION_TAG#v}" >> $GITHUB_OUTPUT
+            echo "LAST_VERSION_TAG_EFFECTIVE=$LAST_VERSION_TAG" >> $GITHUB_OUTPUT
+          fi
+          echo "Calculated last version: $LAST_VERSION_TAG_EFFECTIVE"
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      - name: Bump version
+        id: do_bump
+        env:
+          LAST_TAG: ${{ steps.get_version.outputs.LAST_VERSION_TAG_EFFECTIVE }}
+          INITIAL_BUMP_TYPE: ${{ steps.get_version.outputs.BUMP_TYPE }}
+        run: |
+          echo "Last effective tag: $LAST_TAG"
+          echo "Initial bump type (if any): $INITIAL_BUMP_TYPE"
+          VERSION_BUMPED="false"
+          NEEDS_PR="false"
+          PROPOSED_BUMP_TYPE=""
+
+          # Determine range for git log
+          if [[ "$LAST_TAG" == "v$(node -p "require('./package.json').version")" && "$INITIAL_BUMP_TYPE" == "minor" ]]; then
+            echo "This appears to be an initial versioning or no relevant git tag was found."
+            COMMIT_RANGE="HEAD"
+            COMMITS=$(git log --pretty=%B $COMMIT_RANGE)
+            BUMP_TYPE=$INITIAL_BUMP_TYPE
+          else
+            # Check for actual new commits using git rev-list
+            # The --count flag makes it output the number of commits, --is-empty is not a standard rev-list flag.
+            # We'll check if the count is 0.
+            COMMIT_COUNT=$(git rev-list $LAST_TAG..HEAD --count)
+            if [ "$COMMIT_COUNT" -eq 0 ]; then
+              echo "No new commits since last tag $LAST_TAG. No version bump needed."
+              echo "VERSION_BUMPED=$VERSION_BUMPED" >> $GITHUB_OUTPUT
+              echo "NEEDS_PR=$NEEDS_PR" >> $GITHUB_OUTPUT
+              exit 0 # Exit cleanly, no action needed
+            fi
+            echo "Analyzing commits since $LAST_TAG"
+            COMMIT_RANGE="$LAST_TAG..HEAD"
+            COMMITS=$(git log --pretty=%B $COMMIT_RANGE)
+            # Determine bump type from commits
+            BUMP_TYPE="patch" # Default
+            if echo "$COMMITS" | grep -q -E "BREAKING CHANGE|major\(:"; then
+              BUMP_TYPE="major"
+            elif echo "$COMMITS" | grep -q -E "feat\(|feature\(:"; then
+              BUMP_TYPE="minor"
+            fi
+          fi
+
+          echo "Commit messages to analyze:"
+          echo "$COMMITS"
+          echo "Determined bump type: $BUMP_TYPE"
+
+          if [ ! -f package.json ]; then
+            echo "package.json not found!"
+            exit 1
+          fi
+
+          if [[ "$BUMP_TYPE" == "major" || "$BUMP_TYPE" == "minor" ]]; then
+            echo "Performing $BUMP_TYPE version bump."
+            npm version $BUMP_TYPE -m "chore(release): %s" --force
+            VERSION_BUMPED="true"
+            NEEDS_PR="false"
+          elif [[ "$BUMP_TYPE" == "patch" ]]; then
+            echo "Patch bump indicated. Proposing for PR."
+            # Check if there actually were commits, to avoid PR for no changes if logic gets here.
+            # The earlier check for commit_count should cover most, but as a safeguard:
+            if [ -z "$COMMITS" ] && [[ ! ("$LAST_TAG" == "v$(node -p "require('./package.json').version")" && "$INITIAL_BUMP_TYPE" == "minor") ]]; then
+               echo "No commits found for patch proposal, this case should have been caught earlier. No action."
+               NEEDS_PR="false" # ensure no PR if no commits
+            else
+               NEEDS_PR="true"
+               PROPOSED_BUMP_TYPE="patch"
+            fi
+            VERSION_BUMPED="false"
+          else
+            echo "Unknown bump type: $BUMP_TYPE or no bump needed."
+            NEEDS_PR="false"
+            VERSION_BUMPED="false"
+          fi
+
+          echo "VERSION_BUMPED=$VERSION_BUMPED" >> $GITHUB_OUTPUT
+          echo "NEEDS_PR=$NEEDS_PR" >> $GITHUB_OUTPUT
+          echo "PROPOSED_BUMP_TYPE=$PROPOSED_BUMP_TYPE" >> $GITHUB_OUTPUT
+          # New version string for PR step if needed
+          if [[ "$NEEDS_PR" == "true" && "$PROPOSED_BUMP_TYPE" != "" ]]; then
+            # Calculate potential new version string for PR title/body
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            # This requires node and semver package. Assuming semver is installed.
+            echo "NEXT_VERSION_HYPOTHETICAL=$(node -p "require('semver').inc('$CURRENT_VERSION', '$PROPOSED_BUMP_TYPE')")" >> $GITHUB_OUTPUT
+          fi
+      - name: Create Pull Request for Manual Bump
+        if: steps.do_bump.outputs.NEEDS_PR == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Required for gh cli
+          PROPOSED_BUMP: ${{ steps.do_bump.outputs.PROPOSED_BUMP_TYPE }}
+          CURRENT_VERSION: ${{ steps.get_version.outputs.package_version }} # Version without 'v'
+          HYPOTHETICAL_NEW_VERSION: ${{ steps.do_bump.outputs.NEXT_VERSION_HYPOTHETICAL }}
+          LAST_TAG_FOR_LOG: ${{ steps.get_version.outputs.LAST_VERSION_TAG_EFFECTIVE }}
+        run: |
+          echo "Need to create a PR for a $PROPOSED_BUMP bump from $CURRENT_VERSION to $HYPOTHETICAL_NEW_VERSION."
+          BRANCH_NAME="version-bump-proposal/$HYPOTHETICAL_NEW_VERSION"
+
+          # Configure git user for this commit
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git checkout -b $BRANCH_NAME
+
+          # Apply the version bump to package.json without creating a tag or a commit yet
+          npm version $PROPOSED_BUMP --no-git-tag-version --force
+          # The above command updates package.json and package-lock.json
+
+          git add package.json package-lock.json # Add package-lock.json if it exists
+          git commit -m "chore(release): propose $PROPOSED_BUMP bump to $HYPOTHETICAL_NEW_VERSION"
+          git push --set-upstream origin $BRANCH_NAME
+
+          # Determine commit log range for PR body
+          if [[ "$LAST_TAG_FOR_LOG" == "v$(node -p "require('./package.json').version")" && "${{ steps.get_version.outputs.BUMP_TYPE }}" == "minor" ]]; then
+            # This case means initial versioning, use all commits
+            COMMIT_LOG_RANGE="HEAD"
+          else
+            COMMIT_LOG_RANGE="$LAST_TAG_FOR_LOG..HEAD"
+          fi
+          COMMIT_MESSAGES=$(git log --pretty=format:"* %s (%h)" $COMMIT_LOG_RANGE)
+
+          PR_TITLE="Action Required: Confirm $PROPOSED_BUMP version bump to $HYPOTHETICAL_NEW_VERSION"
+          PR_BODY=$(cat <<EOF
+          Automated versioning proposes a **$PROPOSED_BUMP** version bump from **$CURRENT_VERSION** to **$HYPOTHETICAL_NEW_VERSION**.
+
+          Please review the changes and merge this PR if this version bump is appropriate.
+
+          **Commits since last release ($LAST_TAG_FOR_LOG):**
+          $COMMIT_MESSAGES
+          EOF
+          )
+
+          gh pr create --title "$PR_TITLE" --body "$PR_BODY" --label "needs action" --base "$(git symbolic-ref --short refs/remotes/origin/HEAD)" # Assumes default branch is base
+          echo "Pull request created for manual version bump."
+      - name: Push changes
+        if: steps.do_bump.outputs.VERSION_BUMPED == 'true'
+        run: |
+          echo "Pushing automatically bumped version and tags."
+          git push
+          git push --tags
