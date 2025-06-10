@@ -57,7 +57,7 @@ def main():
     args = parser.parse_args()
 
     try:
-        with open(args.sarif_file, 'r') as f:
+        with open(args.sarif_file, 'r', encoding='utf-8') as f:
             sarif_data = json.load(f)
     except FileNotFoundError:
         print(f"Error: SARIF file not found at {args.sarif_file}")
