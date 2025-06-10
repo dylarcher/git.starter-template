@@ -20,23 +20,14 @@ jobs:
         with:
           python-version: '3.x' # Or your preferred Python version
 
-      - name: Install linting tools
-        run: pip install yamllint yamlfixer
-
-      - name: Lint, Fix, and Validate YAML
+      - name: Install linting and fixing tools
         run: |
-          # First, try to fix files using yamlfixer
-          # yamlfixer should pick up the config from .github/configs/yaml-lint.yaml automatically if it's in a standard location,
-          # or if yamllint itself respects it when called by yamlfixer.
-          # We will use the explicit config for the final validation with yamllint.
-          echo "Running yamlfixer..."
-          yamlfixer .
+          python -m pip install --upgrade pip
+          pip install yamllint==1.32.0 yamlfixer-opt-nc==0.5.1
 
-          # After attempting fixes, run yamllint in strict check mode.
-          # If there are any remaining issues that yamlfixer couldn't resolve,
-          # this command will fail, causing the workflow step to fail.
-          echo "Validating with yamllint after fixes..."
-          yamllint --config-file .github/configs/yaml-lint.yaml .
+      - name: Run yamlfixer (includes yamllint)
+        run: |
+          yamlfixer --config-file .github/configs/yaml-lint.yaml --recurse -1 .
 
       - name: Check for changes
         id: check_changes
