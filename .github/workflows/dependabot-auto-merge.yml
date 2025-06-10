@@ -12,7 +12,7 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha }}
       - id: check_run_wait
         name: Wait for status checks
-        uses: lewagon/wait-on-check-action@v1.3.1
+        uses: lewagon/wait-on-check-action@v1.3.4
         with:
           allowed-conclusions: success,skipped # Consider skipped checks as success for auto-merge
           ref: ${{ github.event.pull_request.head.sha }}
