@@ -9,20 +9,25 @@
     "ignore": [
       "node_modules/**",
       ".git/**",
-      ".github/**",
+      "build/**",
+      "dist/**",
+      "coverage/**",
+      "test/coverage/**",
+      ".tmp/**",
+      ".temp/**",
+      ".cache/**",
+      "logs/**",
+      "*.log",
       ".vscode/**",
       ".idea/**",
       ".idx/**",
       ".vscode-test/**",
+      ".vs/**",
       "lib/**",
-      "build/**",
-      "scripts/**",
-      "test/**",
+      ".github/**",
       "docs/**",
-      ".tmp/**",
-      ".temp/**",
-      ".cache/**",
-      "dist/**"
+      "scripts/**",
+      "test/**"
     ]
   },
   "formatter": {
