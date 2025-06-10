@@ -18,6 +18,7 @@ jobs:
         id: get_stale_issues
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             console.log('Event name:', github.event_name);
             if (github.event_name === 'schedule') {
