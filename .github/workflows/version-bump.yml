@@ -38,6 +38,7 @@ jobs:
             echo "Last version tag found: $LAST_VERSION_TAG"
             echo "package_version=${LAST_VERSION_TAG#v}" >> $GITHUB_OUTPUT
             echo "LAST_VERSION_TAG_EFFECTIVE=$LAST_VERSION_TAG" >> $GITHUB_OUTPUT
+            echo "BUMP_TYPE=" >> $GITHUB_OUTPUT # Explicitly set BUMP_TYPE to empty
           fi
           echo "Calculated last version: $LAST_VERSION_TAG_EFFECTIVE"
       - name: Configure Git
