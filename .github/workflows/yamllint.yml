@@ -20,12 +20,14 @@ jobs:
         with:
           python-version: '3.x' # Or your preferred Python version
 
-      - name: Install yamllint
-        run: pip install yamllint
-
-      - name: Run yamllint
+      - name: Install linting and fixing tools
         run: |
-          yamllint --config-file .github/configs/yaml-lint.yaml --fix .
+          python -m pip install --upgrade pip
+          pip install yamllint yamlfixer-opt-nc
+
+      - name: Run yamlfixer (includes yamllint)
+        run: |
+          yamlfixer --config-file .github/configs/yaml-lint.yaml --recurse -1 .
 
       - name: Check for changes
         id: check_changes
