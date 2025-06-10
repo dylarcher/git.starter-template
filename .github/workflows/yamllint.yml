@@ -72,7 +72,7 @@ jobs:
           git commit -m "Automated YAML linting fixes"
 
           echo "Pushing branch $BRANCH_NAME"
-          git push --set-upstream origin $BRANCH_NAME
+          git push -u origin $BRANCH_NAME
 
           echo "Creating Pull Request"
           gh pr create \
