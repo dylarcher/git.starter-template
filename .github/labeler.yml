@@ -1,28 +1,28 @@
 auto:
-  - .github/workflows/*
-  - .github/actions/*
-  - .github/action.yml
-  - .github/dependabot.yml
-  - .github/labeler.yml
-  - .github/CODEOWNERS
-  - ci/*
+  - ".github/workflows/*"
+  - ".github/actions/*"
+  - ".github/action.yml"
+  - ".github/dependabot.yml"
+  - ".github/labeler.yml"
+  - ".github/CODEOWNERS"
+  - "ci/*"
 conf:
-  - .*
-  - '**/*.jsonc'
-  - '**/*.jsonl'
-  - '**/*.json5'
-  - '**/*.yaml'
-  - '**/*.yml'
-  - '**/*.toml'
-  - '**/*.ini'
-  - '**/*.config.*'
-  - .git*
-  - .env*
-  - .*rc
-  - CITATION.cff
-  - .editorconfig
-  - tsconfig.json
-  - package.json
+  - ".*"
+  - "**/*.jsonc"
+  - "**/*.jsonl"
+  - "**/*.json5"
+  - "**/*.yaml"
+  - "**/*.yml"
+  - "**/*.toml"
+  - "**/*.ini"
+  - "**/*.config.*"
+  - ".git*"
+  - ".env*"
+  - ".*rc"
+  - "CITATION.cff"
+  - ".editorconfig"
+  - "tsconfig.json"
+  - "package.json"
 data:
   - '**/*.json'
 deps:
