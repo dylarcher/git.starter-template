@@ -74,6 +74,7 @@ documentation:
     - '.github/CITATION.md'
     - '.github/CODEOWNERS.md'
     - 'docs/**/*.md'
+    - '**/.md'
 duplicate:
 enhancement:
 good first issue:
