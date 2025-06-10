@@ -1,11 +1,11 @@
 blank_issues_enabled: true
 contact_links:
-  - name: 📚 Documentation
+  - about: Check the documentation before opening an issue
+    name: 📚 Documentation
     url: https://github.com/darcher-/node-compat-range-analyzer/blob/main/README.md
-    about: Check the documentation before opening an issue
-  - name: 💬 Questions & Discussions
+  - about: Use GitHub Discussions for questions and discussions about the project
+    name: 💬 Questions & Discussions
     url: https://github.com/darcher-/node-compat-range-analyzer/discussions
-    about: Use GitHub Discussions for questions and discussions about the project
-  - name: 🚨 Report a Security Vulnerability
+  - about: Report a security vulnerability using the defined process
+    name: 🚨 Report a Security Vulnerability
     url: https://github.com/darcher-/node-compat-range-analyzer/blob/main/SECURITY.md
-    about: Report a security vulnerability using the defined process

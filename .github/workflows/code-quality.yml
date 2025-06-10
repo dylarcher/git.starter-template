@@ -1,4 +1,3 @@
----
 jobs:
   code-quality:
     permissions:
@@ -6,14 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        uses: actions/checkout@v4
         with:
+          fetch-depth: 0
           ref: ${{ github.head_ref }}
+          submodules: recursive
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Set up Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.11.1
+          node-version: 18.x
       - name: Install dependencies
         run: npm ci
       - name: Format project source code
@@ -35,7 +36,7 @@ jobs:
       - continue-on-error: true
         id: check_biome
         name: Check for persistent Biome issues
-        run: npx biome lint src --config-path .github/configs/biome.json
+        run: npx biome lint src --config-path .github/linters/.biomejsrc
       - if: steps.check_biome.outcome == 'failure'
         name: Add 'action needed' label
         uses: actions/github-script@v7

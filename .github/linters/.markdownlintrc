@@ -1,0 +1,67 @@
+$schema: 'https://raw.githubusercontent.com/markdownlint/markdownlint/master/schema.json'
+# Enable all default rules
+default: true
+# List of files and directories to ignore
+ignores:
+  # Ignore the node_modules directory
+  - node_modules
+  # Ignore the .git directory
+  - .git
+  # Ignore the .github directory
+  - .github
+  # Ignore the .vscode directory
+  - .vscode
+  # Ignore the .idea directory
+  - .idea
+  # Ignore the .idx directory
+  - .idx
+  # Ignore the .vscode-test directory
+  - .vscode-test
+  # Ignore the lib directory
+  - lib
+  # Ignore the build directory
+  - build
+  # Ignore the scripts directory
+  - scripts
+  # Ignore the test directory
+  - test
+  # Ignore the docs directory
+  - docs
+  # Ignore the .tmp directory
+  - .tmp
+  # Ignore the .temp directory
+  - .temp
+  # Ignore the .cache directory
+  - .cache
+  # Ignore the dist directory
+  - dist
+# Configure rule MD013 (Line length)
+MD013:
+  # Set the maximum line length for code blocks
+  code_block_line_length: 280
+  # Set the maximum line length for headings
+  heading_line_length: 128
+  # Set the maximum line length for regular lines
+  line_length: 240
+  # Enable stern mode (treat warnings as errors)
+  stern: true
+  # Enable checking line length in tables
+  tables: true
+# Disable rule MD028 (Blank line around block elements)
+MD028: false
+# Enable rule MD033 (Inline HTML)
+MD033: true
+# Disable rule MD036 (Emphasis used instead of a heading)
+MD036: false
+# Configure rule MD046 (Code block style)
+MD046:
+  # Enforce consistent code block style
+  style: consistent
+# Configure rule MD049 (Emphasis style)
+MD049:
+  # Enforce the first style found
+  first: true
+  # Set the prefix for emphasis
+  prefix: ' '
+  # Set the emphasis style to dash
+  style: dash

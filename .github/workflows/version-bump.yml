@@ -1,10 +1,3 @@
-name: Automated Version Bump
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
   bump-version:
     runs-on: ubuntu-latest
@@ -17,13 +10,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version-file: .nvmrc
       - name: Install dependencies
         run: |
           npm ci
           npm install semver
-      - name: Determine last version
-        id: get_version
+      - id: get_version
+        name: Determine last version
         run: |
           git fetch --tags --force # Ensure all tags are fetched
           LAST_VERSION_TAG=$(git tag --list --sort=-v:refname 'v[0-9]*.[0-9]*.[0-9]*' '[0-9]*.[0-9]*.[0-9]*' | head -n 1)
@@ -45,18 +38,17 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-      - name: Bump version
-        id: do_bump
-        env:
-          LAST_TAG: ${{ steps.get_version.outputs.LAST_VERSION_TAG_EFFECTIVE }}
+      - env:
           INITIAL_BUMP_TYPE: ${{ steps.get_version.outputs.BUMP_TYPE }}
+          LAST_TAG: ${{ steps.get_version.outputs.LAST_VERSION_TAG_EFFECTIVE }}
+        id: do_bump
+        name: Bump version
         run: |
           echo "Last effective tag: $LAST_TAG"
           echo "Initial bump type (if any): $INITIAL_BUMP_TYPE"
           VERSION_BUMPED="false"
           NEEDS_PR="false"
           PROPOSED_BUMP_TYPE=""
-
           # Determine range for git log
           if [[ "$LAST_TAG" == "v$(node -p "require('./package.json').version")" && "$INITIAL_BUMP_TYPE" == "minor" ]]; then
             echo "This appears to be an initial versioning or no relevant git tag was found."
@@ -85,16 +77,13 @@ jobs:
               BUMP_TYPE="minor"
             fi
           fi
-
           echo "Commit messages to analyze:"
           echo "$COMMITS"
           echo "Determined bump type: $BUMP_TYPE"
-
           if [ ! -f package.json ]; then
             echo "package.json not found!"
             exit 1
           fi
-
           if [[ "$BUMP_TYPE" == "major" || "$BUMP_TYPE" == "minor" ]]; then
             echo "Performing $BUMP_TYPE version bump."
             npm version $BUMP_TYPE -m "chore(release): %s" --force
@@ -117,7 +106,6 @@ jobs:
             NEEDS_PR="false"
             VERSION_BUMPED="false"
           fi
-
           echo "VERSION_BUMPED=$VERSION_BUMPED" >> $GITHUB_OUTPUT
           echo "NEEDS_PR=$NEEDS_PR" >> $GITHUB_OUTPUT
           echo "PROPOSED_BUMP_TYPE=$PROPOSED_BUMP_TYPE" >> $GITHUB_OUTPUT
@@ -128,32 +116,27 @@ jobs:
             # This requires node and semver package. Assuming semver is installed.
             echo "NEXT_VERSION_HYPOTHETICAL=$(node -p "require('semver').inc('$CURRENT_VERSION', '$PROPOSED_BUMP_TYPE')")" >> $GITHUB_OUTPUT
           fi
-      - name: Create Pull Request for Manual Bump
-        if: steps.do_bump.outputs.NEEDS_PR == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Required for gh cli
-          PROPOSED_BUMP: ${{ steps.do_bump.outputs.PROPOSED_BUMP_TYPE }}
+      - env:
           CURRENT_VERSION: ${{ steps.get_version.outputs.package_version }} # Version without 'v'
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Required for gh cli
           HYPOTHETICAL_NEW_VERSION: ${{ steps.do_bump.outputs.NEXT_VERSION_HYPOTHETICAL }}
           LAST_TAG_FOR_LOG: ${{ steps.get_version.outputs.LAST_VERSION_TAG_EFFECTIVE }}
+          PROPOSED_BUMP: ${{ steps.do_bump.outputs.PROPOSED_BUMP_TYPE }}
+        if: steps.do_bump.outputs.NEEDS_PR == 'true'
+        name: Create Pull Request for Manual Bump
         run: |
           echo "Need to create a PR for a $PROPOSED_BUMP bump from $CURRENT_VERSION to $HYPOTHETICAL_NEW_VERSION."
           BRANCH_NAME="version-bump-proposal/$HYPOTHETICAL_NEW_VERSION"
-
           # Configure git user for this commit
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git checkout -b $BRANCH_NAME
-
           # Apply the version bump to package.json without creating a tag or a commit yet
           npm version $PROPOSED_BUMP --no-git-tag-version --force
           # The above command updates package.json and package-lock.json
-
           git add package.json package-lock.json # Add package-lock.json if it exists
           git commit -m "chore(release): propose $PROPOSED_BUMP bump to $HYPOTHETICAL_NEW_VERSION"
           git push --set-upstream origin $BRANCH_NAME
-
           # Determine commit log range for PR body
           if [[ "$LAST_TAG_FOR_LOG" == "v$(node -p "require('./package.json').version")" && "${{ steps.get_version.outputs.BUMP_TYPE }}" == "minor" ]]; then
             # This case means initial versioning, use all commits
@@ -162,23 +145,24 @@ jobs:
             COMMIT_LOG_RANGE="$LAST_TAG_FOR_LOG..HEAD"
           fi
           COMMIT_MESSAGES=$(git log --pretty=format:"* %s (%h)" $COMMIT_LOG_RANGE)
-
           PR_TITLE="Action Required: Confirm $PROPOSED_BUMP version bump to $HYPOTHETICAL_NEW_VERSION"
           PR_BODY=$(cat <<EOF
           Automated versioning proposes a **$PROPOSED_BUMP** version bump from **$CURRENT_VERSION** to **$HYPOTHETICAL_NEW_VERSION**.
-
           Please review the changes and merge this PR if this version bump is appropriate.
-
           **Commits since last release ($LAST_TAG_FOR_LOG):**
           $COMMIT_MESSAGES
           EOF
           )
-
           gh pr create --title "$PR_TITLE" --body "$PR_BODY" --label "needs action" --base "$(git symbolic-ref --short refs/remotes/origin/HEAD)" # Assumes default branch is base
           echo "Pull request created for manual version bump."
-      - name: Push changes
-        if: steps.do_bump.outputs.VERSION_BUMPED == 'true'
+      - if: steps.do_bump.outputs.VERSION_BUMPED == 'true'
+        name: Push changes
         run: |
           echo "Pushing automatically bumped version and tags."
           git push
           git push --tags
+name: Automated Version Bump
+on:
+  push:
+    branches:
+      - main

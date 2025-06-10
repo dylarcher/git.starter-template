@@ -1,0 +1,138 @@
+$schema: https://raw.githubusercontent.com/istanbuljs/schema/master/coverage.schema.json
+# Include all files in the project for coverage analysis
+all: true
+# Include all probes in the coverage analysis
+allProbes: true
+# Set the minimum required branch coverage percentage
+branches: 87.5
+# Disable checking coverage thresholds during the run
+check-coverage: false
+# List of file patterns to exclude from coverage analysis
+exclude:
+  # Exclude cache directories
+  - .cache/**/*
+  # Exclude Git related directories
+  - .git/**/*
+  # Exclude GitHub workflow related directories
+  - .github/**/*
+  # Exclude IntelliJ IDEA related directories
+  - .idea/**/*
+  # Exclude idx related directories
+  - .idx/**/*
+  # Exclude temporary directories
+  - .temp/**/*
+  # Exclude temporary directories
+  - .tmp/**/*
+  # Exclude Visual Studio related directories
+  - .vs/**/*
+  # Exclude VS Code test related directories
+  - .vscode-test/**/*
+  # Exclude VS Code related directories
+  - .vscode/**/*
+  # Exclude build directories
+  - build/**/*
+  # Exclude distribution directories
+  - dist/**/*
+  # Exclude documentation directories
+  - docs/**/*
+  # Exclude library directories
+  - lib/**/*
+  # Exclude node_modules directory
+  - node_modules/**/*
+  # Exclude scripts directories
+  - scripts/**/*
+  # Exclude test directories
+  - test/**/*
+# Exclude node_modules directory from coverage analysis
+excludeNodeModules: true
+# List of file extensions to include in coverage analysis
+extension:
+  # Include JavaScript files
+  - .js
+# Set the minimum required function coverage percentage
+functions: 90
+# List of file patterns to include in coverage analysis
+include:
+  # Include JavaScript files in the src directory
+  - src/**/*.js
+# Set the minimum required line coverage percentage
+lines: 95
+# Directory where coverage reports will be generated
+# report-dir: test/coverage
+# List of reporters to use for generating coverage reports
+# reporter:
+# Generate a Clover report
+# - clover
+# Generate a Cobertura report
+# - cobertura
+# Generate an HTML report
+# - html
+# Generate a JSON report
+# Generate an LCOV report
+# - lcov
+# Generate a text report
+# - text
+# Options for the reporters
+reporterOptions:
+  # Options for the Clover reporter
+  clover:
+    # Specify the output file name for the Clover report
+    file: clover.xml
+    # Specify the subdirectory for the Clover report
+    subdir: clover
+  # Options for the Cobertura reporter
+  cobertura:
+    # Specify the output file name for the Cobertura report
+    file: cobertura.xml
+    # Specify the subdirectory for the Cobertura report
+    subdir: cobertura
+  # Options for the HTML reporter
+  html:
+    # Specify the subdirectory for the HTML report
+    subdir: html
+  # Options for the JSON reporter
+  json:
+    # Specify the output file name for the JSON report
+    file: coverage.json
+    # Specify the subdirectory for the JSON report
+    subdir: json
+  # Options for the LCOV reporter
+  lcov:
+    # Specify the output file name for the LCOV report
+    file: coverage.lcov
+    # Specify the subdirectory for the LCOV report
+    subdir: lcov
+  # Options for the text reporter
+  text:
+    # Specify the output file name for the text report
+    file: coverage.txt
+    # Specify the subdirectory for the text report
+    subdir: text
+# Set the minimum required statement coverage percentage
+statements: 92.5
+# Define watermarks for coverage percentages
+watermarks:
+  # Watermarks for branch coverage
+  branches:
+    # Low watermark
+    - 36
+    # High watermark
+    - 80
+  # Watermarks for function coverage
+  functions:
+    # Low watermark
+    - 32
+    # High watermark
+    - 64
+  # Watermarks for line coverage
+  lines:
+    # Low watermark
+    - 48
+    # High watermark
+    - 72
+  # Watermarks for statement coverage
+  statements:
+    # Low watermark
+    - 48
+    # High watermark
+    - 96

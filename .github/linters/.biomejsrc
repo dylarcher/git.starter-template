@@ -1,0 +1,87 @@
+# Specifies the schema version for Biome configuration
+$schema: https://biomejs.dev/schemas/latest/schema.json
+# Configuration for CSS files
+css:
+  # Configuration for the CSS formatter
+  formatter:
+    # Enable the CSS formatter
+    enabled: true
+# Configuration for files
+files:
+  # List of file patterns to ignore
+  ignore:
+    # Ignore the node_modules directory
+    - node_modules/**
+    # Ignore the .git directory
+    - .git/**
+    # Ignore the .github directory
+    - .github/**
+    # Ignore the .vscode directory
+    - .vscode/**
+    # Ignore the .idea directory
+    - .idea/**
+    # Ignore the .idx directory
+    - .idx/**
+    # Ignore the .vscode-test directory
+    - .vscode-test/**
+    # Ignore the lib directory
+    - lib/**
+    # Ignore the build directory
+    - build/**
+    # Ignore the scripts directory
+    - scripts/**
+    # Ignore the test directory
+    - test/**
+    # Ignore the docs directory
+    - docs/**
+    # Ignore the .tmp directory
+    - .tmp/**
+    # Ignore the .temp directory
+    - .temp/**
+    # Ignore the .cache directory
+    - .cache/**
+    # Ignore the dist directory
+    - dist/**
+
+# Configuration for the formatter
+formatter:
+  # Enable bracket spacing in formatted code
+  bracketSpacing: true
+  # Enable the formatter
+  enabled: true
+  # Set the indentation style to spaces
+  indentStyle: space
+  # Set the indentation width to 2 spaces
+  indentWidth: 2
+  # Set the line ending to line feed (LF)
+  lineEnding: lf
+  # Set the maximum line width to 80 characters
+  lineWidth: 80
+# Configuration for JavaScript files
+javascript:
+  # Configuration for the JavaScript formatter
+  formatter:
+    # Enable the JavaScript formatter
+    enabled: true
+# Configuration for JSON files
+json:
+  # Configuration for the JSON formatter
+  formatter:
+    # Enable the JSON formatter
+    enabled: true
+# Configuration for the linter
+linter:
+  # Enable the linter
+  enabled: true
+  # Configuration for linter rules
+  rules:
+    # Enable recommended linter rules
+    recommended: true
+    # Configuration for style rules
+    style:
+      # Warn about file naming convention violations
+      useFilenamingConvention: warn
+# Configuration for organizing imports
+organizeImports:
+  # Enable organizing imports
+  enabled: true

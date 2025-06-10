@@ -1,132 +1,103 @@
-automation:
-  changed-files:
-    - '.github/**/*.yml'
-    - '.github/**/*.yaml'
-    - '.github/**/*.json'
-    - '.github/workflows/**'
-    - '.github/actions/**'
-    - '.github/workflows/*.yml'
-    - '.github/actions/*.js'
-    - 'action.yml'
-    - '.github/action.yml'
-blocked:
-incompatible:
-  changed-files:
-    - 'compat/*'
-    - 'src/**/*.js'
-    - 'src/utils/*.js'
-    - 'src/services/*.js'
-review:
-conflict:
-bugfix:
-  changed-files:
-    - 'src/**/*.js' # Note: This is broad and might overlap with 'javascript'. Depending on workflow, this might be okay or need refinement.
-    - 'src/utils/*.js'
-    - 'src/services/*.js'
+auto:
+  - .github/workflows/*
+  - .github/actions/*
+  - .github/action.yml
+  - .github/dependabot.yml
+  - .github/labeler.yml
+  - .github/CODEOWNERS
+build:
+  - build/*
 chore:
-  changed-files:
-    - '.github/*'
-    - '.gitignore'
-    - '.eslintrc*'
-    - '.prettier*'
-configurational: # Renamed from config
-  changed-files:
-    - '.*' # This is very broad, catches dotfiles. Keep for now.
-    - '**/*.jsonl'
-    - '**/*.json5'
-    # Removed '**/*.json' to allow 'data' label to catch general JSON files.
-    # Specific config JSON files are often caught by name below or by 'dependency'.
-    - '**/*.yaml'
-    - '**/*.yml'
-    - '**/*.toml'
-    - '**/*.ini'
-    - '**/*.config.js'
-    - '**/*.config.ts'
-    - 'config/**/*'
-    - '.env*'
-    - '.npmrc'
-    - '.nvmrc'
-    - '.babelrc*'
-    - 'tsconfig.json' # Example of specific config JSON
-    - 'jest.config.*' # Example of specific config JS/JSON
-dependency:
-  changed-files:
-    - 'package.json'
-    - 'package-lock.json'
-    - 'npm-shrinkwrap.json'
-    - 'yarn.lock'
-    - 'pnpm-lock.yaml'
-    - '**/*requirements*.txt'
-    - 'Gemfile*'
-    - 'Cargo.toml'
-    - 'Cargo.lock'
-    - 'go.mod'
-    - 'go.sum'
-documentation:
-  changed-files:
-    - '**/*.md'
-    - '.github/*.md'
-    - '.github/CHANGELOG.md'
-    - '.github/CONTRIBUTING.md'
-    - '.github/CODE_OF_CONDUCT.md'
-    - '.github/SECURITY.md'
-    - '.github/LICENSE.md'
-    - '.github/CITATION.md'
-    - '.github/CODEOWNERS.md'
-    - 'docs/**/*.md'
-    - '**/.md'
-duplicate:
-enhancement:
-good first issue:
-help wanted:
-invalid:
-javascript: # Renamed from logic
-  changed-files:
-    - '**/*.js'
-    - 'src/**/*.js'
-    - 'src/utils/*.js'
-    - 'src/services/*.js'
-    - 'src/**/*.jsx'
-    - 'src/**/*.mjs'
-    - 'src/**/*.cjs'
-inconclusive:
-media: # Renamed from visual
-  changed-files:
-    - '**/*.svg'
-    - '**/*.png'
-    - '**/*.jpg'
-    - '**/*.jpeg'
-    - '**/*.gif'
-    - '**/*.webp'
-    - '**/*.mp4' # Added
-    - '**/*.mov' # Added
-    - 'src/shared/**/*.png'
-    - 'src/shared/**/*.jpg'
-    - 'src/shared/**/*.jpeg'
-    - 'src/shared/**/*.svg'
-    - 'docs/assets:media/**/*'
-    - 'src/demo/**/*' # This might be too broad or could be a demo app with various files
-styles: # New label
-  changed-files:
-    - '**/*.css'
-    - '**/*.scss'
-    - '**/*.sass'
-    - '**/*.less'
-    - '**/*.styl'
-data: # New label
-  changed-files:
-    - '**/*.json' # Catches general JSON files not caught by more specific config patterns
-wontfix:
-semver:
-  changed-files:
-    - 'src/utils/semver.util.js'
-    - 'src/**/*version*.js'
-    - 'src/**/*semver*.js'
-testing:
-  changed-files:
-    - 'test/**/*'
-    - '**/*.test.js'
-    - '**/*.spec.js'
-    - 'jest.config.js'
-    - 'mocha.opts'
-performance:
+  - .github/linters/*
+  - .gitignore
+ci:
+  - ci/*
+conf:
+  - .*
+  - '**/*.jsonc'
+  - '**/*.jsonl'
+  - '**/*.json5'
+  - '**/*.yaml'
+  - '**/*.yml'
+  - '**/*.toml'
+  - '**/*.ini'
+  - '**/*.config.*'
+  - .git*
+  - .env*
+  - .*rc
+  - CITATION.cff
+  - .editorconfig
+  - tsconfig.json
+  - package.json
+data:
+  - '**/*.json'
+deps:
+  - package.json
+  - package-lock.json
+  - npm-shrinkwrap.json
+  - bun.lock
+  - bun.lockb
+  - yarn.lock
+  - yarn.lockb
+  - pnpm-lock.yaml
+  - '**/*requirements*.txt'
+docs:
+  - LICENSE
+  - '**/.md'
+  - '**/.markdown'
+  - '**/.mdx'
+fix:
+  - fix/*
+logic:
+  - '**/*.js'
+  - '**/*.cjs'
+  - '**/*.mjs'
+  - '**/*.ts'
+  - '**/*.jsx'
+  - '**/*.tsx'
+  - '**/*.ejs'
+  - '**/*.py'
+media:
+  - '**/*.avif'
+  - '**/*.bmp'
+  - '**/*.eps'
+  - '**/*.heic'
+  - '**/*.heif'
+  - '**/*.ico'
+  - '**/*.icns'
+  - '**/*.gif'
+  - '**/*.jpeg'
+  - '**/*.jpg'
+  - '**/*.tiff'
+  - '**/*.tif'
+  - '**/*.psd'
+  - '**/*.ai'
+  - '**/*.mov'
+  - '**/*.mp4'
+  - '**/*.avi'
+  - '**/*.wmv'
+  - '**/*.flv'
+  - '**/*.mkv'
+  - '**/*.webm'
+  - '**/*.mpeg'
+  - '**/*.mpg'
+  - '**/*.png'
+  - '**/*.svg'
+  - '**/*.webp'
+perf:
+  - perf/*
+refac:
+  - refactor/*
+style:
+  - '**/*.css'
+  - '**/*.scss'
+  - '**/*.sass'
+  - '**/*.less'
+  - '**/*.styl'
+test:
+  - test/**/*
+  - '**/*.test.*'
+  - '**/*.spec.*'
+vers:
+  - '**/*version*.*'
+  - '**/*semver*.*'

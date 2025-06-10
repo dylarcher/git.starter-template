@@ -1,99 +1,90 @@
-name: ⚡ Performance Issue
-description: Report a performance problem or bottleneck
-title: "⚡ Performance: "
-labels: ["performance"]
 body:
-  - type: markdown
-    attributes:
+  - attributes:
       value: |
         Thank you for taking the time to report a performance issue!
-
-  - type: textarea
-    id: description
-    attributes:
-      label: Description
+    type: markdown
+  - attributes:
       description: Please provide a clear and concise description of the performance issue
-      placeholder: "Describe what operation is slow and how it impacts usage..."
+      label: Description
+      placeholder: Describe what operation is slow and how it impacts usage...
+    id: description
+    type: textarea
     validations:
       required: true
-
-  - type: textarea
-    id: reproduction
-    attributes:
-      label: Steps to Reproduce
+  - attributes:
       description: How can we reproduce this performance issue?
+      label: Steps to Reproduce
       value: |
         1.
         2.
         3.
         4.
+    id: reproduction
+    type: textarea
     validations:
       required: true
-
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected Performance
+  - attributes:
       description: What performance would you consider reasonable for this operation?
-      placeholder: "e.g., The operation should complete in under 1 second for files of this size..."
+      label: Expected Performance
+      placeholder: e.g., The operation should complete in under 1 second for files of this size...
+    id: expected
+    type: textarea
     validations:
       required: true
-
-  - type: textarea
-    id: actual
-    attributes:
-      label: Actual Performance
+  - attributes:
       description: What performance are you currently experiencing?
-      placeholder: "e.g., The operation takes 15-20 seconds to complete..."
+      label: Actual Performance
+      placeholder: e.g., The operation takes 15-20 seconds to complete...
+    id: actual
+    type: textarea
     validations:
       required: true
-
-  - type: input
-    id: version
-    attributes:
-      label: Version
+  - attributes:
       description: Which version of the project are you using?
-      placeholder: "e.g., 1.0.0"
+      label: Version
+      placeholder: e.g., 1.0.0
+    id: version
+    type: input
     validations:
       required: true
-
-  - type: textarea
-    id: environment
-    attributes:
+  - attributes:
+      description: 'Please share details about your environment:'
       label: Environment
-      description: "Please share details about your environment:"
       value: |
         - Node.js version:
         - Operating System and version:
         - CPU model:
         - RAM:
         - Any other relevant hardware/software information:
+    id: environment
+    type: textarea
     validations:
       required: true
-
-  - type: textarea
-    id: profiling
-    attributes:
-      label: Profiling Data
+  - attributes:
       description: If available, include any profiling data or metrics you've collected
-      placeholder: "Paste any performance profiling data, benchmark results, or metrics here..."
+      label: Profiling Data
+      placeholder: Paste any performance profiling data, benchmark results, or metrics here...
+    id: profiling
+    type: textarea
     validations:
       required: false
-
-  - type: textarea
-    id: additional_context
-    attributes:
-      label: Additional Context
+  - attributes:
       description: Add any other context about the problem here
-      placeholder: "Any additional information that might be helpful..."
+      label: Additional Context
+      placeholder: Any additional information that might be helpful...
+    id: additional_context
+    type: textarea
     validations:
       required: false
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Code of Conduct
+  - attributes:
       description: By submitting this issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      label: Code of Conduct
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
+    id: terms
+    type: checkboxes
+description: Report a performance problem or bottleneck
+labels: ["performance"]
+name: ⚡ Performance Issue
+title: '⚡ Performance: '

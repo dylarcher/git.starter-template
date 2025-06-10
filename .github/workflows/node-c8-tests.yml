@@ -9,7 +9,8 @@ jobs:
       - name: NodeJS environment setup
         uses: actions/setup-node@v4
         with:
-          node-version: 20.11.1
+          cache: npm
+          node-version-file: .nvmrc
       - name: NodeJS dependency setup
         run: npm ci
       - name: Test project source code

@@ -1,78 +1,71 @@
-name: Bug Report
-description: Report a problem or unexpected behavior
-title: "[BUG]: "
-labels: ["bugfix"]
 body:
-  - type: markdown
-    attributes:
+  - attributes:
       value: |
-        Thanks for taking the time to fill out this bug report!
-
+        Thanks for taking the time to fill out this bug report!\n
         Please check our documentation first:
         - [Security Policy](.github/SECURITY.md) (for security vulnerabilities)
         - [Changelog](.github/CHANGELOG.md) (to see if this has been fixed in a newer version)
-
-  - type: textarea
-    id: bug-description
-    attributes:
-      label: Bug Description
+    type: markdown
+  - attributes:
       description: A clear and concise description of what the bug is
+      label: Bug Description
       placeholder: Tell us what happened
+    id: bug-description
+    type: textarea
     validations:
       required: true
-
-  - type: textarea
-    id: reproduction
-    attributes:
-      label: Steps To Reproduce
+  - attributes:
       description: Steps to reproduce the behavior
+      label: Steps To Reproduce
       placeholder: |
         1. Go to '...'
         2. Click on '....'
         3. Scroll down to '....'
         4. See error
+    id: reproduction
+    type: textarea
     validations:
       required: true
-
-  - type: textarea
-    id: expected
-    attributes:
-      label: Expected Behavior
+  - attributes:
       description: A clear and concise description of what you expected to happen
+      label: Expected Behavior
       placeholder: Tell us what should have happened
+    id: expected
+    type: textarea
     validations:
       required: true
-
-  - type: input
-    id: version
-    attributes:
-      label: Version
+  - attributes:
       description: What version of our software are you running?
+      label: Version
       placeholder: e.g. 1.1.0
+    id: version
+    type: input
     validations:
       required: true
-
-  - type: textarea
-    id: environment
-    attributes:
-      label: Environment
+  - attributes:
       description: |
         Examples:
         - **OS**: Ubuntu 20.04
         - **Node**: 14.15.0
         - **npm**: 6.14.8
+      label: Environment
       value: |
         - OS:
         - Node:
         - npm:
+    id: environment
+    type: textarea
     validations:
       required: true
-
-  - type: checkboxes
-    id: terms
-    attributes:
-      label: Code of Conduct
+  - attributes:
       description: By submitting this issue, you agree to follow our [Code of Conduct](../CODE_OF_CONDUCT.md)
+      label: Code of Conduct
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
+    id: terms
+    type: checkboxes
+description: Report a problem or unexpected behavior
+labels: ["bugfix"]
+name: Bug Report
+title: "[BUG]: "
