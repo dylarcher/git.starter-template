@@ -1,7 +1,7 @@
 {
   "author": "Dylan Archer <dylarcher@gmail.com> (@dylarcher)",
   "bin": {
-    "gst": "./bin/cli.js"
+    "gst": "bin/cli.js"
   },
   "browser": "dist/index.umd.js",
   "bugs": {
@@ -34,9 +34,9 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+      "import": "dist/index.esm.js",
+      "require": "dist/index.cjs.js",
+      "types": "dist/index.d.ts"
     }
   },
   "files": [
@@ -77,11 +77,12 @@
     "clean:dist-build": "npx rimraf dist lib test/coverage .vscode-test types bin build/.tsbuildinfo",
     "clean:cache": "npm cache clean --force",
     "clean:libs": "npx rimraf node_modules package-lock.json .cache/npm",
-    "markdownPaths": ".github/**/*.md ./docs/**/*.md ./src/**/*.md ./README.md ./CHANGELOG.md",
+    "markdownPaths": ".github/**/*.md docs/**/*.md src/**/*.md README.md CHANGELOG.md",
     "format": "npx biome format --write --config-path .github/configs/biome.json src && node build/fix-markdown-lines.js && npx markdownlint-cli --config .github/configs/.markdownlint.json --fix $(npm run -s markdownPaths) && npx markdownlint-cli --config .github/configs/.markdownlint.json $(npm run -s markdownPaths)",
     "lint": "npx biome lint --write --config-path .github/configs/biome.json src && npx yamllint -c .github/configs/yaml-lint.yaml .github/**/*.yml && npx markdownlint-cli --config .github/configs/.markdownlint.json $(npm run -s markdownPaths)",
-    "lint:commit": "commitlint --from \"${FROM_COMMIT:-HEAD~1}\" --to \"${TO_COMMIT:-HEAD}\" --config ./.github/configs/.commitlintrc.js",
+    "lint:commit": "commitlint --from \"${FROM_COMMIT:-HEAD~1}\" --to \"${TO_COMMIT:-HEAD}\" --config .github/configs/.commitlintrc.js",
     "test": "c8 --config .github/configs/.c8rc.json node --test test/cli.test.js test/index.test.js",
+    "test:coverage": "c8 report --config .github/configs/.c8rc.json --reporter=html --reporter=lcov --reporter=text --reporter=json --reporter=clover --report=cobertura --report-dir=test/coverage",
     "update:project-deps": "npm update --save-dev && npm update --save",
     "update:starter-files": "git remote get-url template || git remote add template https://github.com/dylarcher/git.starter-template.git && git fetch template && git merge template/main --allow-unrelated-histories"
   },

@@ -3,61 +3,80 @@
   "allProbes": true,
   "branches": 87.5,
   "check-coverage": false,
-  "exclude": [],
-  "excludeNodeModules": true,
-  "extension": [".js"],
-  "functions": 90,
-  "include": ["src/**/*.js"],
-  "lines": 95,
-  "report-dir": "test/coverage",
-  "reporter": [
-    "text",
-    "lcov",
-    "text-summary",
-    "html",
-    "json",
-    "json-summary",
-    "cobertura",
-    "clover"
+  "exclude": [
+    "dist",
+    "test",
+    "docs",
+    "build",
+    "lib",
+    ".github",
+    ".vscode",
+    ".vscode-test",
+    ".cache",
+    ".tmp",
+    ".idx",
+    "scripts",
+    "node_modules"
   ],
+  "excludeNodeModules": true,
+  "extension": [
+    ".js"
+  ],
+  "functions": 90,
+  "include": [
+    "src/**/*.js"
+  ],
+  "lines": 95,
   "reporterOptions": {
     "clover": {
-      "subdir": "clover",
-      "file": "clover.xml"
+      "file": "clover.xml",
+      "subdir": "clover"
     },
     "cobertura": {
-      "subdir": "cobertura",
-      "file": "cobertura.xml"
-    },
-    "json": {
-      "subdir": "json",
-      "file": "coverage.json"
-    },
-    "json-summary": {
-      "subdir": "json",
-      "file": "coverage-summary.json"
-    },
-    "lcov": {
-      "subdir": "lcov",
-      "file": "coverage.lcov"
-    },
-    "text": {
-      "subdir": "text",
-      "file": "coverage.txt"
-    },
-    "text-summary": {
-      "subdir": "text",
-      "file": "coverage-summary.txt"
+      "file": "cobertura.xml",
+      "subdir": "cobertura"
     },
     "html": {
       "subdir": "html"
+    },
+    "json": {
+      "file": "coverage.json",
+      "subdir": "json"
+    },
+    "json-summary": {
+      "file": "coverage-summary.json",
+      "subdir": "json"
+    },
+    "lcov": {
+      "file": "coverage.lcov",
+      "subdir": "lcov"
+    },
+    "text": {
+      "file": "coverage.txt",
+      "subdir": "text"
+    },
+    "text-summary": {
+      "file": "coverage-summary.txt",
+      "subdir": "text"
     }
   },
   "statements": 92.5,
   "watermarks": {
-    "branches": [36, 80],
-    "functions": [32, 64],
-    "lines": [48, 72],
-    "statements": [48, 96]
+    "branches": [
+      36,
+      80
+    ],
+    "functions": [
+      32,
+      64
+    ],
+    "lines": [
+      48,
+      72
+    ],
+    "statements": [
+      48,
+      96
+    ]
   }
 }
