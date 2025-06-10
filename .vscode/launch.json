@@ -7,7 +7,8 @@
       "name": "Launch Program",
       "skipFiles": ["<node_internals>/**"],
       "program": "${workspaceFolder}/src/index.js",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"]
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "preLaunchTask": "npm: build"
     },
     {
       "type": "node",
@@ -22,6 +23,24 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Tests",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "program": null,
+      "runtimeExecutable": "node",
+      "args": [
+        "--inspect-brk",
+        "--test",
+        "${workspaceFolder}/test/cli.test.js",
+        "${workspaceFolder}/test/index.test.js"
+      ],
+      "outputCapture": "std",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceFolder}"
     }
   ]
 }

@@ -6,7 +6,6 @@
       "source.addMissingImports": "always",
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.stylelint": "explicit",
       "source.organizeImports": "always"
     },
     "editor.defaultFormatter": "vscode.css-language-features",
@@ -72,7 +71,6 @@
       "source.addMissingImports": "always",
       "source.fixAll": "always",
       "source.fixAll.biomejs": "always",
-      "source.fixAll.prettier": "always",
       "source.fixAll.yaml-sort": "explicit",
       "source.organizeImports": "always"
     },
@@ -260,7 +258,5 @@
   "yaml.suggest.parentSkeletonSelectedFirst": true,
   "yaml.trace.server": "messages",
   "yaml.validate": true,
-  "yaml.yamlVersion": "1.2",
-  "yaml.schemas": {
-  }
+  "yaml.yamlVersion": "1.2"
 }
