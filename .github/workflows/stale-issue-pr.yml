@@ -42,8 +42,21 @@ jobs:
             }
           result-encoding: string # Keep this as string
 
+      - name: Check for Stale Issues
+        id: check_for_stale_issues
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const issues = JSON.parse('${{ steps.get_stale_issues.outputs.issues }}');
+            if (issues && issues.length > 0 && issues[0]) {
+              core.setOutput('has_issues', 'true');
+            } else {
+              core.setOutput('has_issues', 'false');
+            }
+          result-encoding: string
+
       - name: Process Issues
-        if: steps.get_stale_issues.outputs.issues && fromJson(steps.get_stale_issues.outputs.issues)[0]
+        if: steps.check_for_stale_issues.outputs.has_issues == 'true'
         uses: actions/github-script@v6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
