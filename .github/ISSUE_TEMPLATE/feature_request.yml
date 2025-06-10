@@ -1,7 +1,8 @@
 body:
   - attributes:
       value: |
-        Thanks for taking the time to fill out this feature request!\n
+        Thanks for taking the time to fill out this feature request!
+        
         Please check our documentation first:
         - [Contributing Guidelines](.github/CONTRIBUTING.md)
         - [Code of Conduct](.github/CODE_OF_CONDUCT.md)

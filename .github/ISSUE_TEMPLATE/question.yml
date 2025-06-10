@@ -49,7 +49,3 @@ body:
           required: true
     id: terms
     type: checkboxes
-description: Ask a question about this project
-labels: ['question']
-name: ❓ Question
-title: '❓ Question: '
