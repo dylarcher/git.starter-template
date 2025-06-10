@@ -1,0 +1,50 @@
+name: Dependabot auto-merge
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+permissions:
+  pull-requests: write
+  contents: write # Required to merge PRs
+  issues: write # Required to assign users and add labels
+
+jobs:
+  dependabot_auto_merge:
+    runs-on: ubuntu-latest
+    # Only run on PRs opened by Dependabot
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          # We need to fetch the target branch to get its status checks
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Wait for status checks
+        id: check_run_wait
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          running-workflow-name: 'dependabot_auto_merge' # Avoid waiting on itself
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 30 # seconds
+          allowed-conclusions: success,skipped # Consider skipped checks as success for auto-merge
+
+      - name: Auto-merge Dependabot PR
+        if: steps.check_run_wait.outputs.conclusion == 'success'
+        run: |
+          gh pr merge ${{ github.event.pull_request.number }} --auto --squash --delete-branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Handle merge failure (assign and label)
+        if: steps.check_run_wait.outputs.conclusion != 'success'
+        run: |
+          gh pr edit ${{ github.event.pull_request.number }} --add-assignee "@dylarcher"
+          gh pr edit ${{ github.event.pull_request.number }} --add-label "action needed"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
