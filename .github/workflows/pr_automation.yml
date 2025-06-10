@@ -16,25 +16,25 @@ jobs:
           BRANCH_NAME="${{ github.head_ref }}"
           LABEL_TO_ADD=""
           if [[ "$BRANCH_NAME" == feat/* ]]; then
-            LABEL_TO_ADD="feature"
+            LABEL_TO_ADD="feat"
           elif [[ "$BRANCH_NAME" == fix/* ]]; then
-            LABEL_TO_ADD="bugfix"
+            LABEL_TO_ADD="fix"
           elif [[ "$BRANCH_NAME" == chore/* ]]; then
-            LABEL_TO_ADD="chore"
+            LABEL_TO_ADD="task"
           elif [[ "$BRANCH_NAME" == docs/* ]]; then
-            LABEL_TO_ADD="documentation"
+            LABEL_TO_ADD="docs"
           elif [[ "$BRANCH_NAME" == ci/* ]]; then
             LABEL_TO_ADD="ci"
-          elif [[ "$BRANCH_NAME" == refactor/* ]]; then
-            LABEL_TO_ADD="refactor"
+          elif [[ "$BRANCH_NAME" == refac/* ]]; then
+            LABEL_TO_ADD="refac"
           elif [[ "$BRANCH_NAME" == test/* ]]; then
-            LABEL_TO_ADD="testing"
+            LABEL_TO_ADD="test"
           elif [[ "$BRANCH_NAME" == perf/* ]]; then
-            LABEL_TO_ADD="performance"
-          elif [[ "$BRANCH_NAME" == style/* ]]; then
-            LABEL_TO_ADD="style"
-          elif [[ "$BRANCH_NAME" == build/* ]]; then
-            LABEL_TO_ADD="build"
+            LABEL_TO_ADD="perf"
+          elif [[ "$BRANCH_NAME" == css/* ]]; then
+            LABEL_TO_ADD="css"
+          elif [[ "$BRANCH_NAME" == make/* ]]; then
+            LABEL_TO_ADD="make"
           fi
           if [ -n "$LABEL_TO_ADD" ]; then
             gh pr edit ${{ github.event.pull_request.number }} --add-label "$LABEL_TO_ADD"
