@@ -26,7 +26,7 @@ jobs:
         run: npm ci # Use ci for cleaner installs in CI
 
       - name: Update from template repository
-        run: npm run update:starter-temp
+        run: npm run update:starter-files
 
       - name: Commit and push changes
         run: |
